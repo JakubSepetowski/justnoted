@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+body {
+	background-color: #f6f8fc;
+}
+.registerInputs:-webkit-autofill,
+.registerInputs:-webkit-autofill:hover,
+.registerInputs:-webkit-autofill:focus {
+	border: none;
+	-webkit-text-fill-color: #1d4ed8;
+	-webkit-box-shadow: none;
+	transition: background-color 5000s ease-in-out 0s;
+}
+.active {
+	position: relative;
+}
+.active::after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	content: '';
+	height: 100%;
+	width: 2px;
+	background: blue;
+}
