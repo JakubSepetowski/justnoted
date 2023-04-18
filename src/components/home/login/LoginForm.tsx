@@ -5,7 +5,7 @@ export const LoginForm = () => {
 			<div className='flex flex-col  mt-4 md:mt-10  md:text-lg'>
 				<label htmlFor='email'>Email</label>
 				<input
-					className='autofill:bg-none bg-blue-100 focus:outline-none p-1 text-blue-700 placeholder:text-neutral-500 transition-colors duration-200 focus:bg-blue-200 registerInputs rounded-md'
+					className='autofill:bg-none bg-blue-100 focus:outline-none p-1  placeholder:text-neutral-500 transition-colors duration-200 focus:bg-blue-200 registerInputs rounded-md'
 					type='email'
 					id='email'
 				/>
@@ -13,7 +13,7 @@ export const LoginForm = () => {
 			<div className='flex flex-col  mt-4 md:mt-6 md:text-lg'>
 				<label htmlFor='password'>Password</label>
 				<input
-					className='autofill:bg-none bg-blue-100 focus:outline-none p-1 text-blue-700 placeholder:text-neutral-500 transition-colors duration-200 focus:bg-blue-200 registerInputs rounded-md'
+					className='autofill:bg-none bg-blue-100 focus:outline-none p-1  placeholder:text-neutral-500 transition-colors duration-200 focus:bg-blue-200 registerInputs rounded-md'
 					type='password'
 					id='password'
 				/>

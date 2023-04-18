@@ -14,7 +14,7 @@ body {
 .registerInputs:-webkit-autofill:hover,
 .registerInputs:-webkit-autofill:focus {
 	border: none;
-	-webkit-text-fill-color: #1d4ed8;
+	-webkit-text-fill-color: black;
 	-webkit-box-shadow: none;
 	transition: background-color 5000s ease-in-out 0s;
 }
@@ -28,5 +28,5 @@ body {
 	content: '';
 	height: 100%;
 	width: 2px;
-	background: blue;
+	background: #1d4ed8;
 }

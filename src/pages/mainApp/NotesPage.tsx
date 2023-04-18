@@ -1,9 +1,9 @@
 import { Container } from '../../components/mainApp/Container';
 
-export const MainAppPage = () => {
+export const NotesPage = () => {
 	return (
 		<Container>
-			<h1>To jest home page</h1>
+			<h1>To jest notes Page</h1>
 		</Container>
 	);
 };
