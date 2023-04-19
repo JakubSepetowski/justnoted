@@ -1,9 +1,11 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider} from 'react-router-dom';
 import { HomePage } from './pages/home/HomePage';
 import { RegisterPage } from './pages/home/RegisterPage';
 import { LoginPage } from './pages/home/LoginPage';
 import { MainAppPage } from './pages/mainApp/MainAppPage';
 import { NotesPage } from './pages/mainApp/NotesPage';
+import { RequireAuth } from './components/auth/RequireAuth';
+
 
 const router = createBrowserRouter([
 	{
@@ -11,23 +13,33 @@ const router = createBrowserRouter([
 		element: <HomePage />,
 	},
 	{
-		path: 'register',
+		path: '/register',
 		element: <RegisterPage />,
 	},
 	{
-		path: 'login',
+		path: '/login',
 		element: <LoginPage />,
 	},
 	{
 		path: '/app/home',
-		element: <MainAppPage />,
+		element: (
+			<RequireAuth>
+				<MainAppPage />
+			</RequireAuth>
+		),
 	},
 	{
 		path: '/app/notes',
-		element: <NotesPage />,
+		element: (
+			<RequireAuth>
+				{' '}
+				<NotesPage />
+			</RequireAuth>
+		),
 	},
 ]);
 
 export const App = () => {
+	
 	return <RouterProvider router={router} />;
 };

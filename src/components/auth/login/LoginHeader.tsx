@@ -17,7 +17,7 @@ export const LoginHeader = () => {
 							</Link>{' '}
 						</p>
 					</div>
-					<LoginForm/>
+					<LoginForm />
 				</div>
 			</div>
 		</header>

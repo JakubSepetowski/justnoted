@@ -1,8 +1,55 @@
 import { useFormik } from 'formik';
+import { auth, googleProvider } from '../../../config/firebase';
+import { createUserWithEmailAndPassword, signInWithPopup, updateProfile } from 'firebase/auth';
+import { authSlice } from '../../../store/authSlice';
+import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import logo from '../../../assets/imgs/googleLogo.webp';
+import { useNavigateOnAuth } from '../../hooks/useNavigateOnAuth';
+import { useState } from 'react';
+import { NewUserData, RegisterErrMsgs } from '../../../types/types';
 
 export const RegisterForm = () => {
+	const [errorMg, setErrorMg] = useState('');
+	useNavigateOnAuth();
+	const dispatch = useDispatch();
+	const singByEmailHandler = async (values: NewUserData) => {
+		try {
+			const res = await createUserWithEmailAndPassword(auth, values.email, values.password);
+			if (res) {
+				setErrorMg('');
+				if (auth.currentUser) await updateProfile(auth.currentUser, { displayName: values.fname });
+				localStorage.setItem('user', JSON.stringify(auth.currentUser));
+				dispatch(authSlice.actions.setIsAuth());
+			}
+		} catch (err) {
+			let message = '';
+			if (err instanceof Error) message = err.message;
+			console.log(message);
+			switch (message) {
+				case RegisterErrMsgs.inUse:
+					setErrorMg('This email is already in use. Please log in');
+					break;
+				default:
+					setErrorMg('Unexpeted error, try again.');
+			}
+		}
+	};
+	const singByGoogleHandler = async () => {
+		try {
+			const res = await signInWithPopup(auth, googleProvider);
+			if (res) {
+				setErrorMg('');
+				localStorage.setItem('user', JSON.stringify(res.user));
+				dispatch(authSlice.actions.setIsAuth());
+			}
+		} catch (err) {
+			let message = '';
+			if (err instanceof Error) message = err.message;
+			setErrorMg('Unexpeted error, try again.');
+		}
+	};
+
 	const formik = useFormik({
 		initialValues: {
 			fname: '',
@@ -28,7 +75,7 @@ export const RegisterForm = () => {
 				.oneOf([Yup.ref('password')], 'Passwords must match'),
 		}),
 		onSubmit: (values, { resetForm }) => {
-			console.log(values);
+			singByEmailHandler(values);
 			resetForm();
 		},
 	});
@@ -99,6 +146,7 @@ export const RegisterForm = () => {
 					id='repeatPassword'
 				/>
 			</div>
+			{errorMg && <p className='mt-2 text-red-400'>{errorMg}</p>}
 			<button
 				disabled={!(formik.dirty && formik.isValid)}
 				type='submit'
@@ -109,7 +157,9 @@ export const RegisterForm = () => {
 			</button>
 			<p className='text-center mt-4 font-semibold'>OR</p>
 
-			<div className='w-full flex items-center justify-center bg-white shadow-md p-2 mt-4 rounded-md cursor-pointer '>
+			<div
+				onClick={singByGoogleHandler}
+				className='w-full flex items-center justify-center bg-white shadow-md p-2 mt-4 rounded-md cursor-pointer '>
 				<img className='w-6' alt='Google sign-up' src={logo} />
 				<p className='ml-2'>Singup with Google</p>
 			</div>

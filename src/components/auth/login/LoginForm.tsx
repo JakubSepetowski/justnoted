@@ -1,7 +1,53 @@
+import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { auth, googleProvider } from '../../../config/firebase';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import logo from '../../../assets/imgs/googleLogo.webp';
+import { useNavigateOnAuth } from '../../hooks/useNavigateOnAuth';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { authSlice } from '../../../store/authSlice';
+import { LoginUserData, LoginErrMsgs } from '../../../types/types';
+
 export const LoginForm = () => {
+	useNavigateOnAuth();
+	const dispatch = useDispatch();
+	const [errorMg, setErrorMg] = useState('');
+	const LoginByEmailHanlder = async (values: LoginUserData) => {
+		try {
+			const res = await signInWithEmailAndPassword(auth, values.email, values.password);
+			setErrorMg('');
+			localStorage.setItem('user', JSON.stringify(res.user));
+			dispatch(authSlice.actions.setIsAuth());
+		} catch (err) {
+			let message = '';
+			if (err instanceof Error) message = err.message;
+			switch (message) {
+				case LoginErrMsgs.wrongPassword:
+					setErrorMg('Wrong passwrod');
+					break;
+				case LoginErrMsgs.noUser:
+					setErrorMg('Wrong email');
+					break;
+				default:
+					setErrorMg('Unexpeted error, try again.');
+			}
+		}
+	};
+	const LoginByGoogleHanlder = async () => {
+		try {
+			const res = await signInWithPopup(auth, googleProvider);
+			if (res) {
+				setErrorMg('');
+				localStorage.setItem('user', JSON.stringify(res.user));
+				dispatch(authSlice.actions.setIsAuth());
+			}
+		} catch (err) {
+			let message = '';
+			if (err instanceof Error) message = err.message;
+			setErrorMg('Unexpeted error, try again.');
+		}
+	};
 	const formik = useFormik({
 		initialValues: {
 			email: '',
@@ -17,7 +63,7 @@ export const LoginForm = () => {
 				.matches(/[0-9]/, 'Password mast have at least one number'),
 		}),
 		onSubmit: (values, { resetForm }) => {
-			console.log(values);
+			LoginByEmailHanlder(values);
 			resetForm();
 		},
 	});
@@ -54,6 +100,7 @@ export const LoginForm = () => {
 					id='password'
 				/>
 			</div>
+			{errorMg && <p className='mt-2 text-red-400'>{errorMg}</p>}
 			<button
 				disabled={!(formik.dirty && formik.isValid)}
 				type='submit'
@@ -64,7 +111,9 @@ export const LoginForm = () => {
 			</button>
 			<p className='text-center mt-4 font-semibold'>OR</p>
 
-			<div className='w-full flex items-center justify-center bg-white shadow-md p-2 mt-4 rounded-md cursor-pointer'>
+			<div
+				onClick={LoginByGoogleHanlder}
+				className='w-full flex items-center justify-center bg-white shadow-md p-2 mt-4 rounded-md cursor-pointer'>
 				<img className='w-6' alt='Google log-in' src={logo} />
 				<p className='ml-2'>Continue with Google</p>
 			</div>
