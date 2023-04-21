@@ -4,7 +4,7 @@ interface Props {
 }
 export const Container = (props: Props) => {
 	return (
-		<main className='h-screen w-full'>
+		<main className='h-screen w-full overflow-hidden'>
 			<div className='h-full w-full flex mx-auto max-w-[1800px]'>
 				<Nav />
 				<main className='h-full w-full'>{props.children}</main>

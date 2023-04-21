@@ -1,9 +1,12 @@
 import { Container } from '../../components/mainApp/Container';
+import { NotesContent } from '../../components/mainApp/contents/NotesContent';
+import { NotesHeader } from '../../components/mainApp/headers/NotesHeader';
 
 export const NotesPage = () => {
 	return (
 		<Container>
-			<h1>To jest notes Page</h1>
+			<NotesHeader />
+			<NotesContent/>
 		</Container>
 	);
 };

@@ -30,3 +30,7 @@ body {
 	width: 2px;
 	background: #1d4ed8;
 }
+.headerBgc{
+	background-image: url("./assets/imgs/headerImg.png");
+	background-size: cover;
+}
