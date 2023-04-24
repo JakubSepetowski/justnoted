@@ -13,6 +13,7 @@ export const LoginForm = () => {
 	useNavigateOnAuth();
 	const dispatch = useDispatch();
 	const [errorMg, setErrorMg] = useState('');
+	const [isSending, setIsSending] = useState(false);
 	const LoginByEmailHanlder = async (values: LoginUserData) => {
 		try {
 			const res = await signInWithEmailAndPassword(auth, values.email, values.password);
@@ -33,8 +34,10 @@ export const LoginForm = () => {
 					setErrorMg('Unexpeted error, try again.');
 			}
 		}
+		setIsSending(false);
 	};
 	const LoginByGoogleHanlder = async () => {
+		setIsSending(true);
 		try {
 			const res = await signInWithPopup(auth, googleProvider);
 			if (res) {
@@ -43,10 +46,9 @@ export const LoginForm = () => {
 				dispatch(authSlice.actions.setIsAuth());
 			}
 		} catch (err) {
-			let message = '';
-			if (err instanceof Error) message = err.message;
 			setErrorMg('Unexpeted error, try again.');
 		}
+		setIsSending(false);
 	};
 	const formik = useFormik({
 		initialValues: {
@@ -63,6 +65,7 @@ export const LoginForm = () => {
 				.matches(/[0-9]/, 'Password mast have at least one number'),
 		}),
 		onSubmit: (values, { resetForm }) => {
+			setIsSending(true);
 			LoginByEmailHanlder(values);
 			resetForm();
 		},
@@ -106,8 +109,8 @@ export const LoginForm = () => {
 				type='submit'
 				className={`w-full transition-colors duration-200 text-white p-2 rounded-md mt-12 shadow-md ${
 					!(formik.dirty && formik.isValid) ? 'bg-neutral-500' : 'bg-blue-700'
-				}`}>
-				Log in
+				} ${isSending ? 'loading' : ''}`}>
+				{isSending ? 'Please wait' : 'Login'}
 			</button>
 			<p className='text-center mt-4 font-semibold'>OR</p>
 

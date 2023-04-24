@@ -1,11 +1,11 @@
-import { createBrowserRouter, RouterProvider} from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { HomePage } from './pages/home/HomePage';
 import { RegisterPage } from './pages/home/RegisterPage';
 import { LoginPage } from './pages/home/LoginPage';
 import { MainAppPage } from './pages/mainApp/MainAppPage';
 import { NotesPage } from './pages/mainApp/NotesPage';
 import { RequireAuth } from './components/auth/RequireAuth';
-
+import { NewNotePage } from './pages/mainApp/NewNotePage';
 
 const router = createBrowserRouter([
 	{
@@ -29,10 +29,17 @@ const router = createBrowserRouter([
 		),
 	},
 	{
+		path: '/app/new',
+		element: (
+			<RequireAuth>
+				<NewNotePage/>
+			</RequireAuth>
+		),
+	},
+	{
 		path: '/app/notes',
 		element: (
 			<RequireAuth>
-				{' '}
 				<NotesPage />
 			</RequireAuth>
 		),
@@ -40,6 +47,5 @@ const router = createBrowserRouter([
 ]);
 
 export const App = () => {
-	
 	return <RouterProvider router={router} />;
 };

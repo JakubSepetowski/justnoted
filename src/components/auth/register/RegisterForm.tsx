@@ -11,6 +11,7 @@ import { NewUserData, RegisterErrMsgs } from '../../../types/types';
 
 export const RegisterForm = () => {
 	const [errorMg, setErrorMg] = useState('');
+	const [isSending, setIsSending] = useState(false);
 	useNavigateOnAuth();
 	const dispatch = useDispatch();
 	const singByEmailHandler = async (values: NewUserData) => {
@@ -18,14 +19,19 @@ export const RegisterForm = () => {
 			const res = await createUserWithEmailAndPassword(auth, values.email, values.password);
 			if (res) {
 				setErrorMg('');
-				if (auth.currentUser) await updateProfile(auth.currentUser, { displayName: values.fname });
+				if (auth.currentUser) {
+					await updateProfile(auth.currentUser, {
+						displayName: values.fname,
+						photoURL:
+							'https://icons.iconarchive.com/icons/papirus-team/papirus-status/256/avatar-default-icon.png',
+					});
+				}
 				localStorage.setItem('user', JSON.stringify(auth.currentUser));
 				dispatch(authSlice.actions.setIsAuth());
 			}
 		} catch (err) {
 			let message = '';
 			if (err instanceof Error) message = err.message;
-			console.log(message);
 			switch (message) {
 				case RegisterErrMsgs.inUse:
 					setErrorMg('This email is already in use. Please log in');
@@ -34,8 +40,10 @@ export const RegisterForm = () => {
 					setErrorMg('Unexpeted error, try again.');
 			}
 		}
+		setIsSending(false);
 	};
 	const singByGoogleHandler = async () => {
+		setIsSending(true);
 		try {
 			const res = await signInWithPopup(auth, googleProvider);
 			if (res) {
@@ -44,10 +52,9 @@ export const RegisterForm = () => {
 				dispatch(authSlice.actions.setIsAuth());
 			}
 		} catch (err) {
-			let message = '';
-			if (err instanceof Error) message = err.message;
 			setErrorMg('Unexpeted error, try again.');
 		}
+		setIsSending(false);
 	};
 
 	const formik = useFormik({
@@ -75,6 +82,7 @@ export const RegisterForm = () => {
 				.oneOf([Yup.ref('password')], 'Passwords must match'),
 		}),
 		onSubmit: (values, { resetForm }) => {
+			setIsSending(true);
 			singByEmailHandler(values);
 			resetForm();
 		},
@@ -150,10 +158,10 @@ export const RegisterForm = () => {
 			<button
 				disabled={!(formik.dirty && formik.isValid)}
 				type='submit'
-				className={`w-full transition-colors duration-200 text-white p-2 rounded-md mt-12 shadow-md ${
+				className={`w-full transition-colors duration-200 text-white p-2 rounded-md mt-12 shadow-md  ${
 					!(formik.dirty && formik.isValid) ? 'bg-neutral-500' : 'bg-blue-700'
-				}`}>
-				Create account
+				} ${isSending ? 'loading' : ''}`}>
+				{isSending ? 'Please wait' : 'Create account'}
 			</button>
 			<p className='text-center mt-4 font-semibold'>OR</p>
 

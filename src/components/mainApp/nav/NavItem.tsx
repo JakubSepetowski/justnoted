@@ -16,7 +16,7 @@ export const NavItem = (props: Props) => {
 			}
 			end>
 			<img className='w-4 md:w-5 xl:w-6 lg:ml-4' src={props.icon} alt={`${props.name} icon`} />
-			<p className='hidden lg:inline text-white ml-2 uppercase text-lg'>{props.name}</p>
+			<p className='hidden lg:inline text-white ml-2 uppercase '>{props.name}</p>
 		</NavLink>
 	);
 };
