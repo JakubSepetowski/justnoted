@@ -1,13 +1,13 @@
 import { Player } from '@lottiefiles/react-lottie-player';
-import { ContentWrapper } from '../common/ContentWrapper';
-import writing from '../../../assets/lotties/writing.json';
+import { ContentWrapper } from '../../common/ContentWrapper';
+import writing from '../../../../assets/lotties/writing.json';
 import { Field, Formik, Form } from 'formik';
 import { collection, addDoc } from 'firebase/firestore';
 import * as Yup from 'yup';
-import { auth, dataBase } from '../../../config/firebase';
-import { Note } from '../../../types/types';
+import { auth, dataBase } from '../../../../config/firebase';
+import { Note } from '../../../../types/types';
 import { useDispatch } from 'react-redux';
-import { notesSlice } from '../../../store/notesSlice';
+import { notesSlice } from '../../../../store/notesSlice';
 
 export const NewNoteContent = () => {
 	const dispatch = useDispatch();
@@ -62,7 +62,7 @@ export const NewNoteContent = () => {
 			}}
 			validationSchema={Yup.object({
 				title: Yup.string().required('Title is required').max(20, 'Title is to long'),
-				note: Yup.string().max(1000, 'Note is to long').required('Note is required'),
+				note: Yup.string().max(200, 'Note is to long').required('Note is required'),
 				category: Yup.string()
 					.required('Please select a category')
 					.oneOf(categories, 'Please select a category from list'),

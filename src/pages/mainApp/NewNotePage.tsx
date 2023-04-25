@@ -2,7 +2,7 @@ import { onSnapshot, query, collection, where } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Container } from '../../components/mainApp/Container';
-import { NewNoteContent } from '../../components/mainApp/contents/NewNoteContent';
+import { NewNoteContent } from '../../components/mainApp/contents/newNote/NewNoteContent';
 import { auth, dataBase } from '../../config/firebase';
 import { RootState } from '../../store/store';
 
