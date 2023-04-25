@@ -2,6 +2,6 @@ import { RegisterHeader } from '../../components/auth/register/RegisterHeader';
 import { useCheckLocal } from '../../components/hooks/useCheckLocal';
 
 export const RegisterPage = () => {
-	useCheckLocal()
+	useCheckLocal();
 	return <RegisterHeader />;
 };

@@ -1,10 +1,16 @@
 import { Player } from '@lottiefiles/react-lottie-player';
 import { ContentWrapper } from '../common/ContentWrapper';
 import writing from '../../../assets/lotties/writing.json';
-import { Field, Formik, Form, ErrorMessage } from 'formik';
+import { Field, Formik, Form } from 'formik';
+import { collection, addDoc } from 'firebase/firestore';
 import * as Yup from 'yup';
+import { auth, dataBase } from '../../../config/firebase';
+import { Note } from '../../../types/types';
+import { useDispatch } from 'react-redux';
+import { notesSlice } from '../../../store/notesSlice';
 
 export const NewNoteContent = () => {
+	const dispatch = useDispatch();
 	const date = new Date();
 	const day = date.getDate();
 	const month = date.getMonth() + 1;
@@ -20,6 +26,30 @@ export const NewNoteContent = () => {
 		</option>
 	));
 
+	const notesColection = collection(dataBase, `users/${auth.currentUser?.uid}/notes`);
+	const onAddNote = async (values: Note) => {
+		await addDoc(notesColection, {
+			title: values.title,
+			note: values.note,
+			category: values.category,
+			date: values.date,
+			fav: values.fav,
+			callendar: values.calendar,
+			inTrash: false,
+		});
+		dispatch(
+			notesSlice.actions.addToNotes({
+				title: values.title,
+				note: values.note,
+				category: values.category,
+				date: values.date,
+				fav: values.fav,
+				calendar: values.calendar,
+				inTrash: false,
+			})
+		);
+	};
+
 	return (
 		<Formik
 			initialValues={{
@@ -27,8 +57,8 @@ export const NewNoteContent = () => {
 				note: '',
 				category: '0',
 				date: currentDate,
-				saveToCalendar: false,
-				markAsFav: false,
+				calendar: false,
+				fav: false,
 			}}
 			validationSchema={Yup.object({
 				title: Yup.string().required('Title is required').max(20, 'Title is to long'),
@@ -36,12 +66,16 @@ export const NewNoteContent = () => {
 				category: Yup.string()
 					.required('Please select a category')
 					.oneOf(categories, 'Please select a category from list'),
-				saveToCalendar: Yup.boolean(),
-				markAsFav: Yup.boolean(),
-				date: Yup.date().required('Please enter a valid date'),
+				calendar: Yup.boolean(),
+				fav: Yup.boolean(),
+				date: Yup.date()
+					.min(currentDate, 'Past date cannot be selected')
+					.required('Please enter a valid date'),
 			})}
 			onSubmit={(values, { resetForm }) => {
 				console.log(values);
+				onAddNote(values);
+				resetForm();
 			}}>
 			{(formik) => {
 				return (
@@ -99,7 +133,7 @@ export const NewNoteContent = () => {
 										{categoryOptions}
 									</Field>
 								</div>
-								{formik.values.saveToCalendar && (
+								{formik.values.calendar && (
 									<div className='flex flex-col mt-2 md:mt-4'>
 										<label
 											className={`mt-1 font-semibold ${
@@ -118,14 +152,14 @@ export const NewNoteContent = () => {
 
 								<div className='flex flex-col mt-2 md:mt-4'>
 									<div className='flex  items-center '>
-										<Field name='saveToCalendar' className="" type='checkbox' />
-										<label className='ml-2' htmlFor='saveToCalendar'>
+										<Field name='calendar' className='' type='checkbox' />
+										<label className='ml-2' htmlFor='calendar'>
 											save note to calendar
 										</label>
 									</div>
 									<div className='flex items-center '>
-										<Field name='markAsFav' type='checkbox' />
-										<label className='ml-2' htmlFor='markAsFav'>
+										<Field name='fav' type='checkbox' />
+										<label className='ml-2' htmlFor='fav'>
 											mark note as favourite
 										</label>
 									</div>

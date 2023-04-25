@@ -6,6 +6,14 @@ import { MainAppPage } from './pages/mainApp/MainAppPage';
 import { NotesPage } from './pages/mainApp/NotesPage';
 import { RequireAuth } from './components/auth/RequireAuth';
 import { NewNotePage } from './pages/mainApp/NewNotePage';
+import { useDispatch } from 'react-redux';
+import { notesSlice } from './store/notesSlice';
+import { query, collection, getDocs } from 'firebase/firestore';
+import { useEffect } from 'react';
+import { dataBase } from './config/firebase';
+import { useSelector } from 'react-redux';
+import { RootState } from './store/store';
+import { Note } from './types/types';
 
 const router = createBrowserRouter([
 	{
@@ -32,7 +40,7 @@ const router = createBrowserRouter([
 		path: '/app/new',
 		element: (
 			<RequireAuth>
-				<NewNotePage/>
+				<NewNotePage />
 			</RequireAuth>
 		),
 	},
@@ -47,5 +55,28 @@ const router = createBrowserRouter([
 ]);
 
 export const App = () => {
+	const isAuth = useSelector((state: RootState) => state.authentication.isAuth);
+	const dispatch = useDispatch();
+
+	const getNotes = async () => {
+		const user = JSON.parse(localStorage.getItem('user')!);
+		try {
+			const q = query(collection(dataBase, `users/${user.uid}/notes`));
+			const data = await getDocs(q);
+			const filteredData = data.docs.map((doc) => ({
+				id: doc.id,
+				...(doc.data() as Note),
+			}));
+			console.log(filteredData);
+			 dispatch(notesSlice.actions.initNotes(filteredData));
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	useEffect(() => {
+		if (isAuth) getNotes();
+	}, [isAuth]);
+
 	return <RouterProvider router={router} />;
 };

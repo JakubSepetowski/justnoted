@@ -11,6 +11,6 @@ export const useNavigateOnAuth = () => {
 		if (isAuth) {
 			console.log('zmiana');
 			navgiate('/app/home');
-		} 
+		}
 	}, [isAuth]);
 };
