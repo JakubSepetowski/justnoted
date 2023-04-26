@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Note } from '../../../../types/types';
 
 export const NoteCrad = (props: Note) => {
@@ -40,7 +41,11 @@ export const NoteCrad = (props: Note) => {
 			</p>
 			<div className='flex mt-3 justify-between items-center'>
 				<div className='flex'>
-					<button className='bg-blue-700 text-white p-1 rounded-md w-16 md:w-20'>details</button>
+					<Link
+						to={`/app/notes/note/${props.id}`}
+						className='bg-blue-700 text-white p-1 rounded-md w-16 md:w-20 flex justify-center items-center'>
+						details
+					</Link>
 					<button className='ml-2 border  p-1 rounded-md w-16 md:w-20 '>delete</button>
 				</div>
 				<p className='text-xs text-gray-400'>{daysAgo}</p>

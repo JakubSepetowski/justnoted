@@ -8,6 +8,7 @@ import { auth, dataBase } from '../../../../config/firebase';
 import { Note } from '../../../../types/types';
 import { useDispatch } from 'react-redux';
 import { notesSlice } from '../../../../store/notesSlice';
+import { v4 as uuid } from 'uuid';
 
 export const NewNoteContent = () => {
 	const dispatch = useDispatch();
@@ -27,8 +28,9 @@ export const NewNoteContent = () => {
 	));
 
 	const notesColection = collection(dataBase, `users/${auth.currentUser?.uid}/notes`);
-	const onAddNote = async (values: Note) => {
+	const onAddNote = async (values: Note, id: string) => {
 		await addDoc(notesColection, {
+			id,
 			title: values.title,
 			note: values.note,
 			category: values.category,
@@ -37,9 +39,11 @@ export const NewNoteContent = () => {
 			fav: values.fav,
 			callendar: values.calendar,
 			inTrash: false,
+			editatedDate: null,
 		});
 		dispatch(
 			notesSlice.actions.addToNotes({
+				id,
 				title: values.title,
 				note: values.note,
 				category: values.category,
@@ -48,6 +52,7 @@ export const NewNoteContent = () => {
 				fav: values.fav,
 				calendar: values.calendar,
 				inTrash: false,
+				editatedDate: null,
 			})
 		);
 	};
@@ -76,8 +81,8 @@ export const NewNoteContent = () => {
 					.required('Please enter a valid date'),
 			})}
 			onSubmit={(values, { resetForm }) => {
-				console.log(values);
-				onAddNote(values);
+				const unique_id = uuid();
+				onAddNote(values, unique_id);
 				resetForm();
 			}}>
 			{(formik) => {

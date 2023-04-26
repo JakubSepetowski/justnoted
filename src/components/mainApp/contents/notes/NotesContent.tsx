@@ -85,6 +85,7 @@ export const NotesContent = () => {
 	};
 
 	const filterByTitleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setCurrentPage(1);
 		setSearchTerm(e.target.value.toLowerCase());
 	};
 
@@ -160,10 +161,10 @@ export const NotesContent = () => {
 						{notes.length === 0 && <Empty />}
 						{notes.length > 0 && filteredNotes.length === 0 && <p>Nothing found for your query</p>}
 						{currentNotes.map(
-							(note, i) =>
+							(note) =>
 								!note.inTrash && (
 									<NoteCrad
-										key={i}
+										key={note.id}
 										title={note.title}
 										category={note.category}
 										note={note.note}

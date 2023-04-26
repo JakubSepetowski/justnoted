@@ -14,6 +14,7 @@ import { dataBase } from './config/firebase';
 import { useSelector } from 'react-redux';
 import { RootState } from './store/store';
 import { Note } from './types/types';
+import { NotePage } from './pages/mainApp/NotePage';
 
 const router = createBrowserRouter([
 	{
@@ -52,6 +53,14 @@ const router = createBrowserRouter([
 			</RequireAuth>
 		),
 	},
+	{
+		path: '/app/notes/note/:noteId',
+		element: (
+			<RequireAuth>
+				<NotePage />
+			</RequireAuth>
+		),
+	},
 ]);
 
 export const App = () => {
@@ -64,11 +73,10 @@ export const App = () => {
 			const q = query(collection(dataBase, `users/${user.uid}/notes`));
 			const data = await getDocs(q);
 			const filteredData = data.docs.map((doc) => ({
-				id: doc.id,
 				...(doc.data() as Note),
 			}));
 			console.log(filteredData);
-			 dispatch(notesSlice.actions.initNotes(filteredData));
+			dispatch(notesSlice.actions.initNotes(filteredData));
 		} catch (err) {
 			console.log(err);
 		}

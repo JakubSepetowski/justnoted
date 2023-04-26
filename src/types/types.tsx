@@ -19,6 +19,7 @@ export interface Note {
 	fav: boolean;
 	inTrash?: boolean;
 	id?: string;
+	editatedDate?: null | string;
 }
 export interface InitialNoteState {
 	notes: Note[];
