@@ -33,6 +33,7 @@ export const NewNoteContent = () => {
 			note: values.note,
 			category: values.category,
 			date: values.date,
+			createdAt: currentDate,
 			fav: values.fav,
 			callendar: values.calendar,
 			inTrash: false,
@@ -43,6 +44,7 @@ export const NewNoteContent = () => {
 				note: values.note,
 				category: values.category,
 				date: values.date,
+				createdAt: currentDate,
 				fav: values.fav,
 				calendar: values.calendar,
 				inTrash: false,
@@ -57,6 +59,7 @@ export const NewNoteContent = () => {
 				note: '',
 				category: '0',
 				date: currentDate,
+				createdAt: currentDate,
 				calendar: false,
 				fav: false,
 			}}

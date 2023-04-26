@@ -14,6 +14,7 @@ export interface Note {
 	note: string;
 	category: string;
 	date: string;
+	createdAt: string;
 	calendar: boolean;
 	fav: boolean;
 	inTrash?: boolean;
@@ -29,6 +30,14 @@ export interface InitActions {
 export interface AddActions {
 	payload: Note;
 }
+export interface PaginateProps {
+	notesPerPage: number;
+	totalNotes: number;
+	currentPage: number;
+	onPaginate: (pageNumber: number) => void;
+	onPrev: () => void;
+	onNext: () => void;
+}
 
 export enum LoginErrMsgs {
 	wrongPassword = 'Firebase: Error (auth/wrong-password).',
@@ -37,4 +46,19 @@ export enum LoginErrMsgs {
 
 export enum RegisterErrMsgs {
 	inUse = 'Firebase: Error (auth/email-already-in-use).',
+}
+export enum Sorting {
+	category = 'cat',
+	fav = 'fav',
+	calendar = 'cal',
+	latest = 'lat',
+	oldest = 'old',
+}
+export enum SortingOptions {
+	latest = '1',
+	oldest = '2',
+	fav = '3',
+	calendar = '4',
+	home = 'home',
+	shopping = 'shopping',
 }
