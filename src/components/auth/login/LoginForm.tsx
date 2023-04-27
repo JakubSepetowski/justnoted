@@ -3,7 +3,7 @@ import { auth, googleProvider } from '../../../config/firebase';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import logo from '../../../assets/imgs/googleLogo.webp';
-import { useNavigateOnAuth } from '../../hooks/useNavigateOnAuth';
+import { useNavigateOnAuth } from '../../../hooks/useNavigateOnAuth';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { authSlice } from '../../../store/authSlice';

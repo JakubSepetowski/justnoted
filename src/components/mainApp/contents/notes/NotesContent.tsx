@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../../store/store';
 import { ContentWrapper } from '../../common/ContentWrapper';
 import { NoteCrad } from './NoteCard';
@@ -7,10 +7,17 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { Paginate } from './Paginate';
 import { Sorting, SortingOptions } from '../../../../types/types';
+import { notesSlice } from '../../../../store/notesSlice';
+import { doc, collection, getDocs, updateDoc } from 'firebase/firestore';
+import { dataBase, auth } from '../../../../config/firebase';
 
 export const NotesContent = () => {
+	const disptach = useDispatch();
 	const notes = useSelector((state: RootState) => state.notes.notes);
 
+	const notesColection = collection(dataBase, `users/${auth.currentUser?.uid}/notes`);
+
+	const trashedNotes = notes.filter((note) => note.inTrash === false);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [notesPerPage] = useState(4);
 
@@ -85,11 +92,13 @@ export const NotesContent = () => {
 	};
 
 	const filterByTitleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (notes.length > 0 && trashedNotes.length === 0) return;
 		setCurrentPage(1);
 		setSearchTerm(e.target.value.toLowerCase());
 	};
 
 	const filterByCategoryHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		if (notes.length > 0 && trashedNotes.length === 0) return;
 		setSelectedNoteCategory(e.target.value);
 		setCurrentPage(1);
 		const selectedValue = e.target.value;
@@ -120,6 +129,12 @@ export const NotesContent = () => {
 		}
 	};
 
+	const trashAllHandler = () => {
+		disptach(notesSlice.actions.trashAll());
+		notes.forEach(async (note) => {
+			await updateDoc(doc(notesColection, note.id), { inTrash: true });
+		});
+	};
 	return (
 		<ContentWrapper hasHeader={false}>
 			<div className=' h-full flex flex-col '>
@@ -150,8 +165,10 @@ export const NotesContent = () => {
 								className='p-1 md:w-auto lg:w-32 w-full md:mr-2 bg-blue-700 text-white rounded-l-md md:rounded-md flex  justify-center items-center'>
 								Add new
 							</Link>
-							<button className='p-1 md:w-auto lg:w-32 w-full border rounded-r-md md:rounded-md'>
-								Delete all
+							<button
+								onClick={trashAllHandler}
+								className='p-1 md:w-auto lg:w-32 w-full border rounded-r-md md:rounded-md'>
+								Trash all
 							</button>
 						</div>
 					</div>
@@ -159,6 +176,7 @@ export const NotesContent = () => {
 				<div className='h-4/6 md:h-5/6 w-full flex flex-col justify-between'>
 					<div className=' h-full flex flex-col md:flex-row justify-center md:items-center flex-wrap gap-5 overflow-scroll noscroll '>
 						{notes.length === 0 && <Empty />}
+						{notes.length > 0 && trashedNotes.length === 0 && <Empty />}
 						{notes.length > 0 && filteredNotes.length === 0 && <p>Nothing found for your query</p>}
 						{currentNotes.map(
 							(note) =>

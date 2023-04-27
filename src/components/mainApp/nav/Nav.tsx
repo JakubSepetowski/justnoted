@@ -3,7 +3,7 @@ import { auth } from '../../../config/firebase';
 import { signOut } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
 import { authSlice } from '../../../store/authSlice';
-import { useNavigateOnLogout } from '../../hooks/useNavigateOnLogout';
+import { useNavigateOnLogout } from '../../../hooks/useNavigateOnLogout';
 import home from '../../../assets/svg/home.svg';
 import notes from '../../../assets/svg/notes.svg';
 import add from '../../../assets/svg/add.svg';

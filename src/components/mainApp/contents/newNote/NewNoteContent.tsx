@@ -2,13 +2,15 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import { ContentWrapper } from '../../common/ContentWrapper';
 import writing from '../../../../assets/lotties/writing.json';
 import { Field, Formik, Form } from 'formik';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, doc, setDoc } from 'firebase/firestore';
 import * as Yup from 'yup';
 import { auth, dataBase } from '../../../../config/firebase';
-import { Note } from '../../../../types/types';
+import { FormikValues, Note } from '../../../../types/types';
 import { useDispatch } from 'react-redux';
 import { notesSlice } from '../../../../store/notesSlice';
 import { v4 as uuid } from 'uuid';
+
+
 
 export const NewNoteContent = () => {
 	const dispatch = useDispatch();
@@ -28,8 +30,8 @@ export const NewNoteContent = () => {
 	));
 
 	const notesColection = collection(dataBase, `users/${auth.currentUser?.uid}/notes`);
-	const onAddNote = async (values: Note, id: string) => {
-		await addDoc(notesColection, {
+	const onAddNote = async (values: FormikValues, id: string) => {
+		await setDoc(doc(notesColection, id), {
 			id,
 			title: values.title,
 			note: values.note,
@@ -64,7 +66,6 @@ export const NewNoteContent = () => {
 				note: '',
 				category: '0',
 				date: currentDate,
-				createdAt: currentDate,
 				calendar: false,
 				fav: false,
 			}}

@@ -9,16 +9,18 @@ export interface NewUserData {
 	password: string;
 	repeatPassword: string;
 }
-export interface Note {
+export interface FormikValues {
 	title: string;
 	note: string;
 	category: string;
 	date: string;
-	createdAt: string;
 	calendar: boolean;
 	fav: boolean;
+}
+export interface Note extends FormikValues {
+	createdAt: string;
 	inTrash?: boolean;
-	id?: string;
+	id: string;
 	editatedDate?: null | string;
 }
 export interface InitialNoteState {

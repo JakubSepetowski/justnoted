@@ -5,7 +5,7 @@ interface Props {
 }
 export const Container = (props: Props) => {
 	return (
-		<main className='h-screen w-full overflow-hidden'>
+		<div className='h-screen w-full overflow-hidden'>
 			<div className='h-full w-full flex'>
 				<Nav />
 				<main className='h-full w-full'>
@@ -13,6 +13,6 @@ export const Container = (props: Props) => {
 					<UserInfo />
 				</main>
 			</div>
-		</main>
+		</div>
 	);
 };

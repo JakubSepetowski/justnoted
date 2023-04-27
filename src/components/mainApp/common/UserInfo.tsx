@@ -5,7 +5,7 @@ export const UserInfo = () => {
 			<img
 				className='w-6 h-6 md:w-7 md:h-7 xl:w-8 xl:h-8 rounded-full'
 				src={user.photoURL}
-				alt=''
+				alt='user profile photo'
 			/>
 			<p className='hidden sm:inline-block sm:pr-2 md:pr-4 ml-2  xl:ml-3'>{user.displayName}</p>
 		</div>
