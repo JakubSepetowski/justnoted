@@ -5,7 +5,6 @@ export default {
 		extend: {
 			colors: {
 				bgc: '#F6F8FC',
-				'popup-good': '#07bc0c',
 			},
 		},
 	},

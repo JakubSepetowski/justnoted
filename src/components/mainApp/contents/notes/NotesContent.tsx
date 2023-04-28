@@ -3,18 +3,19 @@ import { RootState } from '../../../../store/store';
 import { ContentWrapper } from '../../common/ContentWrapper';
 import { NoteCrad } from './NoteCard';
 import { Empty } from './Empty';
-import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { Paginate } from './Paginate';
 import { Sorting, SortingOptions } from '../../../../types/types';
-import { DeafultBtns } from './DeafultNotesContentBtns';
+import { DeafultNotesContentBtns } from './DeafultNotesContentBtns';
 import { DeleteAllBtn } from './DeleteAllBtn';
+import { popupSlice } from '../../../../store/popupSlice';
 
 interface Props {
 	isTrashSite: boolean;
 }
 
 export const NotesContent = ({ isTrashSite }: Props) => {
+	const dispatch= useDispatch()
 	const notes = useSelector((state: RootState) => state.notes.notes);
 
 	let trashedNotes = notes.filter((note) => note.inTrash === false);
@@ -107,27 +108,71 @@ export const NotesContent = ({ isTrashSite }: Props) => {
 		switch (selectedValue) {
 			case SortingOptions.latest:
 				setCurrentSortingCategory(Sorting.latest);
+				dispatch(
+					popupSlice.actions.openPopup({
+						message: 'Sorting form the latest',
+						success: true,
+					})
+				);
 				break;
 			case SortingOptions.oldest:
 				setCurrentSortingCategory(Sorting.oldest);
+				dispatch(
+					popupSlice.actions.openPopup({
+						message: 'Sorting form the oldest',
+						success: true,
+					})
+				);
 				break;
 			case SortingOptions.fav:
 				setCurrentSortingCategory(Sorting.fav);
+				dispatch(
+					popupSlice.actions.openPopup({
+						message: 'Showing only favourites',
+						success: true,
+					})
+				);
 				break;
 			case SortingOptions.calendar:
 				setCurrentSortingCategory(Sorting.calendar);
+				dispatch(
+					popupSlice.actions.openPopup({
+						message: 'Showing only saved in callendar',
+						success: true,
+					})
+				);
 				break;
 			case SortingOptions.home:
 				setCurrentSortingCategory(Sorting.category);
 				setSelectedNoteCategory(selectedValue);
+				dispatch(
+					popupSlice.actions.openPopup({
+						message: 'Sorting by "home" category',
+						success: true,
+					})
+				);
 				break;
 			case SortingOptions.shopping:
 				setCurrentSortingCategory(Sorting.category);
 				setSelectedNoteCategory(selectedValue);
+				dispatch(
+					popupSlice.actions.openPopup({
+						message: 'Sorting by "shopping" category',
+						success: true,
+					})
+				);
+
 				break;
 			default:
 				setCurrentSortingCategory('');
 				setSelectedNoteCategory('');
+				dispatch(
+					popupSlice.actions.openPopup({
+						message: 'Default view',
+						success: true,
+					})
+				);
+
 		}
 	};
 
@@ -161,8 +206,8 @@ export const NotesContent = ({ isTrashSite }: Props) => {
 							<option value={SortingOptions.home}>Home</option>
 							<option value={SortingOptions.shopping}>Shopping</option>
 						</select>
-						{!isTrashSite && <DeafultBtns />}
-						{isTrashSite && <DeleteAllBtn />}
+						{!isTrashSite && <DeafultNotesContentBtns length={trashedNotes.length} />}
+						{isTrashSite && <DeleteAllBtn length={trashedNotes.length} />}
 					</div>
 				</div>
 				<div className='h-4/6 md:h-5/6 w-full flex flex-col justify-between'>

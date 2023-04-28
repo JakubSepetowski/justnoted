@@ -38,20 +38,15 @@ const navItems = [
 		icon: cal,
 		path: '/app/calendar',
 	},
+	
 	{
 		id: 4,
-		name: 'favourite',
-		icon: fav,
-		path: '/app/favourite',
-	},
-	{
-		id: 5,
 		name: 'trash',
 		icon: trash,
 		path: '/app/trash',
 	},
 	{
-		id: 6,
+		id: 5,
 		name: 'profile',
 		icon: profile,
 		path: '/app/profile',

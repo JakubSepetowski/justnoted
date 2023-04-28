@@ -8,6 +8,7 @@ import { collection, updateDoc, doc, deleteDoc } from 'firebase/firestore';
 import { dataBase, auth } from '../../../../config/firebase';
 import { DeafultNoteBtns } from './DeafultNoteBtns';
 import { TrashNoteBtns } from './TrashNoteBtns';
+import { popupSlice } from '../../../../store/popupSlice';
 
 export const NoteCrad = (props: Note) => {
 	const dispatch = useDispatch();
@@ -17,24 +18,18 @@ export const NoteCrad = (props: Note) => {
 	const diffTime = Math.abs(today.getTime() - createdAt.getTime());
 	const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) - 1;
 
-	const upadateFavHandler = async () => {
-		await updateDoc(doc(notesColection, props.id), { fav: !props.fav });
-	};
-	const upadateTrashHandler = async () => {
-		await updateDoc(doc(notesColection, props.id), { inTrash: true });
-	};
-	// const delateFromDataBaseHanlder = async () => {
-	// 	const noteRef = doc(notesColection, props.id);
-	// 	await deleteDoc(noteRef);
-	// };
-
-	const addToTrashHandler = () => {
-		upadateTrashHandler();
-		dispatch(notesSlice.actions.toogleToTrash(props.id));
-	};
-	const changeFavStateHanlder = () => {
-		upadateFavHandler();
+	const changeFavHandler = async () => {
 		dispatch(notesSlice.actions.changeFavState(props.id));
+		try {
+			await updateDoc(doc(notesColection, props.id), { fav: !props.fav });
+		} catch {
+			dispatch(
+				popupSlice.actions.openPopup({
+					message: 'Failed to marked note as a favorite, try again',
+					success: false,
+				})
+			);
+		}
 	};
 
 	const setDay = (diffDays: number) => {
@@ -66,12 +61,12 @@ export const NoteCrad = (props: Note) => {
 				</div>
 
 				{props.fav && (
-					<button disabled={props.inTrash} onClick={changeFavStateHanlder}>
+					<button disabled={props.inTrash} onClick={changeFavHandler}>
 						<img className='w-4 md:w-5 ' src={favBlue} alt='favourite note icon' />
 					</button>
 				)}
 				{!props.fav && (
-					<button disabled={props.inTrash} onClick={changeFavStateHanlder}>
+					<button disabled={props.inTrash} onClick={changeFavHandler}>
 						<img className='w-4 md:w-5 ' src={favBlack} alt='normal note icon' />{' '}
 					</button>
 				)}

@@ -16,6 +16,7 @@ import { RootState } from './store/store';
 import { Note } from './types/types';
 import { NoteInfoPage } from './pages/mainApp/NoteInfoPage';
 import { TrashPage } from './pages/mainApp/TrashPage';
+import { popupSlice } from './store/popupSlice';
 
 const router = createBrowserRouter([
 	{
@@ -66,7 +67,7 @@ const router = createBrowserRouter([
 		path: '/app/trash',
 		element: (
 			<RequireAuth>
-				<TrashPage/>
+				<TrashPage />
 			</RequireAuth>
 		),
 	},
@@ -74,6 +75,7 @@ const router = createBrowserRouter([
 
 export const App = () => {
 	const isAuth = useSelector((state: RootState) => state.authentication.isAuth);
+	const isOpen = useSelector((state: RootState) => state.popup.isOpen);
 	const dispatch = useDispatch();
 
 	const getNotes = async () => {
@@ -83,7 +85,6 @@ export const App = () => {
 			const data = await getDocs(q);
 			const filteredData = data.docs.map((doc) => ({
 				...(doc.data() as Note),
-				
 			}));
 			console.log(filteredData);
 			dispatch(notesSlice.actions.initNotes(filteredData));
@@ -95,6 +96,15 @@ export const App = () => {
 	useEffect(() => {
 		if (isAuth) getNotes();
 	}, [isAuth]);
+
+	useEffect(() => {
+		if (!isOpen) return;
+		const timer = setTimeout(() => {
+			dispatch(popupSlice.actions.closePopup());
+		}, 2700);
+
+		return () => clearTimeout(timer);
+	}, [isOpen]);
 
 	return <RouterProvider router={router} />;
 };

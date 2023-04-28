@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { dataBase, auth } from '../../../../config/firebase';
 import { notesSlice } from '../../../../store/notesSlice';
+import { popupSlice } from '../../../../store/popupSlice';
 
 interface Props {
 	id: string;
@@ -12,13 +13,21 @@ export const DeafultNoteBtns = ({ id }: Props) => {
 	const dispatch = useDispatch();
 	const notesColection = collection(dataBase, `users/${auth.currentUser?.uid}/notes`);
 
-	const upadateTrashHandler = async () => {
-		await updateDoc(doc(notesColection, id), { inTrash: true });
+	const addToTrashHandler = async () => {
+		try {
+			await updateDoc(doc(notesColection, id), { inTrash: true });
+			dispatch(notesSlice.actions.toogleToTrash(id));
+			dispatch(popupSlice.actions.openPopup({ message: 'Added note to trash', success: true }));
+		} catch {
+			dispatch(
+				popupSlice.actions.openPopup({
+					message: 'Failed to add to trash, try again',
+					success: false,
+				})
+			);
+		}
 	};
-	const addToTrashHandler = () => {
-		upadateTrashHandler();
-		dispatch(notesSlice.actions.toogleToTrash(id));
-	};
+
 	return (
 		<div className='flex'>
 			<Link

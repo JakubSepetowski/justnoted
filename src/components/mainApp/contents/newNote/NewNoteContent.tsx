@@ -9,8 +9,7 @@ import { FormikValues, Note } from '../../../../types/types';
 import { useDispatch } from 'react-redux';
 import { notesSlice } from '../../../../store/notesSlice';
 import { v4 as uuid } from 'uuid';
-
-
+import { popupSlice } from '../../../../store/popupSlice';
 
 export const NewNoteContent = () => {
 	const dispatch = useDispatch();
@@ -31,20 +30,8 @@ export const NewNoteContent = () => {
 
 	const notesColection = collection(dataBase, `users/${auth.currentUser?.uid}/notes`);
 	const onAddNote = async (values: FormikValues, id: string) => {
-		await setDoc(doc(notesColection, id), {
-			id,
-			title: values.title,
-			note: values.note,
-			category: values.category,
-			date: values.date,
-			createdAt: currentDate,
-			fav: values.fav,
-			callendar: values.calendar,
-			inTrash: false,
-			editatedDate: null,
-		});
-		dispatch(
-			notesSlice.actions.addToNotes({
+		try {
+			await setDoc(doc(notesColection, id), {
 				id,
 				title: values.title,
 				note: values.note,
@@ -52,11 +39,38 @@ export const NewNoteContent = () => {
 				date: values.date,
 				createdAt: currentDate,
 				fav: values.fav,
-				calendar: values.calendar,
+				callendar: values.calendar,
 				inTrash: false,
 				editatedDate: null,
-			})
-		);
+			});
+			dispatch(
+				notesSlice.actions.addToNotes({
+					id,
+					title: values.title,
+					note: values.note,
+					category: values.category,
+					date: values.date,
+					createdAt: currentDate,
+					fav: values.fav,
+					calendar: values.calendar,
+					inTrash: false,
+					editatedDate: null,
+				})
+			);
+			dispatch(
+				popupSlice.actions.openPopup({
+					message: 'Note has been added',
+					success: true,
+				})
+			);
+		} catch {
+			dispatch(
+				popupSlice.actions.openPopup({
+					message: 'Filed to add note, try again',
+					success: false,
+				})
+			);
+		}
 	};
 
 	return (
