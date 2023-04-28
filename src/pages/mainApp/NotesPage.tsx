@@ -4,7 +4,7 @@ import { NotesContent } from '../../components/mainApp/contents/notes/NotesConte
 export const NotesPage = () => {
 	return (
 		<Container>
-			<NotesContent />
+			<NotesContent isTrashSite={false} />
 		</Container>
 	);
 };

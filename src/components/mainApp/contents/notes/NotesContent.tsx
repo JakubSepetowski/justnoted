@@ -7,17 +7,19 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { Paginate } from './Paginate';
 import { Sorting, SortingOptions } from '../../../../types/types';
-import { notesSlice } from '../../../../store/notesSlice';
-import { doc, collection, getDocs, updateDoc } from 'firebase/firestore';
-import { dataBase, auth } from '../../../../config/firebase';
+import { DeafultBtns } from './DeafultNotesContentBtns';
+import { DeleteAllBtn } from './DeleteAllBtn';
 
-export const NotesContent = () => {
-	const disptach = useDispatch();
+interface Props {
+	isTrashSite: boolean;
+}
+
+export const NotesContent = ({ isTrashSite }: Props) => {
 	const notes = useSelector((state: RootState) => state.notes.notes);
 
-	const notesColection = collection(dataBase, `users/${auth.currentUser?.uid}/notes`);
+	let trashedNotes = notes.filter((note) => note.inTrash === false);
+	if (isTrashSite) trashedNotes = notes.filter((note) => note.inTrash === true);
 
-	const trashedNotes = notes.filter((note) => note.inTrash === false);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [notesPerPage] = useState(4);
 
@@ -31,27 +33,27 @@ export const NotesContent = () => {
 	const sorting = (sortBy: string) => {
 		switch (sortBy) {
 			case Sorting.category: {
-				const filteredNotes = notes.filter(
+				const sortedNotes = trashedNotes.filter(
 					(note) =>
 						note.title.toLocaleLowerCase().includes(searchTerm) &&
 						(selectedNoteCategory === '' || note.category === selectedNoteCategory)
 				);
-				return filteredNotes;
+				return sortedNotes;
 			}
 			case Sorting.fav: {
-				const filteredNotes = notes.filter(
+				const sortedNotes = trashedNotes.filter(
 					(note) => note.title.toLocaleLowerCase().includes(searchTerm) && note.fav === true
 				);
-				return filteredNotes;
+				return sortedNotes;
 			}
 			case Sorting.calendar: {
-				const filteredNotes = notes.filter(
+				const sortedNotes = trashedNotes.filter(
 					(note) => note.title.toLocaleLowerCase().includes(searchTerm) && note.calendar === true
 				);
-				return filteredNotes;
+				return sortedNotes;
 			}
 			case Sorting.latest: {
-				const sortedNotes = [...notes].sort((noteA, noteB) => {
+				const sortedNotes = [...trashedNotes].sort((noteA, noteB) => {
 					const dateA = new Date(noteA.createdAt);
 					const dateB = new Date(noteB.createdAt);
 					return dateB.getTime() - dateA.getTime();
@@ -59,7 +61,7 @@ export const NotesContent = () => {
 				return sortedNotes.filter((note) => note.title.toLocaleLowerCase().includes(searchTerm));
 			}
 			case Sorting.oldest: {
-				const sortedNotes = [...notes].sort((noteA, noteB) => {
+				const sortedNotes = [...trashedNotes].sort((noteA, noteB) => {
 					const dateA = new Date(noteA.createdAt);
 					const dateB = new Date(noteB.createdAt);
 					return dateA.getTime() - dateB.getTime();
@@ -68,10 +70,10 @@ export const NotesContent = () => {
 			}
 
 			default:
-				const filteredNotes = notes.filter((note) =>
+				const sortedNotes = trashedNotes.filter((note) =>
 					note.title.toLocaleLowerCase().includes(searchTerm)
 				);
-				return filteredNotes;
+				return sortedNotes;
 		}
 	};
 
@@ -129,17 +131,17 @@ export const NotesContent = () => {
 		}
 	};
 
-	const trashAllHandler = () => {
-		disptach(notesSlice.actions.trashAll());
-		notes.forEach(async (note) => {
-			await updateDoc(doc(notesColection, note.id), { inTrash: true });
-		});
-	};
 	return (
 		<ContentWrapper hasHeader={false}>
 			<div className=' h-full flex flex-col '>
 				<div className='md:h-1/6  pt-8 md:pt-0 md:p-0  w-full flex flex-col md:flex-row items-center md:justify-around '>
-					<h2 className='font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl'>Your Notes</h2>
+					{isTrashSite && (
+						<h2 className='font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl'>Your Trash</h2>
+					)}
+					{!isTrashSite && (
+						<h2 className='font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl'>Your Notes</h2>
+					)}
+
 					<div className='flex flex-col md:flex-row w-full md:w-auto text-sm lg:text-base'>
 						<input
 							onChange={filterByTitleHandler}
@@ -159,27 +161,17 @@ export const NotesContent = () => {
 							<option value={SortingOptions.home}>Home</option>
 							<option value={SortingOptions.shopping}>Shopping</option>
 						</select>
-						<div className=' flex mt-2 md:mt-0 '>
-							<Link
-								to='/app/new'
-								className='p-1 md:w-auto lg:w-32 w-full md:mr-2 bg-blue-700 text-white rounded-l-md md:rounded-md flex  justify-center items-center'>
-								Add new
-							</Link>
-							<button
-								onClick={trashAllHandler}
-								className='p-1 md:w-auto lg:w-32 w-full border rounded-r-md md:rounded-md'>
-								Trash all
-							</button>
-						</div>
+						{!isTrashSite && <DeafultBtns />}
+						{isTrashSite && <DeleteAllBtn />}
 					</div>
 				</div>
 				<div className='h-4/6 md:h-5/6 w-full flex flex-col justify-between'>
 					<div className=' h-full flex flex-col md:flex-row justify-center md:items-center flex-wrap gap-5 overflow-scroll noscroll '>
-						{notes.length === 0 && <Empty />}
-						{notes.length > 0 && trashedNotes.length === 0 && <Empty />}
-						{notes.length > 0 && filteredNotes.length === 0 && <p>Nothing found for your query</p>}
+						{trashedNotes.length === 0 && <Empty isTrash={isTrashSite} />}
+						{trashedNotes.length > 0 && filteredNotes.length === 0 && <p>Nothing found for your query</p>}
 						{currentNotes.map(
 							(note) =>
+								!isTrashSite &&
 								!note.inTrash && (
 									<NoteCrad
 										key={note.id}
@@ -191,6 +183,25 @@ export const NotesContent = () => {
 										id={note.id}
 										fav={note.fav}
 										calendar={note.calendar}
+										inTrash={false}
+									/>
+								)
+						)}
+						{currentNotes.map(
+							(note) =>
+								isTrashSite &&
+								note.inTrash && (
+									<NoteCrad
+										key={note.id}
+										title={note.title}
+										category={note.category}
+										note={note.note}
+										date={note.date}
+										createdAt={note.createdAt}
+										id={note.id}
+										fav={note.fav}
+										calendar={note.calendar}
+										inTrash={true}
 									/>
 								)
 						)}

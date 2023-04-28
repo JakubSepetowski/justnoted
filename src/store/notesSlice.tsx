@@ -24,6 +24,9 @@ export const notesSlice = createSlice({
 			const id = actions.payload;
 			state.notes = state.notes.filter((note) => note.id !== id);
 		},
+		deleteAllTrashedNote(state) {
+			state.notes = state.notes.filter((note) => note.inTrash !== true);
+		},
 		toogleToTrash(state, actions: IdActions) {
 			const id = actions.payload;
 			state.notes = state.notes.map((note) => {

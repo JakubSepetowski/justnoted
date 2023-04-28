@@ -6,6 +6,8 @@ import { useDispatch } from 'react-redux';
 import { notesSlice } from '../../../../store/notesSlice';
 import { collection, updateDoc, doc, deleteDoc } from 'firebase/firestore';
 import { dataBase, auth } from '../../../../config/firebase';
+import { DeafultNoteBtns } from './DeafultNoteBtns';
+import { TrashNoteBtns } from './TrashNoteBtns';
 
 export const NoteCrad = (props: Note) => {
 	const dispatch = useDispatch();
@@ -64,12 +66,12 @@ export const NoteCrad = (props: Note) => {
 				</div>
 
 				{props.fav && (
-					<button onClick={changeFavStateHanlder}>
+					<button disabled={props.inTrash} onClick={changeFavStateHanlder}>
 						<img className='w-4 md:w-5 ' src={favBlue} alt='favourite note icon' />
 					</button>
 				)}
 				{!props.fav && (
-					<button onClick={changeFavStateHanlder}>
+					<button disabled={props.inTrash} onClick={changeFavStateHanlder}>
 						<img className='w-4 md:w-5 ' src={favBlack} alt='normal note icon' />{' '}
 					</button>
 				)}
@@ -79,19 +81,8 @@ export const NoteCrad = (props: Note) => {
 				<p>{props.note}</p>
 			</div>
 			<div className='flex mt-3 justify-between items-center'>
-				<div className='flex'>
-					<Link
-						to={`/app/notes/note/${props.id}`}
-						className='bg-blue-700 text-white p-1 pl-2 pr-2 rounded-md min-w-0 flex justify-center items-center'>
-						Details
-					</Link>
-
-					<button
-						onClick={addToTrashHandler}
-						className='ml-2 border  p-1 rounded-md min-w-0 pl-2 pr-2'>
-						Add to trash
-					</button>
-				</div>
+				{!props.inTrash && <DeafultNoteBtns id={props.id} />}
+				{props.inTrash && <TrashNoteBtns id={props.id} />}
 				<p className='text-xs text-gray-400'>{daysAgo}</p>
 			</div>
 		</div>
