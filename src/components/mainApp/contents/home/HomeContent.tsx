@@ -6,7 +6,7 @@ export const HomeContent = () => {
 	const isFetched = useSelector((state: RootState) => state.notes.isFetched);
 	return (
 		<ContentWrapper hasHeader={true}>
-			<div className=' h-full bg-red-700 '>{!isFetched && <p>Loading plase wait...</p>}</div>
+			<div className=' h-full w-full'>{!isFetched && <p>Loading plase wait...</p>}</div>
 		</ContentWrapper>
 	);
 };

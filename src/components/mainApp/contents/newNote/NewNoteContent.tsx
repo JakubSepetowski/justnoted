@@ -2,14 +2,15 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import { ContentWrapper } from '../../common/ContentWrapper';
 import writing from '../../../../assets/lotties/writing.json';
 import { Field, Formik, Form } from 'formik';
-import { collection, addDoc, doc, setDoc } from 'firebase/firestore';
+import { collection, doc, setDoc } from 'firebase/firestore';
 import * as Yup from 'yup';
 import { auth, dataBase } from '../../../../config/firebase';
-import { FormikValues, Note } from '../../../../types/types';
+import { FormikValues } from '../../../../types/types';
 import { useDispatch } from 'react-redux';
 import { notesSlice } from '../../../../store/notesSlice';
 import { v4 as uuid } from 'uuid';
 import { popupSlice } from '../../../../store/popupSlice';
+import { H2 } from '../../common/H2';
 
 export const NewNoteContent = () => {
 	const dispatch = useDispatch();
@@ -105,10 +106,8 @@ export const NewNoteContent = () => {
 					<ContentWrapper hasHeader={false}>
 						<div className=' h-full flex flex-col md:flex-row justify-center items-center lg:justify-between  overflow-hidden'>
 							<Form className='w-full md:w-1/2 text-sm md:text-base '>
-								<h2 className='mb-4 font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl'>
-									Add new!
-								</h2>
-								<div className='flex flex-col'>
+								<H2 title='Add new!' />
+								<div className='flex flex-col mt-4'>
 									<label
 										className={`font-semibold ${
 											formik.touched.title && formik.errors.title ? 'text-red-500' : ''

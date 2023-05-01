@@ -9,6 +9,12 @@ export interface NewUserData {
 	password: string;
 	repeatPassword: string;
 }
+export interface LocalStorage {
+	name: string;
+	email: string;
+	photoURL: string;
+	uid: string;
+}
 export interface FormikValues {
 	title: string;
 	note: string;

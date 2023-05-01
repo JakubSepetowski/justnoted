@@ -9,13 +9,14 @@ import { Sorting, SortingOptions } from '../../../../types/types';
 import { DeafultNotesContentBtns } from './DeafultNotesContentBtns';
 import { DeleteAllBtn } from './DeleteAllBtn';
 import { popupSlice } from '../../../../store/popupSlice';
+import { H2 } from '../../common/H2';
 
 interface Props {
 	isTrashSite: boolean;
 }
 
 export const NotesContent = ({ isTrashSite }: Props) => {
-	const dispatch= useDispatch()
+	const dispatch = useDispatch();
 	const notes = useSelector((state: RootState) => state.notes.notes);
 
 	let trashedNotes = notes.filter((note) => note.inTrash === false);
@@ -172,7 +173,6 @@ export const NotesContent = ({ isTrashSite }: Props) => {
 						success: true,
 					})
 				);
-
 		}
 	};
 
@@ -180,12 +180,8 @@ export const NotesContent = ({ isTrashSite }: Props) => {
 		<ContentWrapper hasHeader={false}>
 			<div className=' h-full flex flex-col '>
 				<div className='md:h-1/6  pt-8 md:pt-0 md:p-0  w-full flex flex-col md:flex-row items-center md:justify-around '>
-					{isTrashSite && (
-						<h2 className='font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl'>Your Trash</h2>
-					)}
-					{!isTrashSite && (
-						<h2 className='font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl'>Your Notes</h2>
-					)}
+					{isTrashSite && <H2 title='Your Trash' />}
+					{!isTrashSite && <H2 title='Your Notes' />}
 
 					<div className='flex flex-col md:flex-row w-full md:w-auto text-sm lg:text-base'>
 						<input
@@ -213,7 +209,9 @@ export const NotesContent = ({ isTrashSite }: Props) => {
 				<div className='h-4/6 md:h-5/6 w-full flex flex-col justify-between'>
 					<div className=' h-full flex flex-col md:flex-row justify-center md:items-center flex-wrap gap-5 overflow-scroll noscroll '>
 						{trashedNotes.length === 0 && <Empty isTrash={isTrashSite} />}
-						{trashedNotes.length > 0 && filteredNotes.length === 0 && <p>Nothing found for your query</p>}
+						{trashedNotes.length > 0 && filteredNotes.length === 0 && (
+							<p>Nothing found for your query</p>
+						)}
 						{currentNotes.map(
 							(note) =>
 								!isTrashSite &&

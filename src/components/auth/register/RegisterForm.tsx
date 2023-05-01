@@ -26,7 +26,16 @@ export const RegisterForm = () => {
 							'https://icons.iconarchive.com/icons/papirus-team/papirus-status/256/avatar-default-icon.png',
 					});
 				}
-				localStorage.setItem('user', JSON.stringify(auth.currentUser));
+				localStorage.setItem(
+					'user',
+					JSON.stringify({
+						name: values.fname,
+						email: values.email,
+						uid: res.user.uid,
+						photoURL: res.user.photoURL,
+						
+					})
+				);
 				dispatch(authSlice.actions.setIsAuth());
 			}
 		} catch (err) {
@@ -48,7 +57,16 @@ export const RegisterForm = () => {
 			const res = await signInWithPopup(auth, googleProvider);
 			if (res) {
 				setErrorMg('');
-				localStorage.setItem('user', JSON.stringify(res.user));
+				localStorage.setItem(
+					'user',
+					JSON.stringify({
+						name: res.user.displayName,
+						email: res.user.email,
+						uid: res.user.uid,
+						photoURL: res.user.photoURL,
+						
+					})
+				);
 				dispatch(authSlice.actions.setIsAuth());
 			}
 		} catch (err) {

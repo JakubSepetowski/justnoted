@@ -18,7 +18,16 @@ export const LoginForm = () => {
 		try {
 			const res = await signInWithEmailAndPassword(auth, values.email, values.password);
 			setErrorMg('');
-			localStorage.setItem('user', JSON.stringify(res.user));
+			localStorage.setItem(
+				'user',
+				JSON.stringify({
+					name: res.user.displayName,
+					email: res.user.email,
+					photoURL: res.user.photoURL,
+					uid: res.user.uid,
+				
+				})
+			);
 			dispatch(authSlice.actions.setIsAuth());
 		} catch (err) {
 			let message = '';
@@ -42,7 +51,16 @@ export const LoginForm = () => {
 			const res = await signInWithPopup(auth, googleProvider);
 			if (res) {
 				setErrorMg('');
-				localStorage.setItem('user', JSON.stringify(res.user));
+				localStorage.setItem(
+					'user',
+					JSON.stringify({
+						name: res.user.displayName,
+						email: res.user.email,
+						uid: res.user.uid,
+						photoURL: res.user.photoURL,
+						
+					})
+				);
 				dispatch(authSlice.actions.setIsAuth());
 			}
 		} catch (err) {

@@ -10,13 +10,14 @@ import { useDispatch } from 'react-redux';
 import { notesSlice } from './store/notesSlice';
 import { query, collection, getDocs } from 'firebase/firestore';
 import { useEffect } from 'react';
-import { dataBase } from './config/firebase';
+import { auth, dataBase } from './config/firebase';
 import { useSelector } from 'react-redux';
 import { RootState } from './store/store';
-import { Note } from './types/types';
+import { LocalStorage, Note } from './types/types';
 import { NoteInfoPage } from './pages/mainApp/NoteInfoPage';
 import { TrashPage } from './pages/mainApp/TrashPage';
 import { popupSlice } from './store/popupSlice';
+import { ProfilePage } from './pages/mainApp/ProfilePage';
 
 const router = createBrowserRouter([
 	{
@@ -71,6 +72,14 @@ const router = createBrowserRouter([
 			</RequireAuth>
 		),
 	},
+	{
+		path: '/app/profile',
+		element: (
+			<RequireAuth>
+				<ProfilePage />
+			</RequireAuth>
+		),
+	},
 ]);
 
 export const App = () => {
@@ -79,7 +88,8 @@ export const App = () => {
 	const dispatch = useDispatch();
 
 	const getNotes = async () => {
-		const user = JSON.parse(localStorage.getItem('user')!);
+		const user: LocalStorage = JSON.parse(localStorage.getItem('user')!);
+
 		try {
 			const q = query(collection(dataBase, `users/${user.uid}/notes`));
 			const data = await getDocs(q);
