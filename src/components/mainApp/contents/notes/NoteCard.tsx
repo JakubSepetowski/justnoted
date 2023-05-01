@@ -14,7 +14,7 @@ export const NoteCrad = (props: Note) => {
 	const dispatch = useDispatch();
 	const notesColection = collection(dataBase, `users/${auth.currentUser?.uid}/notes`);
 	const today = new Date();
-	const createdAt = new Date(`${props.createdAt}T00:00:00`);
+	const createdAt = new Date(props.createdAt);
 	const diffTime = Math.abs(today.getTime() - createdAt.getTime());
 	const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) - 1;
 

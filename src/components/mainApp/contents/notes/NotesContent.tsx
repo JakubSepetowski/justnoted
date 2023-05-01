@@ -138,7 +138,7 @@ export const NotesContent = ({ isTrashSite }: Props) => {
 				setCurrentSortingCategory(Sorting.calendar);
 				dispatch(
 					popupSlice.actions.openPopup({
-						message: 'Showing only saved in callendar',
+						message: 'Showing only saved in calendar',
 						success: true,
 					})
 				);
@@ -185,12 +185,14 @@ export const NotesContent = ({ isTrashSite }: Props) => {
 
 					<div className='flex flex-col md:flex-row w-full md:w-auto text-sm lg:text-base'>
 						<input
+							disabled={trashedNotes.length === 0}
 							onChange={filterByTitleHandler}
 							placeholder='Search notes by title'
 							className='w-full p-1 mt-2 md:mt-0 md:mr-2 md:w-32 lg:w-52 rounded-md'
 							type='text'
 						/>
 						<select
+							disabled={trashedNotes.length === 0}
 							onChange={filterByCategoryHandler}
 							className='w-full p-1 md:w-24 lg:w-36 mt-2 md:mt-0 md:mr-4 lg:mr-8 rounded-md'
 							name='filter'>
