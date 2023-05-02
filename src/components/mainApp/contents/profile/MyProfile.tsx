@@ -8,10 +8,9 @@ import { useDispatch } from 'react-redux';
 import { popupSlice } from '../../../../store/popupSlice';
 import { storage } from '../../../../config/firebase';
 import { ref, uploadBytes, list, getDownloadURL } from 'firebase/storage';
-import camera from '../../../../assets/svg/camera.svg';
-
-import * as Yup from 'yup';
 import { Spinner } from '../../common/Spinner';
+import camera from '../../../../assets/svg/camera.svg';
+import * as Yup from 'yup';
 
 export const MyProfile = () => {
 	const user: LocalStorage = JSON.parse(localStorage.getItem('user')!);
@@ -136,7 +135,7 @@ export const MyProfile = () => {
 	return (
 		<div className='mt-16'>
 			<H2 title='My Profile' />
-			<div className='mt-4 w-full h-auto p-2 border rounded-lg flex flex-col justify-center items-center md:flex-row '>
+			<div className='mt-4 w-full h-auto p-2 md:p-4 border rounded-lg flex flex-col justify-center items-center md:flex-row '>
 				<div className='relative flex flex-col justify-center items-center'>
 					<img
 						className='w-20 h-20 md:w-24 md:h-24 rounded-full'
@@ -179,7 +178,7 @@ export const MyProfile = () => {
 								type='text'
 								id='fname'
 							/>
-							<p className='text-xs text-red-500 mt-1'>{formik.errors.fname}</p>
+							<p className='text-xs text-red-400 mt-1'>{formik.errors.fname}</p>
 						</form>
 					)}
 				</div>
@@ -188,13 +187,17 @@ export const MyProfile = () => {
 						<button
 							disabled={!(formik.dirty && formik.isValid)}
 							onClick={saveChangesHandler}
-							className={` text-white rounded-lg p-1 pl-4 pr-4 mr-2 transition-colors duration-200 ${
-								!(formik.dirty && formik.isValid) ? 'bg-neutral-500' : 'bg-blue-700'
+							className={` text-white rounded-lg p-1 pl-4 pr-4 mr-2 transition-colors duration-200  ${
+								!(formik.dirty && formik.isValid) ? 'bg-neutral-500' : 'bg-blue-700 duration-200 transition-colors hover:bg-blue-600 '
 							}`}>
 							Save
 						</button>
 					)}
-					<button onClick={toggleEditHandler} className=' border rounded-lg p-1 pl-4 pr-4'>
+					<button
+						onClick={toggleEditHandler}
+						className={`border rounded-lg p-1 pl-4 pr-4 duration-200 transition-colors  hover:text-white ${
+							isEditting ? 'hover:bg-red-600' : 'hover:bg-blue-700'
+						}`}>
 						{isEditting ? 'Cancel' : 'Edit'}
 					</button>
 				</div>

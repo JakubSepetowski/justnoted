@@ -18,6 +18,13 @@ body {
 	-webkit-box-shadow: none;
 	transition: background-color 5000s ease-in-out 0s;
 }
+.registerInputs--white:-webkit-autofill,
+.registerInputs--white:-webkit-autofill:hover,
+.registerInputs--white:-webkit-autofill:focus {
+	
+	-webkit-text-fill-color: white;
+	
+}
 .active {
 	position: relative;
 }

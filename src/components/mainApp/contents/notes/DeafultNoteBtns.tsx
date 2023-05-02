@@ -32,11 +32,13 @@ export const DeafultNoteBtns = ({ id }: Props) => {
 		<div className='flex'>
 			<Link
 				to={`/app/notes/note/${id}`}
-				className='bg-blue-700 text-white p-1 pl-2 pr-2 rounded-md min-w-0 flex justify-center items-center'>
+				className='bg-blue-700 text-white p-1 pl-2 pr-2 rounded-md min-w-0 flex justify-center items-center duration-200 transition-colors hover:bg-blue-600'>
 				Details
 			</Link>
 
-			<button onClick={addToTrashHandler} className='ml-2 border  p-1 rounded-md min-w-0 pl-2 pr-2'>
+			<button
+				onClick={addToTrashHandler}
+				className='ml-2 border  p-1 rounded-md min-w-0 pl-2 pr-2 bg-transparent hover:bg-neutral-200 duration-200 transition-colors'>
 				Add to trash
 			</button>
 		</div>

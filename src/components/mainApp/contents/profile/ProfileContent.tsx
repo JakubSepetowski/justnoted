@@ -1,5 +1,5 @@
 import { ContentWrapper } from '../../common/ContentWrapper';
-import { AccountManagment } from './AccountManagment';
+import { DeleteAccount  } from './DeleteAccount ';
 import { Security } from './Security';
 import { Theme } from './Theme';
 import { MyProfile } from './MyProfile';
@@ -7,11 +7,11 @@ import { MyProfile } from './MyProfile';
 export const ProfileContent = () => {
 	return (
 		<ContentWrapper hasHeader={false}>
-			<div className='w-full h-full overflow-y-auto'>
+			<div className='w-full h-full overflow-y-auto noscroll'>
 				<MyProfile />
 				<Theme />
 				<Security />
-				<AccountManagment />
+				<DeleteAccount  />
 			</div>
 		</ContentWrapper>
 	);

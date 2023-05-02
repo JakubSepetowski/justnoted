@@ -49,13 +49,13 @@ export const TrashNoteBtns = ({ id }: Props) => {
 		<div className='flex'>
 			<button
 				onClick={deleteNoteHandler}
-				className='bg-blue-700 text-white p-1 pl-2 pr-2 rounded-md min-w-0 flex justify-center items-center'>
+				className='bg-blue-700 text-white p-1 pl-2 pr-2 rounded-md min-w-0 flex justify-center items-center duration-200 transition-colors hover:bg-blue-600'>
 				Delete
 			</button>
 
 			<button
 				onClick={removeFromTrashHandler}
-				className='ml-2 border  p-1 rounded-md min-w-0 pl-2 pr-2'>
+				className='ml-2 border  p-1 rounded-md min-w-0 pl-2 pr-2 bg-transparent hover:bg-neutral-200 duration-200 transition-colors'>
 				Undo
 			</button>
 		</div>

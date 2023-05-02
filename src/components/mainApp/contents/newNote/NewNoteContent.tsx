@@ -19,8 +19,19 @@ export const NewNoteContent = () => {
 	const month = date.getMonth() + 1;
 	const year = date.getFullYear();
 	let currentDate: string;
-	if (month < 10) currentDate = `${year}-0${month}-${day}`;
-	else currentDate = `${year}-${month}-${day}`;
+	switch (true) {
+		case month < 10 && day >= 10:
+			currentDate = `${year}-0${month}-${day}`;
+			break;
+		case month >= 10 && day < 10:
+			currentDate = `${year}-${month}-0${day}`;
+			break;
+		case month < 10 && day < 10:
+			currentDate = `${year}-0${month}-0${day}`;
+			break;
+		default:
+			currentDate = `${year}-${month}-${day}`;
+	}
 
 	const categories = ['shopping', 'home'];
 	const categoryOptions = categories.map((product, key) => (
@@ -189,12 +200,12 @@ export const NewNoteContent = () => {
 								<div className='mt-4 md:mt-8'>
 									<button
 										type='submit'
-										className='w-24 md:w-32 text-white bg-blue-700 rounded-md p-1 md:p-2'>
+										className='w-24 md:w-32 text-white bg-blue-700 rounded-md p-1 md:p-2 duration-200 transition-colors hover:bg-blue-600 '>
 										Add
 									</button>
 									<button
 										type='reset'
-										className='ml-4 md:ml-6 w-24 md:w-32 text-white bg-neutral-500 rounded-md p-1 md:p-2'>
+										className='ml-4 md:ml-6 w-24 md:w-32 text-white bg-neutral-500 rounded-md p-1 md:p-2 duration-200 transition-colors hover:bg-neutral-400 '>
 										Clear
 									</button>
 								</div>
