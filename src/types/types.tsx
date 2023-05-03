@@ -39,6 +39,11 @@ export interface InitActions {
 export interface AddActions {
 	payload: Note;
 }
+export interface Quote {
+	author: string;
+	category: string;
+	quote: string;
+}
 export interface PaginateProps {
 	notesPerPage: number;
 	totalNotes: number;

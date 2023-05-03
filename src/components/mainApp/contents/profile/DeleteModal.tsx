@@ -8,10 +8,11 @@ import {
 	signOut,
 } from 'firebase/auth';
 import { useEffect, useState } from 'react';
-import { auth } from '../../../../config/firebase';
+import { auth, dataBase } from '../../../../config/firebase';
 import { useNavigateOnLogout } from '../../../../hooks/useNavigateOnLogout';
 import { useDispatch } from 'react-redux';
 import { authSlice } from '../../../../store/authSlice';
+import { collection, doc, deleteDoc } from 'firebase/firestore';
 
 interface Props {
 	onCloseModal: () => void;
@@ -26,7 +27,7 @@ interface Values {
 export const DeleteModal = ({ onCloseModal }: Props) => {
 	useNavigateOnLogout();
 	const dispatch = useDispatch();
-	const user: LocalStorage = JSON.parse(localStorage.getItem('user')!);
+	const localUser: LocalStorage = JSON.parse(localStorage.getItem('user')!);
 	const [isSending, setIsSending] = useState(false);
 	const [isDeleted, setIsDeleted] = useState(false);
 	const [errorMgs, setErrorMgs] = useState('');

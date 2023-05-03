@@ -142,7 +142,7 @@ export const MyProfile = () => {
 						src={user.photoURL}
 						alt='profile image'
 					/>
-					{isSending && <Spinner />}
+					{isSending && <Spinner isAbsolute={true} />}
 
 					<label
 						htmlFor='file'
@@ -188,7 +188,9 @@ export const MyProfile = () => {
 							disabled={!(formik.dirty && formik.isValid)}
 							onClick={saveChangesHandler}
 							className={` text-white rounded-lg p-1 pl-4 pr-4 mr-2 transition-colors duration-200  ${
-								!(formik.dirty && formik.isValid) ? 'bg-neutral-500' : 'bg-blue-700 duration-200 transition-colors hover:bg-blue-600 '
+								!(formik.dirty && formik.isValid)
+									? 'bg-neutral-500'
+									: 'bg-blue-700 duration-200 transition-colors hover:bg-blue-600 '
 							}`}>
 							Save
 						</button>
@@ -198,7 +200,7 @@ export const MyProfile = () => {
 						className={`border rounded-lg p-1 pl-4 pr-4 duration-200 transition-colors  hover:text-white ${
 							isEditting ? 'hover:bg-red-600' : 'hover:bg-blue-700'
 						}`}>
-						{isEditting ? 'Cancel' : 'Edit'}
+						{isEditting ? 'Cancel' : 'Change name'}
 					</button>
 				</div>
 			</div>

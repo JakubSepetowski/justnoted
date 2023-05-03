@@ -2,7 +2,7 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import { ContentWrapper } from '../../common/ContentWrapper';
 import writing from '../../../../assets/lotties/writing.json';
 import { Field, Formik, Form } from 'formik';
-import { collection, doc, setDoc } from 'firebase/firestore';
+import { collection, doc, setDoc, updateDoc } from 'firebase/firestore';
 import * as Yup from 'yup';
 import { auth, dataBase } from '../../../../config/firebase';
 import { FormikValues } from '../../../../types/types';
@@ -40,8 +40,8 @@ export const NewNoteContent = () => {
 		</option>
 	));
 
-	const notesColection = collection(dataBase, `users/${auth.currentUser?.uid}/notes`);
 	const onAddNote = async (values: FormikValues, id: string) => {
+		const notesColection = collection(dataBase, `users/${auth.currentUser?.uid}/notes`);
 		try {
 			await setDoc(doc(notesColection, id), {
 				id,

@@ -53,7 +53,7 @@ export const NoteCrad = (props: Note) => {
 	return (
 		<div
 			id={props.id}
-			className='p-4 shadow-md rounded-md bg-white w-full flex flex-col justify-between text-sm md:text-base h-2/3 md:h-2/5 md:w-2/5  lg:w-5/12  '>
+			className='p-4 shadow-md rounded-md bg-white w-full flex flex-col justify-between text-sm md:text-base h-2/3 md:h-2/5 md:w-2/5  lg:w-5/12 transition-transform duration-200 hover:scale-[1.02] '>
 			<div className='flex justify-between items-center border-b pb-3 '>
 				<div>
 					<h3>{props.title}</h3>

@@ -1,6 +1,15 @@
+import spinner from '../../../assets/svg/spinner.svg';
 
-import spinner from "../../../assets/svg/spinner.svg"
-
-export const Spinner = () => {
-    return <img className="absolute animate-spin  w-10 h-10 " src={spinner} alt="laoding icon" />
+interface Props {
+	isAbsolute: boolean;
 }
+
+export const Spinner = ({ isAbsolute }: Props) => {
+	return (
+		<img
+			className={`animate-spin  w-10 h-10 ${isAbsolute ? 'absolute' : ''}`}
+			src={spinner}
+			alt='laoding icon'
+		/>
+	);
+};
