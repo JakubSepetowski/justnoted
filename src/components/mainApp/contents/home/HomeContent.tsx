@@ -1,23 +1,39 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store/store';
 import { ContentWrapper } from '../../common/ContentWrapper';
+import { Card } from './Card';
+import important from '../../../../assets/svg/important.svg';
+import pinned from '../../../../assets/svg/pinned.svg';
+import { HomeNotesNames } from '../../../../types/types';
+import { Quote } from './Quote';
 import { Clock } from './Clock';
-import { Important } from './Important';
-import { QucikNote } from './QucikNote';
-import { Habbits } from './Habbits';
 
 export const HomeContent = () => {
-	const isFetched = useSelector((state: RootState) => state.notes.isFetched);
+	const imortantNoteDesc = useSelector((state: RootState) => state.homeNotes.importantNoteDesc);
+	const quickNoteDesc = useSelector((state: RootState) => state.homeNotes.quickNoteDesc);
+
 	return (
 		<ContentWrapper hasHeader={true}>
-			<div className=' h-full w-full flex flex-col md:justify-center overflow-y-auto noscroll gap-5 '>
+			<div className='h-full w-full flex flex-col md:justify-center overflow-y-auto noscroll gap-5 '>
 				<div className='w-full flex flex-col md:flex-row gap-5 h-full md:h-[42%]'>
-					<Clock />
-					<Important />
+					<Quote />
+					<Card
+						name={HomeNotesNames.importantNote}
+						desc={imortantNoteDesc}
+						title='Keep this in mind'
+						info='Add here important things'
+						img={important}
+					/>
 				</div>
 				<div className='w-full flex flex-col md:flex-row gap-5 h-full md:h-[42%] items-end'>
-					<QucikNote />
-					<Habbits />
+					<Card
+						name={HomeNotesNames.quickNote}
+						desc={quickNoteDesc}
+						title='Quick note'
+						info='Add before you forget'
+						img={pinned}
+					/>
+					<Clock />
 				</div>
 			</div>
 		</ContentWrapper>

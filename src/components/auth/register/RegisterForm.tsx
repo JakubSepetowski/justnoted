@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import { auth, googleProvider } from '../../../config/firebase';
+import { auth, dataBase, googleProvider } from '../../../config/firebase';
 import { createUserWithEmailAndPassword, signInWithPopup, updateProfile } from 'firebase/auth';
 import { authSlice } from '../../../store/authSlice';
 import { useDispatch } from 'react-redux';
@@ -8,12 +8,29 @@ import logo from '../../../assets/imgs/googleLogo.webp';
 import { useNavigateOnAuth } from '../../../hooks/useNavigateOnAuth';
 import { useState } from 'react';
 import { NewUserData, RegisterErrMsgs } from '../../../types/types';
+import { collection, setDoc, doc } from 'firebase/firestore';
+import { v4 as uuid } from 'uuid';
 
 export const RegisterForm = () => {
 	const [errorMg, setErrorMg] = useState('');
 	const [isSending, setIsSending] = useState(false);
 	useNavigateOnAuth();
 	const dispatch = useDispatch();
+
+	const createCollection = async () => {
+		const homeNotesColection = collection(dataBase, `users/${auth.currentUser?.uid}/home`);
+		const id = uuid();
+		try {
+			await setDoc(doc(homeNotesColection, id), {
+				id,
+				importantNoteDesc: '',
+				quicktNoteDesc: '',
+			});
+		} catch (err) {
+			throw new Error();
+		}
+	};
+
 	const singByEmailHandler = async (values: NewUserData) => {
 		try {
 			const res = await createUserWithEmailAndPassword(auth, values.email, values.password);
@@ -33,9 +50,9 @@ export const RegisterForm = () => {
 						email: values.email,
 						uid: res.user.uid,
 						photoURL: res.user.photoURL,
-						
 					})
 				);
+				createCollection();
 				dispatch(authSlice.actions.setIsAuth());
 			}
 		} catch (err) {
@@ -64,9 +81,9 @@ export const RegisterForm = () => {
 						email: res.user.email,
 						uid: res.user.uid,
 						photoURL: res.user.photoURL,
-						
 					})
 				);
+				createCollection();
 				dispatch(authSlice.actions.setIsAuth());
 			}
 		} catch (err) {
@@ -86,18 +103,21 @@ export const RegisterForm = () => {
 			fname: Yup.string()
 				.required('Name is required')
 				.min(3, 'Name must be at least 3 characters long')
-				.max(15, 'Name can not be longer than 10 chars'),
-			email: Yup.string().required('Email is required').email('Email must be valid'),
+				.max(15, 'Name can not be longer than 10 chars')
+				.trim(),
+			email: Yup.string().required('Email is required').email('Email must be valid').trim(),
 			password: Yup.string()
 				.required('Password is required')
 				.min(6, 'Password must be at least 6 characters long')
 				.matches(/[A-Z]/, 'Password mast have at least one uppercase char')
 				.matches(/[a-z]/, 'Password mast have at least one lowercase char')
-				.matches(/[0-9]/, 'Password mast have at least one number'),
+				.matches(/[0-9]/, 'Password mast have at least one number')
+				.trim(),
 
 			repeatPassword: Yup.string()
 				.required('Please confirm your password')
-				.oneOf([Yup.ref('password')], 'Passwords must match'),
+				.oneOf([Yup.ref('password')], 'Passwords must match')
+				.trim(),
 		}),
 		onSubmit: (values, { resetForm }) => {
 			setIsSending(true);

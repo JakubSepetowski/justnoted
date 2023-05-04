@@ -38,14 +38,14 @@ export const Quote = () => {
 	}, []);
 
 	return (
-		<>
+		<div className=' bg-white rounded-md h-64  md:h-full overflow-y-auto p-4 border flex flex-col justify-center items-center w-full md:w-3/5 text-center text-xs md:text-sm  '>
 			{quoteAuthor && quoteText && (
-				<div className='text-center text-xs md:text-sm '>
+				<>
 					<p className='italic'>"{quoteText}"</p>
 					<p className='font-semibold mt-2'>by {quoteAuthor}</p>
-				</div>
+				</>
 			)}
-			{!quoteAuthor && !quoteText && <Spinner isAbsolute={false}/>}
-		</>
+			{!quoteAuthor && !quoteText && <Spinner isAbsolute={false} />}
+		</div>
 	);
 };

@@ -96,8 +96,8 @@ export const NewNoteContent = () => {
 				fav: false,
 			}}
 			validationSchema={Yup.object({
-				title: Yup.string().required('Title is required').max(20, 'Title is to long'),
-				note: Yup.string().max(200, 'Note is to long').required('Note is required'),
+				title: Yup.string().required('Title is required').max(20, 'Title is to long').trim(),
+				note: Yup.string().max(200, 'Note is to long').required('Note is required').trim(),
 				category: Yup.string()
 					.required('Please select a category')
 					.oneOf(categories, 'Please select a category from list'),

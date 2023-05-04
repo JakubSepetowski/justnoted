@@ -23,6 +23,12 @@ export interface FormikValues {
 	calendar: boolean;
 	fav: boolean;
 }
+export interface getData extends HomeNotes, Note {}
+export interface HomeNotes {
+	id: string;
+	importantNoteDesc: string;
+	quicktNoteDesc: string;
+}
 export interface Note extends FormikValues {
 	createdAt: string;
 	inTrash?: boolean;
@@ -75,4 +81,8 @@ export enum SortingOptions {
 	calendar = '4',
 	home = 'home',
 	shopping = 'shopping',
+}
+export enum HomeNotesNames{
+ importantNote="importantNote",
+ quickNote="quickNote"
 }

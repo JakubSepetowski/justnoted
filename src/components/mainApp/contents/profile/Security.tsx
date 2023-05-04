@@ -26,7 +26,7 @@ export const Security = () => {
 			if (user) await reauthenticateWithCredential(user, credential);
 			updateUserPassword(val.newPassword);
 			setHasError(false);
-		} catch (err) {
+		} catch{
 			setHasError(true);
 			setIsSending(false);
 			dispatch(
@@ -48,7 +48,7 @@ export const Security = () => {
 					success: true,
 				})
 			);
-		} catch (err) {
+		} catch{
 			dispatch(
 				popupSlice.actions.openPopup({
 					message: 'Failed to update password, try again',
@@ -70,14 +70,16 @@ export const Security = () => {
 				.min(6, 'Password must be at least 6 characters long')
 				.matches(/[A-Z]/, 'Password mast have at least one uppercase char')
 				.matches(/[a-z]/, 'Password mast have at least one lowercase char')
-				.matches(/[0-9]/, 'Password mast have at least one number'),
+				.matches(/[0-9]/, 'Password mast have at least one number')
+				.trim(),
 			newPassword: Yup.string()
 				.required('New password is required')
 				.min(6, 'New password must be at least 6 characters long')
 				.matches(/[A-Z]/, 'New password mast have at least one uppercase char')
 				.matches(/[a-z]/, 'New password mast have at least one lowercase char')
 				.matches(/[0-9]/, 'New password mast have at least one number')
-				.notOneOf([Yup.ref('password')], 'New password must be different'),
+				.notOneOf([Yup.ref('password')], 'New password must be different')
+				.trim(),
 		}),
 		onSubmit: (values, { resetForm }) => {
 			reauthenticateUser(values);

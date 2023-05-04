@@ -13,11 +13,12 @@ import { useEffect } from 'react';
 import { auth, dataBase } from './config/firebase';
 import { useSelector } from 'react-redux';
 import { RootState } from './store/store';
-import { LocalStorage, Note } from './types/types';
+import { getData, LocalStorage } from './types/types';
 import { NoteInfoPage } from './pages/mainApp/NoteInfoPage';
 import { TrashPage } from './pages/mainApp/TrashPage';
 import { popupSlice } from './store/popupSlice';
 import { ProfilePage } from './pages/mainApp/ProfilePage';
+import { homeNotesSlice } from './store/homeNotesSlice';
 
 const router = createBrowserRouter([
 	{
@@ -83,28 +84,58 @@ const router = createBrowserRouter([
 ]);
 
 export const App = () => {
+	const dispatch = useDispatch();
 	const isAuth = useSelector((state: RootState) => state.authentication.isAuth);
 	const isOpen = useSelector((state: RootState) => state.popup.isOpen);
-	const dispatch = useDispatch();
 
-	const getNotes = async () => {
-		const user: LocalStorage = JSON.parse(localStorage.getItem('user')!);
+	const user: LocalStorage = JSON.parse(localStorage.getItem('user')!);
 
+	async function getData<T extends getData>(pathName: string) {
 		try {
-			const q = query(collection(dataBase, `users/${user.uid}/notes`));
+			const q = query(collection(dataBase, `users/${user.uid}/${pathName}`));
 			const data = await getDocs(q);
 			const filteredData = data.docs.map((doc) => ({
-				...(doc.data() as Note),
+				...(doc.data() as T),
 			}));
-			console.log(filteredData);
-			dispatch(notesSlice.actions.initNotes(filteredData));
-		} catch (err) {
-			console.log(err);
+
+			if (pathName === 'notes') dispatch(notesSlice.actions.initNotes(filteredData));
+			if (pathName === 'home') {
+				const imortantNote = filteredData[0].importantNoteDesc;
+				const quickNote = filteredData[0].quicktNoteDesc;
+
+				dispatch(
+					homeNotesSlice.actions.initState({
+						id: filteredData[0].id,
+						importantDesc: imortantNote,
+						quickDesc: quickNote,
+					})
+				);
+			}
+		} catch {
+			if (pathName === 'notes') dispatch(notesSlice.actions.initNotes([]));
+			if (pathName === 'home') {
+				dispatch(
+					homeNotesSlice.actions.initState({
+						id: '',
+						importantDesc: '',
+						quickDesc: '',
+					})
+				);
+			}
+			dispatch(
+				popupSlice.actions.openPopup({
+					message: 'Filed to get data, try to reload page',
+					success: false,
+				})
+			);
 		}
-	};
+	}
 
 	useEffect(() => {
-		if (isAuth) getNotes();
+		if (isAuth) {
+			getData('notes');
+			getData('home');
+		}
 	}, [isAuth]);
 
 	useEffect(() => {

@@ -25,7 +25,6 @@ export const LoginForm = () => {
 					email: res.user.email,
 					photoURL: res.user.photoURL,
 					uid: res.user.uid,
-				
 				})
 			);
 			dispatch(authSlice.actions.setIsAuth());
@@ -58,7 +57,6 @@ export const LoginForm = () => {
 						email: res.user.email,
 						uid: res.user.uid,
 						photoURL: res.user.photoURL,
-						
 					})
 				);
 				dispatch(authSlice.actions.setIsAuth());
@@ -74,13 +72,14 @@ export const LoginForm = () => {
 			password: '',
 		},
 		validationSchema: Yup.object({
-			email: Yup.string().required('Email is required').email('Email must be valid'),
+			email: Yup.string().required('Email is required').email('Email must be valid').trim(),
 			password: Yup.string()
 				.required('Password is required')
 				.min(6, 'Password must be at least 6 characters long')
 				.matches(/[A-Z]/, 'Password mast have at least one uppercase char')
 				.matches(/[a-z]/, 'Password mast have at least one lowercase char')
-				.matches(/[0-9]/, 'Password mast have at least one number'),
+				.matches(/[0-9]/, 'Password mast have at least one number')
+				.trim(),
 		}),
 		onSubmit: (values, { resetForm }) => {
 			setIsSending(true);

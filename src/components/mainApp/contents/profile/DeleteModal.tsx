@@ -56,7 +56,7 @@ export const DeleteModal = ({ onCloseModal }: Props) => {
 			localStorage.removeItem('user');
 			setErrorMgs('');
 			setIsDeleted(true);
-		} catch (err) {
+		} catch{
 			setErrorMgs('Failed to delete account, try again');
 		}
 
@@ -89,7 +89,8 @@ export const DeleteModal = ({ onCloseModal }: Props) => {
 				.min(6, 'Password must be at least 6 characters long')
 				.matches(/[A-Z]/, 'Password mast have at least one uppercase char')
 				.matches(/[a-z]/, 'Password mast have at least one lowercase char')
-				.matches(/[0-9]/, 'Password mast have at least one number'),
+				.matches(/[0-9]/, 'Password mast have at least one number')
+				.trim(),
 			confirm: Yup.string()
 				.required('You must confrim')
 				.matches(/delete account/, 'You must confirm with "delete account"'),
