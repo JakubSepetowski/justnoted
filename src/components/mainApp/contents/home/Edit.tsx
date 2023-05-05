@@ -70,12 +70,12 @@ export const Edit = ({ name, desc, onClose }: Props) => {
 							<div className='mt-3 md:mt-0 flex flex-col w-full md:w-auto md:flex-row'>
 								<button
 									type='submit'
-									className=' text-white bg-blue-700 rounded-md p-1 min-w-[4rem] duration-200 transition-colors hover:bg-blue-600 '>
+									className=' text-white bg-blue-700 rounded-md p-1 pl-2 pr-2 duration-200 transition-colors hover:bg-blue-600 '>
 									Save
 								</button>
 								<button
 									onClick={onClose}
-									className='md:ml-2 mt-2 md:mt-0 text-white bg-neutral-500 rounded-md p-1 min-w-[4rem]  duration-200 transition-colors hover:bg-neutral-400'
+									className='md:ml-2 mt-2 md:mt-0 text-white bg-neutral-500 rounded-md p-1 pl-2 pr-2  duration-200 transition-colors hover:bg-neutral-400'
 									type='button'>
 									Cancel
 								</button>

@@ -19,6 +19,7 @@ import { TrashPage } from './pages/mainApp/TrashPage';
 import { popupSlice } from './store/popupSlice';
 import { ProfilePage } from './pages/mainApp/ProfilePage';
 import { homeNotesSlice } from './store/homeNotesSlice';
+import { CalendarPage } from './pages/mainApp/CalendarPage';
 
 const router = createBrowserRouter([
 	{
@@ -78,6 +79,14 @@ const router = createBrowserRouter([
 		element: (
 			<RequireAuth>
 				<ProfilePage />
+			</RequireAuth>
+		),
+	},
+	{
+		path: '/app/calendar',
+		element: (
+			<RequireAuth>
+				<CalendarPage />
 			</RequireAuth>
 		),
 	},

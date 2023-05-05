@@ -9,6 +9,10 @@ const initialState: InitialNoteState = {
 interface IdActions {
 	payload: string;
 }
+
+interface UpdateActions {
+	payload: Note;
+}
 export const notesSlice = createSlice({
 	name: 'notes',
 	initialState,
@@ -23,6 +27,31 @@ export const notesSlice = createSlice({
 		deleteNote(state, actions) {
 			const id = actions.payload;
 			state.notes = state.notes.filter((note) => note.id !== id);
+		},
+		updateNote(state, actions: UpdateActions) {
+			const id = actions.payload.id;
+			state.notes = state.notes.map((note) => {
+				if (note.id === id) {
+					return {
+						...note,
+						title: actions.payload.title,
+						note: actions.payload.note,
+						category: actions.payload.category,
+						date: actions.payload.date,
+						calendar: actions.payload.calendar,
+						fav: actions.payload.fav,
+						lastTitle: actions.payload.lastTitle,
+						lastNote: actions.payload.lastNote,
+						lastCategory: actions.payload.lastCategory,
+						lastCalendar: actions.payload.lastCalendar,
+						lastDate: actions.payload.lastDate,
+						lastFav: actions.payload.lastFav,
+						editatedDate: actions.payload.editatedDate,
+					};
+				} else {
+					return note;
+				}
+			});
 		},
 		deleteAllTrashedNote(state) {
 			state.notes = state.notes.filter((note) => note.inTrash !== true);

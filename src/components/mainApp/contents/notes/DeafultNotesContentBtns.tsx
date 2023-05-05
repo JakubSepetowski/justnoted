@@ -14,6 +14,7 @@ export const DeafultNotesContentBtns = ({ length }: Props) => {
 	const dispatch = useDispatch();
 	const notes = useSelector((state: RootState) => state.notes.notes);
 	const notesColection = collection(dataBase, `users/${auth.currentUser?.uid}/notes`);
+	
 
 	const trashAllHandler = () => {
 		try {

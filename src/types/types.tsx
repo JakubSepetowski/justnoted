@@ -34,6 +34,12 @@ export interface Note extends FormikValues {
 	inTrash?: boolean;
 	id: string;
 	editatedDate?: null | string;
+	lastTitle?: null | string;
+	lastNote?: null | string;
+	lastCategory?: null | string;
+	lastFav?: null | boolean;
+	lastDate?: null | string;
+	lastCalendar?: null | boolean;
 }
 export interface InitialNoteState {
 	notes: Note[];
@@ -82,7 +88,7 @@ export enum SortingOptions {
 	home = 'home',
 	shopping = 'shopping',
 }
-export enum HomeNotesNames{
- importantNote="importantNote",
- quickNote="quickNote"
+export enum HomeNotesNames {
+	importantNote = 'importantNote',
+	quickNote = 'quickNote',
 }

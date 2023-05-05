@@ -2,73 +2,44 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import { ContentWrapper } from '../../common/ContentWrapper';
 import writing from '../../../../assets/lotties/writing.json';
 import { Field, Formik, Form } from 'formik';
-import { collection, doc, setDoc, updateDoc } from 'firebase/firestore';
+import { collection, doc, setDoc } from 'firebase/firestore';
 import * as Yup from 'yup';
 import { auth, dataBase } from '../../../../config/firebase';
-import { FormikValues } from '../../../../types/types';
+import { FormikValues, Note } from '../../../../types/types';
 import { useDispatch } from 'react-redux';
 import { notesSlice } from '../../../../store/notesSlice';
 import { v4 as uuid } from 'uuid';
 import { popupSlice } from '../../../../store/popupSlice';
 import { H2 } from '../../common/H2';
+import { categoryOptions, categories } from '../../common/categories';
+import { currentDate } from '../../common/date';
 
 export const NewNoteContent = () => {
 	const dispatch = useDispatch();
-	const date = new Date();
-	const day = date.getDate();
-	const month = date.getMonth() + 1;
-	const year = date.getFullYear();
-	let currentDate: string;
-	switch (true) {
-		case month < 10 && day >= 10:
-			currentDate = `${year}-0${month}-${day}`;
-			break;
-		case month >= 10 && day < 10:
-			currentDate = `${year}-${month}-0${day}`;
-			break;
-		case month < 10 && day < 10:
-			currentDate = `${year}-0${month}-0${day}`;
-			break;
-		default:
-			currentDate = `${year}-${month}-${day}`;
-	}
-
-	const categories = ['shopping', 'home'];
-	const categoryOptions = categories.map((product, key) => (
-		<option value={product} key={key}>
-			{product}
-		</option>
-	));
 
 	const onAddNote = async (values: FormikValues, id: string) => {
 		const notesColection = collection(dataBase, `users/${auth.currentUser?.uid}/notes`);
+		const newNote: Note = {
+			id,
+			title: values.title,
+			note: values.note,
+			category: values.category,
+			date: values.date,
+			createdAt: currentDate,
+			fav: values.fav,
+			calendar: values.calendar,
+			inTrash: false,
+			editatedDate: null,
+			lastTitle: null,
+			lastNote: null,
+			lastCategory: null,
+			lastFav: null,
+			lastDate: null,
+			lastCalendar: null,
+		};
 		try {
-			await setDoc(doc(notesColection, id), {
-				id,
-				title: values.title,
-				note: values.note,
-				category: values.category,
-				date: values.date,
-				createdAt: currentDate,
-				fav: values.fav,
-				callendar: values.calendar,
-				inTrash: false,
-				editatedDate: null,
-			});
-			dispatch(
-				notesSlice.actions.addToNotes({
-					id,
-					title: values.title,
-					note: values.note,
-					category: values.category,
-					date: values.date,
-					createdAt: currentDate,
-					fav: values.fav,
-					calendar: values.calendar,
-					inTrash: false,
-					editatedDate: null,
-				})
-			);
+			await setDoc(doc(notesColection, id), newNote);
+			dispatch(notesSlice.actions.addToNotes(newNote));
 			dispatch(
 				popupSlice.actions.openPopup({
 					message: 'Note has been added',
@@ -96,8 +67,8 @@ export const NewNoteContent = () => {
 				fav: false,
 			}}
 			validationSchema={Yup.object({
-				title: Yup.string().required('Title is required').max(20, 'Title is to long').trim(),
-				note: Yup.string().max(200, 'Note is to long').required('Note is required').trim(),
+				title: Yup.string().required('Title is required').max(20, 'Title is too long').trim(),
+				note: Yup.string().max(200, 'Note is too long').required('Note is required').trim(),
 				category: Yup.string()
 					.required('Please select a category')
 					.oneOf(categories, 'Please select a category from list'),
@@ -145,6 +116,12 @@ export const NewNoteContent = () => {
 										name='note'
 										as='textarea'
 									/>
+									<p
+										className={`self-end mt-1 ${
+											formik.touched.note && formik.values.note.length > 200 ? 'text-red-500' : ''
+										}`}>
+										{formik.values.note.length}/200
+									</p>
 								</div>
 								<div className='flex flex-col mt-2 md:mt-4'>
 									<label
@@ -199,13 +176,18 @@ export const NewNoteContent = () => {
 								</div>
 								<div className='mt-4 md:mt-8'>
 									<button
+										disabled={!(formik.dirty && formik.isValid)}
 										type='submit'
-										className='w-24 md:w-32 text-white bg-blue-700 rounded-md p-1 md:p-2 duration-200 transition-colors hover:bg-blue-600 '>
+										className={`w-24 md:w-32 rounded-md p-1 md:p-2 duration-200 transition-colors text-white ${
+											!(formik.dirty && formik.isValid)
+												? 'bg-neutral-500 '
+												: ' bg-blue-700 hover:bg-blue-600 '
+										}`}>
 										Add
 									</button>
 									<button
 										type='reset'
-										className='ml-4 md:ml-6 w-24 md:w-32 text-white bg-neutral-500 rounded-md p-1 md:p-2 duration-200 transition-colors hover:bg-neutral-400 '>
+										className='ml-4 md:ml-6 w-24 md:w-32 border  p-1 rounded-md  md:p-2 bg-transparent hover:bg-neutral-200 duration-200 transition-colors '>
 										Clear
 									</button>
 								</div>
