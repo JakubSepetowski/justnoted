@@ -1,5 +1,4 @@
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { notePopupSlice } from '../../../../store/slices/notePopupSlice';
 
 interface Props {
