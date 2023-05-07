@@ -9,6 +9,7 @@
 }
 body {
 	background-color: #f6f8fc;
+	font-family: 'Raleway', sans-serif;
 }
 .registerInputs:-webkit-autofill,
 .registerInputs:-webkit-autofill:hover,
@@ -78,4 +79,48 @@ body {
 	100% {
 		text-shadow: 0.25em 0 0 white, 0.5em 0 0 white;
 	}
+}
+
+.blue {
+	background-color: #3b82f6;
+}
+.blue-hover:hover {
+	background-color: #60a5fa;
+}
+
+.indigo {
+	background-color: #6366f1;
+}
+.indigo-hover:hover {
+	background-color: #818cf8;
+}
+.purple {
+	background-color: #a855f7;
+}
+.purple-hover:hover {
+	background-color: #c084fc;
+}
+.green {
+	background-color: #22c55e;
+}
+.green-hover:hover {
+	background-color: #4ade80;
+}
+.red {
+	background-color: #ef4444;
+}
+.red-hover:hover {
+	background-color: #f87171;
+}
+.orange {
+	background-color: #f97316;
+}
+.orange-hover:hover {
+	background-color: #fb923c;
+}
+.yellow {
+	background-color: #eab308;
+}
+.yellow-hover:hover {
+	background-color: #facc15;
 }

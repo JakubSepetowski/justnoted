@@ -20,10 +20,11 @@ export const CalendarNote = ({ title, id, color, note }: Props) => {
 			})
 		);
 	};
+
 	return (
 		<div
 			onClick={openPopupHandler}
-			className={`rounded-md w-full md:w-11/12 md:mx-auto cursor-pointer bg-${color}-500 text-sm duration-200 transition-colors hover:bg-opacity-80 text-white p-2  md:p-1  md:text-xs mt-1`}>
+			className={`rounded-md w-full md:w-11/12 md:mx-auto cursor-pointer ${color} ${color}-hover transition-colors text-sm duration-200  hover:bg-opacity-80 text-white p-2  md:p-1  md:text-xs mt-1`}>
 			<h3 className='overflow-x-auto noscroll'>{title}</h3>
 		</div>
 	);

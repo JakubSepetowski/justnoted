@@ -35,7 +35,7 @@ export const PopupBtn = ({ color, currColor, id }: Props) => {
 	return (
 		<button
 			onClick={changeColorHandler}
-			className={`bg-${color}-500 w-5 h-5 rounded-full flex justify-center items-center`}>
+			className={`${color} ${color}-hover transition-colors duration-200  w-5 h-5 rounded-full flex justify-center items-center`}>
 			{currColor === color && (
 				<img className='w-2/3' src={checkMark} alt='currently selected color'></img>
 			)}

@@ -47,4 +47,12 @@ It is also possible to customize your profile - change your username, profile pi
 The application is currently being refined
 
 ## Screenshots
-image.png
+![home page](../../home.png)
+![login page](../../zdj/Log%20in%20page.png)
+![main app home](../../zdj/mainAppHome.png)
+![notes page](../../zdj/Log%20in%20page%20(3).png)
+![details page](../../zdj/Log%20in%20page%20(4).png)
+![new note](../../zdj/Log%20in%20page%20(11).png)
+![calendar page](../../zdj/Log%20in%20page%20(6).png)
+![trash page](../../zdj/Log%20in%20page%20(8).png)
+![account page](../../zdj/Log%20in%20page%20(9).png)

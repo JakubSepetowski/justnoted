@@ -19,7 +19,7 @@ export const NotePopup = () => {
 	return (
 		<div className='absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] bg-white rounded-md shadow-2xl border  min-h-0 min-w-0 max-w-md flex flex-col items-center overflow-hidden text-sm md:text-base '>
 			<div
-				className={`bg-${currColor}-500 h-12 w-full flex justify-between items-center p-4 text-white`}>
+				className={`${currColor}  h-12 w-full flex justify-between items-center p-4 text-white`}>
 				<p className='font-semibold'>Your note</p>
 				<button onClick={closePopupHandler}>Close</button>
 			</div>
