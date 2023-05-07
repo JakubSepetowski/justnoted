@@ -47,3 +47,4 @@ It is also possible to customize your profile - change your username, profile pi
 The application is currently being refined
 
 ## Screenshots
+image.png
