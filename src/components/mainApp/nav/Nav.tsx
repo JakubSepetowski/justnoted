@@ -2,7 +2,7 @@ import { NavItem } from './NavItem';
 import { auth } from '../../../config/firebase';
 import { signOut } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
-import { authSlice } from '../../../store/authSlice';
+import { authSlice } from '../../../store/slices/authSlice';
 import { useNavigateOnLogout } from '../../../hooks/useNavigateOnLogout';
 import home from '../../../assets/svg/home.svg';
 import notes from '../../../assets/svg/notes.svg';
@@ -38,7 +38,7 @@ const navItems = [
 		icon: cal,
 		path: '/app/calendar',
 	},
-	
+
 	{
 		id: 4,
 		name: 'trash',

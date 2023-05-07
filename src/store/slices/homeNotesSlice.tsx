@@ -21,7 +21,7 @@ const initialState = {
 };
 
 export const homeNotesSlice = createSlice({
-	name: 'quicktNote',
+	name: 'homeNotes',
 	initialState,
 	reducers: {
 		initState(state, actions: InitActions) {

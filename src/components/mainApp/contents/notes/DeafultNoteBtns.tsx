@@ -2,8 +2,8 @@ import { collection, doc, updateDoc } from 'firebase/firestore';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { dataBase, auth } from '../../../../config/firebase';
-import { notesSlice } from '../../../../store/notesSlice';
-import { popupSlice } from '../../../../store/popupSlice';
+import { notesSlice } from '../../../../store/slices/notesSlice';
+import { popupSlice } from '../../../../store/slices/popupSlice';
 
 interface Props {
 	id: string;

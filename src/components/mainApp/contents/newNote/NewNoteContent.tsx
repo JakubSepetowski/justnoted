@@ -7,9 +7,9 @@ import * as Yup from 'yup';
 import { auth, dataBase } from '../../../../config/firebase';
 import { FormikValues, Note } from '../../../../types/types';
 import { useDispatch } from 'react-redux';
-import { notesSlice } from '../../../../store/notesSlice';
+import { notesSlice } from '../../../../store/slices/notesSlice';
 import { v4 as uuid } from 'uuid';
-import { popupSlice } from '../../../../store/popupSlice';
+import { popupSlice } from '../../../../store/slices/popupSlice';
 import { H2 } from '../../common/H2';
 import { categoryOptions, categories } from '../../common/categories';
 import { currentDate } from '../../common/date';
@@ -28,6 +28,7 @@ export const NewNoteContent = () => {
 			createdAt: currentDate,
 			fav: values.fav,
 			calendar: values.calendar,
+			color: 'blue',
 			inTrash: false,
 			editatedDate: null,
 			lastTitle: null,

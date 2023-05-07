@@ -3,12 +3,12 @@ import { Note } from '../../../../types/types';
 import favBlack from '../../../../assets/svg/fav-black.svg';
 import favBlue from '../../../../assets/svg/fav-blue.svg';
 import { useDispatch } from 'react-redux';
-import { notesSlice } from '../../../../store/notesSlice';
+import { notesSlice } from '../../../../store/slices/notesSlice';
 import { collection, updateDoc, doc, deleteDoc } from 'firebase/firestore';
 import { dataBase, auth } from '../../../../config/firebase';
 import { DeafultNoteBtns } from './DeafultNoteBtns';
 import { TrashNoteBtns } from './TrashNoteBtns';
-import { popupSlice } from '../../../../store/popupSlice';
+import { popupSlice } from '../../../../store/slices/popupSlice';
 
 export const NoteCrad = (props: Note) => {
 	const dispatch = useDispatch();

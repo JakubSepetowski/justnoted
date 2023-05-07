@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Quote as QuoteType } from '../../../../types/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../../store/store';
-import { quoteSlice } from '../../../../store/quoteSlice';
+import { quoteSlice } from '../../../../store/slices/quoteSlice';
 import { Spinner } from '../../common/Spinner';
 let initial = true;
 

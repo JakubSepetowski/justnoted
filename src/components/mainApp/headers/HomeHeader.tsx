@@ -5,10 +5,10 @@ const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
 export const HomeHeader = () => {
 	const date = new Date();
 	const dayNumber = date.getDate();
-	const dayName = days[date.getDay() - 1];
+	const dayName = days[date.getDate() - 1];
 	const month = date.toLocaleString('en', { month: 'long' });
 	const year = date.getFullYear();
-	const user:LocalStorage = JSON.parse(localStorage.getItem('user')!);
+	const user: LocalStorage = JSON.parse(localStorage.getItem('user')!);
 
 	return (
 		<HeaderWrapper>

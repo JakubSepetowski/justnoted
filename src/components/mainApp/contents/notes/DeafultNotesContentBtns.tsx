@@ -2,9 +2,9 @@ import { collection, updateDoc, doc } from 'firebase/firestore';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { dataBase, auth } from '../../../../config/firebase';
-import { notesSlice } from '../../../../store/notesSlice';
+import { notesSlice } from '../../../../store/slices/notesSlice';
 import { RootState } from '../../../../store/store';
-import { popupSlice } from '../../../../store/popupSlice';
+import { popupSlice } from '../../../../store/slices/popupSlice';
 
 interface Props {
 	length: number;
@@ -14,7 +14,6 @@ export const DeafultNotesContentBtns = ({ length }: Props) => {
 	const dispatch = useDispatch();
 	const notes = useSelector((state: RootState) => state.notes.notes);
 	const notesColection = collection(dataBase, `users/${auth.currentUser?.uid}/notes`);
-	
 
 	const trashAllHandler = () => {
 		try {

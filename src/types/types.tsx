@@ -33,6 +33,7 @@ export interface Note extends FormikValues {
 	createdAt: string;
 	inTrash?: boolean;
 	id: string;
+	color?:string;
 	editatedDate?: null | string;
 	lastTitle?: null | string;
 	lastNote?: null | string;

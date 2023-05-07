@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { AddActions, InitActions, InitialNoteState, Note } from '../types/types';
+import { AddActions, InitActions, InitialNoteState, Note } from '../../types/types';
 
 const initialState: InitialNoteState = {
 	notes: [],
@@ -12,6 +12,12 @@ interface IdActions {
 
 interface UpdateActions {
 	payload: Note;
+}
+interface ChangeColorActions {
+	payload: {
+		id: string;
+		color: string;
+	};
 }
 export const notesSlice = createSlice({
 	name: 'notes',
@@ -81,6 +87,19 @@ export const notesSlice = createSlice({
 					return {
 						...note,
 						fav: !note.fav,
+					};
+				} else {
+					return note;
+				}
+			});
+		},
+		changeColor(state, actions: ChangeColorActions) {
+			const id = actions.payload.id;
+			state.notes = state.notes.map((note) => {
+				if (note.id === id) {
+					return {
+						...note,
+						color: actions.payload.color,
 					};
 				} else {
 					return note;

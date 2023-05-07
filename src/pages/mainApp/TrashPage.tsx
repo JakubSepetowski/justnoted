@@ -1,8 +1,9 @@
 import { Container } from '../../components/mainApp/Container';
 import { NotesContent } from '../../components/mainApp/contents/notes/NotesContent';
-import { TrashContent } from '../../components/mainApp/contents/trash/TrashContent';
+import { useCloseNotePopup } from '../../hooks/useCloseNotePopup';
 
 export const TrashPage = () => {
+	useCloseNotePopup();
 	return (
 		<Container>
 			<NotesContent isTrashSite={true} />

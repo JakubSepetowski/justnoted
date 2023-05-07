@@ -23,6 +23,12 @@ body {
 .registerInputs--white:-webkit-autofill:focus {
 	-webkit-text-fill-color: white;
 }
+::-webkit-calendar-picker-indicator {
+	cursor: pointer;
+}
+.calendar::-webkit-calendar-picker-indicator {
+	filter: invert(100%);
+}
 
 .active {
 	position: relative;

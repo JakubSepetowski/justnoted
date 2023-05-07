@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import { updateProfile } from 'firebase/auth';
 import { LocalStorage } from '../../../../types/types';
 import { useDispatch } from 'react-redux';
-import { popupSlice } from '../../../../store/popupSlice';
+import { popupSlice } from '../../../../store/slices/popupSlice';
 import { storage } from '../../../../config/firebase';
 import { ref, uploadBytes, list, getDownloadURL } from 'firebase/storage';
 import { Spinner } from '../../common/Spinner';

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { authSlice } from '../store/authSlice';
+import { authSlice } from '../store/slices/authSlice';
 
 export const useCheckLocal = () => {
 	const navigate = useNavigate();

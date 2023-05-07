@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { authSlice } from './authSlice';
-import { notesSlice } from './notesSlice';
-import { popupSlice } from './popupSlice';
-import { quoteSlice } from './quoteSlice';
-import { homeNotesSlice } from './homeNotesSlice';
+import { authSlice } from './slices/authSlice';
+import { notesSlice } from './slices/notesSlice';
+import { popupSlice } from './slices/popupSlice';
+import { quoteSlice } from './slices/quoteSlice';
+import { homeNotesSlice } from './slices/homeNotesSlice';
+import { notePopupSlice } from './slices/notePopupSlice';
 
 export const store = configureStore({
 	reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
 		popup: popupSlice.reducer,
 		quote: quoteSlice.reducer,
 		homeNotes: homeNotesSlice.reducer,
+		notesPopup: notePopupSlice.reducer,
 	},
 });
 

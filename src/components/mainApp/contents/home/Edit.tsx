@@ -5,8 +5,8 @@ import { updateDoc, doc, collection } from 'firebase/firestore';
 import { dataBase, auth } from '../../../../config/firebase';
 import * as Yup from 'yup';
 import { RootState } from '../../../../store/store';
-import { homeNotesSlice } from '../../../../store/homeNotesSlice';
-import { popupSlice } from '../../../../store/popupSlice';
+import { homeNotesSlice } from '../../../../store/slices/homeNotesSlice';
+import { popupSlice } from '../../../../store/slices/popupSlice';
 import { HomeNotesNames } from '../../../../types/types';
 interface Props {
 	name: string;
@@ -79,7 +79,6 @@ export const Edit = ({ name, desc, onClose }: Props) => {
 									type='button'>
 									Cancel
 								</button>
-								
 							</div>
 							<div className='flex flex-row self-end md:self-auto '>
 								{formik.errors.edit && <p className=' text-red-400'>{formik.errors.edit}</p>}

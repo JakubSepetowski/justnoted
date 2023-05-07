@@ -1,7 +1,7 @@
 import { useFormik } from 'formik';
 import { auth, dataBase, googleProvider } from '../../../config/firebase';
 import { createUserWithEmailAndPassword, signInWithPopup, updateProfile } from 'firebase/auth';
-import { authSlice } from '../../../store/authSlice';
+import { authSlice } from '../../../store/slices/authSlice';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import logo from '../../../assets/imgs/googleLogo.webp';

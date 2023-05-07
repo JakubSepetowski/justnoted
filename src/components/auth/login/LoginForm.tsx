@@ -6,7 +6,7 @@ import logo from '../../../assets/imgs/googleLogo.webp';
 import { useNavigateOnAuth } from '../../../hooks/useNavigateOnAuth';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { authSlice } from '../../../store/authSlice';
+import { authSlice } from '../../../store/slices/authSlice';
 import { LoginUserData, LoginErrMsgs } from '../../../types/types';
 
 export const LoginForm = () => {

@@ -8,7 +8,7 @@ import { Paginate } from './Paginate';
 import { Sorting, SortingOptions } from '../../../../types/types';
 import { DeafultNotesContentBtns } from './DeafultNotesContentBtns';
 import { DeleteAllBtn } from './DeleteAllBtn';
-import { popupSlice } from '../../../../store/popupSlice';
+import { popupSlice } from '../../../../store/slices/popupSlice';
 import { H2 } from '../../common/H2';
 
 interface Props {

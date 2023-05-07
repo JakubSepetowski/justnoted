@@ -1,12 +1,12 @@
-import { Link } from 'react-router-dom';
 import { ContentWrapper } from '../../common/ContentWrapper';
-import { H2 } from '../../common/H2';
-import { MobileCalendar } from './MobileCalendar';
+import { MobileCalendar } from './mobile/MobileCalendar';
+import { BigCalendar } from './big/BigCalendar';
 
 export const CalendarContent = () => {
 	return (
 		<ContentWrapper hasHeader={false}>
 			<MobileCalendar />
+			<BigCalendar />
 		</ContentWrapper>
 	);
 };

@@ -6,7 +6,7 @@ import { EmailAuthProvider } from 'firebase/auth';
 import { reauthenticateWithCredential, updatePassword } from 'firebase/auth';
 import { LocalStorage } from '../../../../types/types';
 import { useState } from 'react';
-import { popupSlice } from '../../../../store/popupSlice';
+import { popupSlice } from '../../../../store/slices/popupSlice';
 import { useDispatch } from 'react-redux';
 
 interface Values {
@@ -26,7 +26,7 @@ export const Security = () => {
 			if (user) await reauthenticateWithCredential(user, credential);
 			updateUserPassword(val.newPassword);
 			setHasError(false);
-		} catch{
+		} catch {
 			setHasError(true);
 			setIsSending(false);
 			dispatch(
@@ -48,7 +48,7 @@ export const Security = () => {
 					success: true,
 				})
 			);
-		} catch{
+		} catch {
 			dispatch(
 				popupSlice.actions.openPopup({
 					message: 'Failed to update password, try again',

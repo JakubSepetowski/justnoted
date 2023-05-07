@@ -12,7 +12,7 @@ interface MessageActions {
 	};
 }
 export const popupSlice = createSlice({
-	name: 'auth',
+	name: 'popup',
 	initialState,
 	reducers: {
 		openPopup(state, actions: MessageActions) {

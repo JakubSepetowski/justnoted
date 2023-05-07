@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 import { auth, dataBase } from '../../../../config/firebase';
 import { useNavigateOnLogout } from '../../../../hooks/useNavigateOnLogout';
 import { useDispatch } from 'react-redux';
-import { authSlice } from '../../../../store/authSlice';
+import { authSlice } from '../../../../store/slices/authSlice';
 import { collection, doc, deleteDoc } from 'firebase/firestore';
 
 interface Props {
@@ -56,7 +56,7 @@ export const DeleteModal = ({ onCloseModal }: Props) => {
 			localStorage.removeItem('user');
 			setErrorMgs('');
 			setIsDeleted(true);
-		} catch{
+		} catch {
 			setErrorMgs('Failed to delete account, try again');
 		}
 

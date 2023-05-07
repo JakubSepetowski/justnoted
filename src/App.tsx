@@ -7,7 +7,7 @@ import { NotesPage } from './pages/mainApp/NotesPage';
 import { RequireAuth } from './components/auth/RequireAuth';
 import { NewNotePage } from './pages/mainApp/NewNotePage';
 import { useDispatch } from 'react-redux';
-import { notesSlice } from './store/notesSlice';
+import { notesSlice } from './store/slices/notesSlice';
 import { query, collection, getDocs } from 'firebase/firestore';
 import { useEffect } from 'react';
 import { auth, dataBase } from './config/firebase';
@@ -16,9 +16,9 @@ import { RootState } from './store/store';
 import { getData, LocalStorage } from './types/types';
 import { NoteInfoPage } from './pages/mainApp/NoteInfoPage';
 import { TrashPage } from './pages/mainApp/TrashPage';
-import { popupSlice } from './store/popupSlice';
+import { popupSlice } from './store/slices/popupSlice';
 import { ProfilePage } from './pages/mainApp/ProfilePage';
-import { homeNotesSlice } from './store/homeNotesSlice';
+import { homeNotesSlice } from './store/slices/homeNotesSlice';
 import { CalendarPage } from './pages/mainApp/CalendarPage';
 
 const router = createBrowserRouter([

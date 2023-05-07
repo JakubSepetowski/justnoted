@@ -6,8 +6,8 @@ import { currentDate } from '../../common/date';
 import { collection, updateDoc, doc } from 'firebase/firestore';
 import { dataBase, auth } from '../../../../config/firebase';
 import { useDispatch } from 'react-redux';
-import { notesSlice } from '../../../../store/notesSlice';
-import { popupSlice } from '../../../../store/popupSlice';
+import { notesSlice } from '../../../../store/slices/notesSlice';
+import { popupSlice } from '../../../../store/slices/popupSlice';
 import { useState } from 'react';
 
 interface Props {
