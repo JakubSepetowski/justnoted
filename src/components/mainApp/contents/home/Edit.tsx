@@ -11,6 +11,7 @@ import { HomeNotesNames } from '../../../../types/types';
 interface Props {
 	name: string;
 	desc: string;
+
 	onClose: () => void;
 }
 

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import edit from '../../../../assets/svg/edit.svg';
 import help from '../../../../assets/svg/info.svg';
+import { AnimatePresence, motion } from 'framer-motion';
+import { opacityAnim } from '../../../../animations/animations';
 
 interface Props {
 	title: string;
@@ -36,12 +38,19 @@ export const CardHeader = ({ title, titleImg, info, onClick }: Props) => {
 					<img className='w-8 h-8' src={help} alt='help icon' />
 				</div>
 			</div>
-
-			{isHovering && (
-				<div className='absolute top-0 left-0 bg-blue-700 text-white w-full md:w-2/3 p-4 z-20 rounded-md shadow-md'>
-					<p>{info}</p>
-				</div>
-			)}
+			<AnimatePresence>
+				{isHovering && (
+					<motion.div
+						key={title + 'info'}
+						variants={opacityAnim}
+						initial='hidden'
+						animate='visible'
+						exit='exit'
+						className='absolute top-0 left-0 bg-blue-700 text-white w-full md:w-2/3 p-4 z-20 rounded-md shadow-md'>
+						<p>{info}</p>
+					</motion.div>
+				)}
+			</AnimatePresence>
 		</div>
 	);
 };

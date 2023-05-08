@@ -1,8 +1,8 @@
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import { FormikValues, Note } from '../../../../types/types';
-import { categories, categoryOptions } from '../../common/categories';
-import { currentDate } from '../../common/date';
+import { categories, categoryOptions } from '../../../common/categories';
+import { currentDate } from '../../../common/date';
 import { collection, updateDoc, doc } from 'firebase/firestore';
 import { dataBase, auth } from '../../../../config/firebase';
 import { useDispatch } from 'react-redux';
@@ -183,7 +183,7 @@ export const EditNote = ({ noteInfo, onCloseEdit }: Props) => {
 										className={`w-24 rounded-md p-1  duration-200 transition-colors text-white ${
 											!(formik.dirty && formik.isValid)
 												? 'bg-neutral-500 '
-												: ' bg-blue-700 hover:bg-blue-600 '
+												: `${noteInfo.color} hover:scale-[1.02] transition-transform `
 										}`}>
 										Save
 									</button>

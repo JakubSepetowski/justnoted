@@ -9,6 +9,10 @@ import { dataBase, auth } from '../../../../config/firebase';
 import { DeafultNoteBtns } from './DeafultNoteBtns';
 import { TrashNoteBtns } from './TrashNoteBtns';
 import { popupSlice } from '../../../../store/slices/popupSlice';
+import { motion } from 'framer-motion';
+import { noteAnim } from '../../../../animations/animations';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
 export const NoteCrad = (props: Note) => {
 	const dispatch = useDispatch();
@@ -51,18 +55,23 @@ export const NoteCrad = (props: Note) => {
 
 	const daysAgo = setDay(diffDays);
 	return (
-		<div
-			id={props.id}
-			className='p-4 shadow-md rounded-md bg-white w-full flex flex-col justify-between text-sm md:text-base h-2/3 md:h-2/5 md:w-2/5  lg:w-5/12 transition-transform duration-200 hover:scale-[1.02] '>
+		<motion.div
+			layout
+			variants={noteAnim}
+			initial='hidden'
+			animate='visible'
+			exit='exit'
+			key={props.id}
+			className='p-4 shadow-md rounded-md bg-white w-full flex flex-col justify-between text-sm md:text-base h-2/3 md:h-[48%] md:w-2/5  lg:w-5/12  '>
 			<div className='flex justify-between items-center border-b pb-3 '>
 				<div>
-					<h3>{props.title}</h3>
+					<h3 className={`${props.color}-text blueText font-semibold`}>{props.title}</h3>
 					<h4>{props.category}</h4>
 				</div>
 
 				{props.fav && (
 					<button disabled={props.inTrash} onClick={changeFavHandler}>
-						<img className='w-4 md:w-5 ' src={favBlue} alt='favourite note icon' />
+						<FontAwesomeIcon className={`${props.color}-text text-lg md:text-xl`} icon={faHeart} />
 					</button>
 				)}
 				{!props.fav && (
@@ -76,10 +85,10 @@ export const NoteCrad = (props: Note) => {
 				<p>{props.note}</p>
 			</div>
 			<div className='flex mt-3 justify-between items-center'>
-				{!props.inTrash && <DeafultNoteBtns id={props.id} />}
-				{props.inTrash && <TrashNoteBtns id={props.id} />}
+				{!props.inTrash && <DeafultNoteBtns id={props.id} color={props.color!} />}
+				{props.inTrash && <TrashNoteBtns id={props.id} color={props.color!} />}
 				<p className='text-xs text-gray-400'>{daysAgo}</p>
 			</div>
-		</div>
+		</motion.div>
 	);
 };

@@ -5,6 +5,7 @@ import { RootState } from '../../../../../store/store';
 import { useEffect, useState } from 'react';
 import { Note } from '../../../../../types/types';
 import { CalendarNote } from '../CalendarNote';
+import { AnimatePresence } from 'framer-motion';
 
 interface Props {
 	day: Dayjs;
@@ -21,8 +22,6 @@ export const Day = ({ day, rowIdx }: Props) => {
 		setDayNotes(filteredNotes);
 	}, [notes, day]);
 
-	
-
 	return (
 		<div
 			className={`border border-gray-300 flex flex-col overflow-y-auto noscroll  ${
@@ -35,21 +34,23 @@ export const Day = ({ day, rowIdx }: Props) => {
 				<p
 					className={`text-sm p-1 mt-1 text-center ${
 						day.format('DD-MM-YY') === dayjs().format('DD-MM-YY')
-							? 'bg-blue-700 text-white w-7 rounded-full'
+							? 'transition-colors duration-200 bg-blue-700 text-white w-7 rounded-full'
 							: ''
 					}`}>
 					{day.format('DD')}
 				</p>
 			</div>
-			{dayNotes.map((note) => (
-				<CalendarNote
-					key={note.id}
-					id={note.id}
-					title={note.title}
-					color={note.color!}
-					note={note.note}
-				/>
-			))}
+			<AnimatePresence>
+				{dayNotes.map((note) => (
+					<CalendarNote
+						key={note.id}
+						id={note.id}
+						title={note.title}
+						color={note.color!}
+						note={note.note}
+					/>
+				))}
+			</AnimatePresence>
 		</div>
 	);
 };

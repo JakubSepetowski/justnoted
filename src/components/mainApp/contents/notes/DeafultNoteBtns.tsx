@@ -7,9 +7,10 @@ import { popupSlice } from '../../../../store/slices/popupSlice';
 
 interface Props {
 	id: string;
+	color:string
 }
 
-export const DeafultNoteBtns = ({ id }: Props) => {
+export const DeafultNoteBtns = ({ id,color }: Props) => {
 	const dispatch = useDispatch();
 	const notesColection = collection(dataBase, `users/${auth.currentUser?.uid}/notes`);
 
@@ -27,12 +28,13 @@ export const DeafultNoteBtns = ({ id }: Props) => {
 			);
 		}
 	};
+	
 
 	return (
 		<div className='flex'>
 			<Link
 				to={`/app/notes/note/${id}`}
-				className='bg-blue-700 text-white p-1 pl-2 pr-2 rounded-md min-w-0 flex justify-center items-center duration-200 transition-colors hover:bg-blue-600'>
+				className={`${color} hover:scale-[1.02] text-white p-1 pl-2 pr-2 rounded-md min-w-0 flex justify-center items-center duration-200 transition-transform`}>
 				Details
 			</Link>
 

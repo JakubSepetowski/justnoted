@@ -5,13 +5,13 @@ import { Day } from './Day';
 import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../store/store';
+import { AnimatePresence } from 'framer-motion';
 
 export const BigCalendar = () => {
 	const [currMonth, setCurrMonth] = useState(getMonth());
 	const [monthIndex, setMonthIndex] = useState(dayjs().month());
 	const notes = useSelector((state: RootState) => state.notes.notes);
-	
-	
+
 	useEffect(() => {
 		setCurrMonth(getMonth(monthIndex));
 	}, [monthIndex]);
@@ -25,7 +25,7 @@ export const BigCalendar = () => {
 		setMonthIndex(dayjs().month());
 	};
 	return (
-		<div className='hidden md:flex flex-col h-full w-full bg-white rounded-md shadow-md overflow-hidden'>
+		<div className='flex flex-col h-full w-full bg-white rounded-md shadow-md overflow-hidden'>
 			<BigCalendarHeader
 				monthIndex={monthIndex}
 				onNextOrPrevMonthHandler={nextOrPrevMonthHandler}
@@ -35,7 +35,7 @@ export const BigCalendar = () => {
 				{currMonth.map((row, i) => (
 					<Fragment key={i}>
 						{row.map((day, idx) => (
-							<Day key={idx} day={day} rowIdx={i} />
+							<Day key={idx} day={day} rowIdx={i}  />
 						))}
 					</Fragment>
 				))}

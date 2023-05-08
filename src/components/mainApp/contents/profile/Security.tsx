@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import { H2 } from '../../common/H2';
+import { H2 } from '../../../common/H2';
 import * as Yup from 'yup';
 import { auth } from '../../../../config/firebase';
 import { EmailAuthProvider } from 'firebase/auth';
@@ -8,6 +8,8 @@ import { LocalStorage } from '../../../../types/types';
 import { useState } from 'react';
 import { popupSlice } from '../../../../store/slices/popupSlice';
 import { useDispatch } from 'react-redux';
+import { motion } from 'framer-motion';
+import { fromLeftAnim, opacityAnim } from '../../../../animations/animations';
 
 interface Values {
 	password: string;
@@ -89,8 +91,13 @@ export const Security = () => {
 	});
 	return (
 		<div className='mt-4 md:mt-8'>
-			<H2 title='Change Password' />
-			<form
+			<motion.h3
+				variants={fromLeftAnim}
+				className='font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl'>
+				Change Password
+			</motion.h3>
+			<motion.form
+				variants={opacityAnim}
 				onSubmit={formik.handleSubmit}
 				className='mt-4  w-full p-2 md:p-4 border rounded-lg flex flex-col justify-center  '>
 				<div className='flex flex-col md:w-1/2 md:text-lg'>
@@ -141,7 +148,7 @@ export const Security = () => {
 					} ${isSending ? 'loading' : ''}`}>
 					{isSending ? 'Please wait' : 'Change password'}
 				</button>
-			</form>
+			</motion.form>
 		</div>
 	);
 };

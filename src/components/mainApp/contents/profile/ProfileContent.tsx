@@ -1,4 +1,4 @@
-import { ContentWrapper } from '../../common/ContentWrapper';
+import { ContentWrapper } from '../../../common/ContentWrapper';
 import { DeleteAccount } from './DeleteAccount ';
 import { Security } from './Security';
 import { MyProfile } from './MyProfile';

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { LocalStorage } from '../../../types/types';
+import { LocalStorage } from '../../types/types';
 
 export const UserInfo = () => {
 	const navigate = useNavigate();

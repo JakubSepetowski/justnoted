@@ -18,6 +18,7 @@ It is also possible to customize your profile - change your username, profile pi
 - adding to trash/restoring notakti
 - deleting
 - sort
+- pagination
 - search by name
 - edit history
 - database
@@ -41,6 +42,8 @@ It is also possible to customize your profile - change your username, profile pi
 - Firebase
 - Framer Motion
 - Dayjs
+- React-hook/media-query
+- Fontawsome
 - Vite
 
 ## How to use :computer:

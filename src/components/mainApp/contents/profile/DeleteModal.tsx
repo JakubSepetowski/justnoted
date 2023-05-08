@@ -8,11 +8,11 @@ import {
 	signOut,
 } from 'firebase/auth';
 import { useEffect, useState } from 'react';
-import { auth, dataBase } from '../../../../config/firebase';
+import { auth } from '../../../../config/firebase';
 import { useNavigateOnLogout } from '../../../../hooks/useNavigateOnLogout';
 import { useDispatch } from 'react-redux';
 import { authSlice } from '../../../../store/slices/authSlice';
-import { collection, doc, deleteDoc } from 'firebase/firestore';
+import { motion } from 'framer-motion';
 
 interface Props {
 	onCloseModal: () => void;
@@ -27,7 +27,6 @@ interface Values {
 export const DeleteModal = ({ onCloseModal }: Props) => {
 	useNavigateOnLogout();
 	const dispatch = useDispatch();
-	const localUser: LocalStorage = JSON.parse(localStorage.getItem('user')!);
 	const [isSending, setIsSending] = useState(false);
 	const [isDeleted, setIsDeleted] = useState(false);
 	const [errorMgs, setErrorMgs] = useState('');
@@ -108,7 +107,7 @@ export const DeleteModal = ({ onCloseModal }: Props) => {
 			className='fixed top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] h-screen w-full z-20 bg-black bg-opacity-80 backdrop-blur-md flex justify-center items-center text-white'>
 			<div
 				onClick={stopPropagationHanlder}
-				className=' bg-bgc w-4/5 h-4/6 md:w-1/3 md:h-[55%] z-50 rounded-md shadow-md   flex flex-col overflow-hidden relative'>
+				className=' bg-bgc w-4/5  md:w-1/3 h-min z-50 rounded-md shadow-md   flex flex-col overflow-hidden relative'>
 				<div className='flex w-full items-center justify-between bg-zinc-900   p-4 '>
 					<h3 className=' md:text-lg'>Are you sure to do this? It cannot be undone</h3>
 					<button onClick={closeModalHandler}>X</button>

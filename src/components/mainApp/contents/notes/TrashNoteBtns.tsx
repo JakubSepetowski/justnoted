@@ -5,8 +5,9 @@ import { notesSlice } from '../../../../store/slices/notesSlice';
 import { popupSlice } from '../../../../store/slices/popupSlice';
 interface Props {
 	id: string;
+	color:string
 }
-export const TrashNoteBtns = ({ id }: Props) => {
+export const TrashNoteBtns = ({ id,color }: Props) => {
 	const dispatch = useDispatch();
 	const notesColection = collection(dataBase, `users/${auth.currentUser?.uid}/notes`);
 
@@ -49,7 +50,7 @@ export const TrashNoteBtns = ({ id }: Props) => {
 		<div className='flex'>
 			<button
 				onClick={deleteNoteHandler}
-				className='bg-blue-700 text-white p-1 pl-2 pr-2 rounded-md min-w-0 flex justify-center items-center duration-200 transition-colors hover:bg-blue-600'>
+				className={`${color} hover:scale-[1.02] text-white p-1 pl-2 pr-2 rounded-md min-w-0 flex justify-center items-center duration-200 transition-transform`}>
 				Delete
 			</button>
 

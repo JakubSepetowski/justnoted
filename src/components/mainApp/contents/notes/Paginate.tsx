@@ -1,3 +1,4 @@
+import { useMediaQuery } from '@react-hook/media-query';
 import { PaginateProps } from '../../../../types/types';
 
 export const Paginate = ({
@@ -8,6 +9,7 @@ export const Paginate = ({
 	onPrev,
 	onNext,
 }: PaginateProps) => {
+	const isSmallScreen = useMediaQuery('(max-width: 768px)');
 	const pageNumbers = [];
 
 	const condition = Math.ceil(totalNotes / notesPerPage);
@@ -26,7 +28,7 @@ export const Paginate = ({
 	};
 
 	return (
-		<div className='w-full flex justify-center gap-2 text-sm md:text-base'>
+		<div className='w-full md:mt-6 flex justify-center gap-2 text-sm md:text-base'>
 			<button
 				disabled={currentPage === 1}
 				onClick={prevPageHanlder}
@@ -36,16 +38,43 @@ export const Paginate = ({
 				Prev
 			</button>
 
-			{pageNumbers.map((number) => (
-				<button
-					key={number}
-					onClick={() => paginateHanlder(number)}
-					className={` p-1 pl-2 pr-2  flex justify-center items-center cursor-pointer transition-colors duration-200 hover:bg-blue-700 hover:text-white rounded-md ${
-						currentPage === number ? 'bg-blue-700 text-white' : 'bg-white text-blue-700'
-					}`}>
-					{number}
-				</button>
-			))}
+			{!isSmallScreen &&
+				pageNumbers.map((number) => (
+					<button
+						key={number}
+						onClick={() => paginateHanlder(number)}
+						className={` p-1 pl-2 pr-2  flex justify-center items-center cursor-pointer transition-colors duration-200 hover:bg-blue-700 hover:text-white rounded-md ${
+							currentPage === number ? 'bg-blue-700 text-white' : 'bg-white text-blue-700'
+						}`}>
+						{number}
+					</button>
+				))}
+
+			{isSmallScreen && (
+				<>
+					{currentPage > 1 && (
+						<button
+							onClick={() => paginateHanlder(currentPage - 1)}
+							className={` p-1 pl-2 pr-2  flex justify-center items-center cursor-pointer transition-colors duration-200 hover:bg-blue-700 hover:text-white rounded-md bg-white text-blue-700`}>
+							{currentPage - 1}
+						</button>
+					)}
+
+					<button
+						onClick={() => paginateHanlder(currentPage)}
+						className={` p-1 pl-2 pr-2  flex justify-center items-center cursor-pointer transition-colors duration-200 hover:bg-blue-700 hover:text-white rounded-md bg-blue-700 text-white`}>
+						{currentPage}
+					</button>
+
+					{currentPage < condition && (
+						<button
+							onClick={() => paginateHanlder(currentPage + 1)}
+							className={` p-1 pl-2 pr-2  flex justify-center items-center cursor-pointer transition-colors duration-200 hover:bg-blue-700 hover:text-white rounded-md bg-white text-blue-700`}>
+							{currentPage + 1}
+						</button>
+					)}
+				</>
+			)}
 
 			<button
 				disabled={currentPage === condition}

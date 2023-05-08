@@ -1,12 +1,14 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../store/store';
-import { currentDate } from '../../../common/date';
+import { currentDate } from '../../../../common/date';
 import { CalendarNote } from '../CalendarNote';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { H2 } from '../../../common/H2';
+import { H2 } from '../../../../common/H2';
 import noEdit from '../../../../../assets/lotties/noEdit.json';
 import { Player } from '@lottiefiles/react-lottie-player';
+import { motion } from 'framer-motion';
+import { fromBottomAnim } from '../../../../../animations/animations';
 export const MobileCalendar = () => {
 	const notes = useSelector((state: RootState) => state.notes.notes);
 	const [pickedData, setPikcedData] = useState(currentDate);
@@ -21,7 +23,7 @@ export const MobileCalendar = () => {
 		setPikcedData(e.target.value);
 	};
 	return (
-		<div className='md:hidden w-full h-full flex flex-col justify-center items-center'>
+		<div className=' w-full h-full flex flex-col justify-center items-center'>
 			<H2 title='Your Calendar' />
 			<div
 				className={`bg-white shadow-md rounded-md w-full  flex flex-col mt-4 mb-4 overflow-hidden ${
@@ -57,9 +59,11 @@ export const MobileCalendar = () => {
 					)}
 				</div>
 			</div>
-			<Link to='/app/new' className='w-full text-center bg-blue-700 text-white p-2 rounded-md'>
-				add new note
-			</Link>
+			<motion.div variants={fromBottomAnim} className='w-full flex'>
+				<Link to='/app/new' className='w-full text-center bg-blue-700 text-white p-2 rounded-md'>
+					add new note
+				</Link>
+			</motion.div>
 		</div>
 	);
 };

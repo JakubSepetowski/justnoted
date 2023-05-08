@@ -31,7 +31,7 @@ export const NoteInfo = ({ noteInfo, onOpenEdit }: Props) => {
 			<div className='flex'>
 				<Link
 					to='/app/notes'
-					className='bg-blue-700 text-white p-1 pl-2 pr-2 rounded-md min-w-0 flex justify-center items-center duration-200 transition-colors hover:bg-blue-600'>
+					className={`${noteInfo.color} hover:scale-[1.02] text-white p-1 pl-2 pr-2 rounded-md min-w-0 flex justify-center items-center duration-200 transition-transform`}>
 					Back to all notes
 				</Link>
 				<button

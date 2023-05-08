@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../../store/store';
-import { ContentWrapper } from '../../common/ContentWrapper';
+import { ContentWrapper } from '../../../common/ContentWrapper';
 import { NoteCrad } from './NoteCard';
 import { Empty } from './Empty';
 import { useState } from 'react';
@@ -9,7 +9,9 @@ import { Sorting, SortingOptions } from '../../../../types/types';
 import { DeafultNotesContentBtns } from './DeafultNotesContentBtns';
 import { DeleteAllBtn } from './DeleteAllBtn';
 import { popupSlice } from '../../../../store/slices/popupSlice';
-import { H2 } from '../../common/H2';
+import { H2 } from '../../../common/H2';
+import { AnimatePresence, motion } from 'framer-motion';
+import { fromLeftAnim, fromRigthAnim, opacityAnim } from '../../../../animations/animations';
 
 interface Props {
 	isTrashSite: boolean;
@@ -148,7 +150,7 @@ export const NotesContent = ({ isTrashSite }: Props) => {
 				setSelectedNoteCategory(selectedValue);
 				dispatch(
 					popupSlice.actions.openPopup({
-						message: 'Sorting by "home" category',
+						message: 'Sorting by "Home" category',
 						success: true,
 					})
 				);
@@ -158,7 +160,62 @@ export const NotesContent = ({ isTrashSite }: Props) => {
 				setSelectedNoteCategory(selectedValue);
 				dispatch(
 					popupSlice.actions.openPopup({
-						message: 'Sorting by "shopping" category',
+						message: 'Sorting by "Shopping" category',
+						success: true,
+					})
+				);
+
+				break;
+			case SortingOptions.finance:
+				setCurrentSortingCategory(Sorting.category);
+				setSelectedNoteCategory(selectedValue);
+				dispatch(
+					popupSlice.actions.openPopup({
+						message: 'Sorting by "Finance" category',
+						success: true,
+					})
+				);
+
+				break;
+			case SortingOptions.health:
+				setCurrentSortingCategory(Sorting.category);
+				setSelectedNoteCategory(selectedValue);
+				dispatch(
+					popupSlice.actions.openPopup({
+						message: 'Sorting by "Health" category',
+						success: true,
+					})
+				);
+
+				break;
+			case SortingOptions.hobby:
+				setCurrentSortingCategory(Sorting.category);
+				setSelectedNoteCategory(selectedValue);
+				dispatch(
+					popupSlice.actions.openPopup({
+						message: 'Sorting by "Hobby" category',
+						success: true,
+					})
+				);
+
+				break;
+			case SortingOptions.study:
+				setCurrentSortingCategory(Sorting.category);
+				setSelectedNoteCategory(selectedValue);
+				dispatch(
+					popupSlice.actions.openPopup({
+						message: 'Sorting by "Study" category',
+						success: true,
+					})
+				);
+
+				break;
+			case SortingOptions.work:
+				setCurrentSortingCategory(Sorting.category);
+				setSelectedNoteCategory(selectedValue);
+				dispatch(
+					popupSlice.actions.openPopup({
+						message: 'Sorting by "Work" category',
 						success: true,
 					})
 				);
@@ -183,7 +240,9 @@ export const NotesContent = ({ isTrashSite }: Props) => {
 					{isTrashSite && <H2 title='Your Trash' />}
 					{!isTrashSite && <H2 title='Your Notes' />}
 
-					<div className='flex flex-col md:flex-row w-full md:w-auto text-sm lg:text-base'>
+					<motion.div
+						variants={fromRigthAnim}
+						className='flex flex-col md:flex-row w-full md:w-auto text-sm lg:text-base'>
 						<input
 							disabled={trashedNotes.length === 0}
 							onChange={filterByTitleHandler}
@@ -201,55 +260,72 @@ export const NotesContent = ({ isTrashSite }: Props) => {
 							<option value={SortingOptions.oldest}>From the oldest</option>
 							<option value={SortingOptions.fav}>Favourites</option>
 							<option value={SortingOptions.calendar}>Save in calendar</option>
-							<option value={SortingOptions.home}>Home</option>
 							<option value={SortingOptions.shopping}>Shopping</option>
+							<option value={SortingOptions.home}>Home</option>
+							<option value={SortingOptions.work}>Work</option>
+							<option value={SortingOptions.study}>Study</option>
+							<option value={SortingOptions.hobby}>Hobby</option>
+							<option value={SortingOptions.finance}>Finance</option>
+							<option value={SortingOptions.health}>Health</option>
 						</select>
 						{!isTrashSite && <DeafultNotesContentBtns length={trashedNotes.length} />}
 						{isTrashSite && <DeleteAllBtn length={trashedNotes.length} />}
-					</div>
+					</motion.div>
 				</div>
 				<div className='h-4/6 md:h-5/6 w-full flex flex-col justify-between'>
-					<div className=' h-full flex flex-col md:flex-row justify-center md:items-center flex-wrap gap-5 overflow-scroll noscroll '>
-						{trashedNotes.length === 0 && <Empty isTrash={isTrashSite} />}
-						{trashedNotes.length > 0 && filteredNotes.length === 0 && (
-							<p>Nothing found for your query</p>
-						)}
-						{currentNotes.map(
-							(note) =>
-								!isTrashSite &&
-								!note.inTrash && (
-									<NoteCrad
-										key={note.id}
-										title={note.title}
-										category={note.category}
-										note={note.note}
-										date={note.date}
-										createdAt={note.createdAt}
-										id={note.id}
-										fav={note.fav}
-										calendar={note.calendar}
-										inTrash={false}
-									/>
-								)
-						)}
-						{currentNotes.map(
-							(note) =>
-								isTrashSite &&
-								note.inTrash && (
-									<NoteCrad
-										key={note.id}
-										title={note.title}
-										category={note.category}
-										note={note.note}
-										date={note.date}
-										createdAt={note.createdAt}
-										id={note.id}
-										fav={note.fav}
-										calendar={note.calendar}
-										inTrash={true}
-									/>
-								)
-						)}
+					<div className=' h-full flex flex-col md:flex-row justify-center md:items-center flex-wrap gap-5 overflow-x-auto noscroll'>
+						<AnimatePresence>
+							{trashedNotes.length === 0 && <Empty isTrash={isTrashSite} />}
+							{trashedNotes.length > 0 && filteredNotes.length === 0 && (
+								<motion.p
+									layout
+									key='noFoundP'
+									variants={opacityAnim}
+									initial='hidden'
+									animate='visible'
+									exit='exit'>
+									Nothing found for your query
+								</motion.p>
+							)}
+							{currentNotes.map(
+								(note) =>
+									!isTrashSite &&
+									!note.inTrash && (
+										<NoteCrad
+											key={note.id}
+											title={note.title}
+											category={note.category}
+											note={note.note}
+											date={note.date}
+											createdAt={note.createdAt}
+											id={note.id}
+											fav={note.fav}
+											calendar={note.calendar}
+											inTrash={false}
+											color={note.color}
+										/>
+									)
+							)}
+							{currentNotes.map(
+								(note) =>
+									isTrashSite &&
+									note.inTrash && (
+										<NoteCrad
+											key={note.id}
+											title={note.title}
+											category={note.category}
+											note={note.note}
+											date={note.date}
+											createdAt={note.createdAt}
+											id={note.id}
+											fav={note.fav}
+											calendar={note.calendar}
+											inTrash={true}
+											color={note.color}
+										/>
+									)
+							)}
+						</AnimatePresence>
 					</div>
 					{filteredNotes.length > 4 && (
 						<Paginate

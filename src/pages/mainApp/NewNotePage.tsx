@@ -1,12 +1,16 @@
+import { motion } from 'framer-motion';
+import { PageAnim } from '../../animations/animations';
 import { Container } from '../../components/mainApp/Container';
 import { NewNoteContent } from '../../components/mainApp/contents/newNote/NewNoteContent';
 import { useCloseNotePopup } from '../../hooks/useCloseNotePopup';
 
 export const NewNotePage = () => {
-	useCloseNotePopup()
+	useCloseNotePopup();
 	return (
-		<Container>
-			<NewNoteContent />
-		</Container>
+		<motion.div variants={PageAnim} initial='hidden' animate='visible'>
+			<Container>
+				<NewNoteContent />
+			</Container>
+		</motion.div>
 	);
 };

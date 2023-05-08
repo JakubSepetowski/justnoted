@@ -1,12 +1,16 @@
+import { motion } from 'framer-motion';
+import { PageAnim } from '../../animations/animations';
 import { Container } from '../../components/mainApp/Container';
 import { CalendarContent } from '../../components/mainApp/contents/calendar/CalendarContent';
 import { useCloseNotePopup } from '../../hooks/useCloseNotePopup';
 
 export const CalendarPage = () => {
-	useCloseNotePopup()
+	useCloseNotePopup();
 	return (
-		<Container>
-			<CalendarContent />
-		</Container>
+		<motion.div variants={PageAnim} initial='hidden' animate='visible'>
+			<Container>
+				<CalendarContent />
+			</Container>
+		</motion.div>
 	);
 };
