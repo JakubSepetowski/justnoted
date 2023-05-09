@@ -1,6 +1,5 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { LocalStorage } from '../../../../types/types';
 import {
 	EmailAuthProvider,
 	reauthenticateWithCredential,
@@ -12,10 +11,13 @@ import { auth } from '../../../../config/firebase';
 import { useNavigateOnLogout } from '../../../../hooks/useNavigateOnLogout';
 import { useDispatch } from 'react-redux';
 import { authSlice } from '../../../../store/slices/authSlice';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { createPortal } from 'react-dom';
+import { fromBottomAnim, opacityAnim } from '../../../../animations/animations';
 
 interface Props {
 	onCloseModal: () => void;
+	isOpen: boolean;
 }
 
 interface Values {
@@ -24,7 +26,7 @@ interface Values {
 	confirm?: string;
 }
 
-export const DeleteModal = ({ onCloseModal }: Props) => {
+export const DeleteModal = ({ isOpen, onCloseModal }: Props) => {
 	useNavigateOnLogout();
 	const dispatch = useDispatch();
 	const [isSending, setIsSending] = useState(false);
@@ -101,91 +103,102 @@ export const DeleteModal = ({ onCloseModal }: Props) => {
 		},
 	});
 
-	return (
-		<div
-			onClick={closeModalHandler}
-			className='fixed top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] h-screen w-full z-20 bg-black bg-opacity-80 backdrop-blur-md flex justify-center items-center text-white'>
-			<div
-				onClick={stopPropagationHanlder}
-				className=' bg-bgc w-4/5  md:w-1/3 h-min z-50 rounded-md shadow-md   flex flex-col overflow-hidden relative'>
-				<div className='flex w-full items-center justify-between bg-zinc-900   p-4 '>
-					<h3 className=' md:text-lg'>Are you sure to do this? It cannot be undone</h3>
-					<button onClick={closeModalHandler}>X</button>
-				</div>
+	return createPortal(
+		<AnimatePresence>
+			{isOpen && (
+				<motion.div
+					key='deleteModal'
+					variants={opacityAnim}
+					initial='hidden'
+					animate='visible'
+					exit='exit'
+					onClick={closeModalHandler}
+					className='fixed top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] h-screen w-full z-20 bg-black bg-opacity-80 backdrop-blur-md flex justify-center items-center text-white'>
+					<motion.div
+						variants={fromBottomAnim}
+						onClick={stopPropagationHanlder}
+						className=' bg-bgc w-4/5  md:w-1/3 h-min z-50 rounded-md shadow-md   flex flex-col overflow-hidden relative'>
+						<div className='flex w-full items-center justify-between bg-zinc-900   p-4 '>
+							<h3 className=' md:text-lg'>Are you sure to do this? It cannot be undone</h3>
+							<button onClick={closeModalHandler}>X</button>
+						</div>
 
-				<div className='h-full  bg-zinc-800 overflow-y-auto p-4 noscroll text-sm md:text-base'>
-					<p className='mt-4 border-b pb-2 border-neutral-600'>
-						We will immediately delete your account, along with all of your notes and data
-					</p>
-					<form
-						onSubmit={formik.handleSubmit}
-						className='mt-4  w-full p-2 rounded-lg flex flex-col justify-center  '>
-						<div className='flex flex-col '>
-							<label htmlFor='email'>Email</label>
-							<input
-								className='autofill:bg-none  focus:outline-none p-1 bg-transparent   registerInputs registerInputs--white rounded-md border focus:border-blue-700  border-neutral-600 mt-1'
-								value={formik.values.email}
-								onChange={formik.handleChange}
-								onBlur={formik.handleBlur}
-								type='email'
-								id='email'
-							/>
-							{formik.errors.email && (
-								<p className='text-xs text-red-400 mt-1'>{formik.errors.email}</p>
+						<div className='h-full  bg-zinc-800 overflow-y-auto p-4 noscroll text-sm md:text-base'>
+							<p className='border-b pb-2 border-neutral-600'>
+								We will immediately delete your account, along with all of your notes and data.
+							</p>
+							<form
+								onSubmit={formik.handleSubmit}
+								className='mt-4  w-full p-2 rounded-lg flex flex-col justify-center  '>
+								<div className='flex flex-col '>
+									<label htmlFor='email'>Email</label>
+									<input
+										className='autofill:bg-none  focus:outline-none p-1 bg-transparent   registerInputs registerInputs--white rounded-md border focus:border-blue-700  border-neutral-600 mt-1'
+										value={formik.values.email}
+										onChange={formik.handleChange}
+										onBlur={formik.handleBlur}
+										type='email'
+										id='email'
+									/>
+									{formik.errors.email && (
+										<p className='text-xs text-red-400 mt-1'>{formik.errors.email}</p>
+									)}
+								</div>
+								<div className='flex flex-col mt-4 '>
+									<label htmlFor='password'>Password</label>
+									<input
+										className='autofill:bg-none  focus:outline-none p-1 bg-transparent   registerInputs registerInputs--white rounded-md border focus:border-blue-700  border-neutral-600 mt-1'
+										value={formik.values.password}
+										onChange={formik.handleChange}
+										onBlur={formik.handleBlur}
+										type='password'
+										id='password'
+									/>
+									{formik.errors.password && (
+										<p className='text-xs text-red-400 mt-1'>{formik.errors.password}</p>
+									)}
+								</div>
+								<div className='flex flex-col mt-4 '>
+									<label htmlFor='confirm'>
+										To verify, type <span className='font-bold italic '>delete account</span> below:
+									</label>
+									<input
+										className='autofill:bg-none  focus:outline-none p-1 bg-transparent   registerInputs registerInputs--white rounded-md border focus:border-blue-700  border-neutral-600 mt-1'
+										value={formik.values.confirm}
+										onChange={formik.handleChange}
+										onBlur={formik.handleBlur}
+										type='text'
+										id='confirm'
+									/>
+									{formik.errors.confirm && (
+										<p className='text-xs text-red-400 mt-1'>{formik.errors.confirm}</p>
+									)}
+								</div>
+								<button
+									disabled={!(formik.dirty && formik.isValid)}
+									type='submit'
+									className={`w-full  transition-colors duration-200  p-1 rounded-md mt-8    ${
+										!(formik.dirty && formik.isValid)
+											? 'bg-transparent text-red-600 border border-neutral-600 '
+											: 'bg-red-600 text-white hover:bg-red-700'
+									}${isSending ? 'loading' : ''}`}>
+									{isSending ? 'Deleting, please waite' : 'Delete my account'}
+								</button>
+								{errorMgs && <p className='mt-2 text-center text-red-400 '>{errorMgs}</p>}
+							</form>
+							{isDeleted && (
+								<div className='absolute z-50 top-0 left-0 h-full w-full bg-zinc-800 flex flex-col justify-center items-center p-4 '>
+									<h3 className='text-lg'>
+										Your account has been successfully deleted.Thank you for using my application
+										and see you there!
+									</h3>
+								</div>
 							)}
 						</div>
-						<div className='flex flex-col mt-4 '>
-							<label htmlFor='password'>Password</label>
-							<input
-								className='autofill:bg-none  focus:outline-none p-1 bg-transparent   registerInputs registerInputs--white rounded-md border focus:border-blue-700  border-neutral-600 mt-1'
-								value={formik.values.password}
-								onChange={formik.handleChange}
-								onBlur={formik.handleBlur}
-								type='password'
-								id='password'
-							/>
-							{formik.errors.password && (
-								<p className='text-xs text-red-400 mt-1'>{formik.errors.password}</p>
-							)}
-						</div>
-						<div className='flex flex-col mt-4 '>
-							<label htmlFor='confirm'>
-								To verify, type <span className='font-bold italic '>delete account</span> below:
-							</label>
-							<input
-								className='autofill:bg-none  focus:outline-none p-1 bg-transparent   registerInputs registerInputs--white rounded-md border focus:border-blue-700  border-neutral-600 mt-1'
-								value={formik.values.confirm}
-								onChange={formik.handleChange}
-								onBlur={formik.handleBlur}
-								type='text'
-								id='confirm'
-							/>
-							{formik.errors.confirm && (
-								<p className='text-xs text-red-400 mt-1'>{formik.errors.confirm}</p>
-							)}
-						</div>
-						<button
-							disabled={!(formik.dirty && formik.isValid)}
-							type='submit'
-							className={`w-full  transition-colors duration-200  p-1 rounded-md mt-8    ${
-								!(formik.dirty && formik.isValid)
-									? 'bg-transparent text-red-600 border border-neutral-600 '
-									: 'bg-red-600 text-white hover:bg-red-700'
-							}${isSending ? 'loading' : ''}`}>
-							{isSending ? 'Deleting, please waite' : 'Delete my account'}
-						</button>
-						{errorMgs && <p className='mt-2 text-center text-red-400 '>{errorMgs}</p>}
-					</form>
-					{isDeleted && (
-						<div className='absolute z-50 top-0 left-0 h-full w-full bg-zinc-800 flex flex-col justify-center items-center p-4 '>
-							<h3 className='text-lg'>
-								Your account has been successfully deleted.Thank you for using my application and
-								see you there!
-							</h3>
-						</div>
-					)}
-				</div>
-			</div>
-		</div>
+					</motion.div>
+				</motion.div>
+			)}
+		</AnimatePresence>,
+		document.getElementById('modal')!
 	);
 };

@@ -2,12 +2,14 @@ import { Link } from 'react-router-dom';
 import { InfoItem } from './InfoItem';
 import { Note } from '../../../../types/types';
 
+
 interface Props {
 	noteInfo: Note;
 	onOpenEdit: () => void;
 }
 
 export const NoteInfo = ({ noteInfo, onOpenEdit }: Props) => {
+	
 	return (
 		<>
 			<div className='flex  h-4/5 flex-col justify-between '>
@@ -26,6 +28,10 @@ export const NoteInfo = ({ noteInfo, onOpenEdit }: Props) => {
 						desc={noteInfo.calendar ? `${noteInfo.date}` : 'no'}
 						addMarign={true}
 					/>
+					<div className='mt-1 flex items-center'>
+						<p className='font-semibold'>Picked color:</p>
+						<div className={` ml-1 ${noteInfo.color} w-5 h-5 rounded-full`}></div>
+					</div>
 				</div>
 			</div>
 			<div className='flex'>

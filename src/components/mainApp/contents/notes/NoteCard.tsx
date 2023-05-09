@@ -1,7 +1,4 @@
-import { Link } from 'react-router-dom';
 import { Note } from '../../../../types/types';
-import favBlack from '../../../../assets/svg/fav-black.svg';
-import favBlue from '../../../../assets/svg/fav-blue.svg';
 import { useDispatch } from 'react-redux';
 import { notesSlice } from '../../../../store/slices/notesSlice';
 import { collection, updateDoc, doc, deleteDoc } from 'firebase/firestore';
@@ -13,6 +10,7 @@ import { motion } from 'framer-motion';
 import { noteAnim } from '../../../../animations/animations';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import favBlack from '../../../../assets/svg/fav-black.svg';
 
 export const NoteCrad = (props: Note) => {
 	const dispatch = useDispatch();

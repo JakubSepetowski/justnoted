@@ -14,7 +14,7 @@ export const ColorsBtns = ({ color, currColor, onChange }: Props) => {
 		<button
 			onClick={onChangeHandler}
 			type='button'
-			className={`${color} ${color}-hover transition-colors duration-200  w-5 h-5 rounded-full flex justify-center items-center`}>
+			className={`${color} ${color}-hover transition-colors duration-200 w-4 h-4  md:w-5 md:h-5 rounded-full flex justify-center items-center`}>
 			{currColor === color && (
 				<img className='w-2/3' src={checkMark} alt='currently selected color'></img>
 			)}

@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 import { PopupInfo } from '../common/PopupInfo';
 import { UserInfo } from '../common/UserInfo';
 import { Nav } from './nav/Nav';

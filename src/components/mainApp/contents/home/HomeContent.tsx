@@ -8,7 +8,7 @@ import { HomeNotesNames } from '../../../../types/types';
 import { motion } from 'framer-motion';
 import { Quote } from './Quote';
 import { Clock } from './Clock';
-import { fromBottomAnim, opacityAnim } from '../../../../animations/animations';
+import { fromBottomAnim} from '../../../../animations/animations';
 
 export const HomeContent = () => {
 	const imortantNoteDesc = useSelector((state: RootState) => state.homeNotes.importantNoteDesc);

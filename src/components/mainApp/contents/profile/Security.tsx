@@ -1,6 +1,4 @@
 import { useFormik } from 'formik';
-import { H2 } from '../../../common/H2';
-import * as Yup from 'yup';
 import { auth } from '../../../../config/firebase';
 import { EmailAuthProvider } from 'firebase/auth';
 import { reauthenticateWithCredential, updatePassword } from 'firebase/auth';
@@ -10,6 +8,7 @@ import { popupSlice } from '../../../../store/slices/popupSlice';
 import { useDispatch } from 'react-redux';
 import { motion } from 'framer-motion';
 import { fromLeftAnim, opacityAnim } from '../../../../animations/animations';
+import * as Yup from 'yup';
 
 interface Values {
 	password: string;

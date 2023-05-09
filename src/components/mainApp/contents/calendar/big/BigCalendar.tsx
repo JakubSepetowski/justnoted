@@ -5,7 +5,7 @@ import { Day } from './Day';
 import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../store/store';
-import { AnimatePresence } from 'framer-motion';
+
 
 export const BigCalendar = () => {
 	const [currMonth, setCurrMonth] = useState(getMonth());

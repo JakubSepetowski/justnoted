@@ -8,7 +8,6 @@ import home from '../../../assets/svg/home.svg';
 import notes from '../../../assets/svg/notes.svg';
 import add from '../../../assets/svg/add.svg';
 import cal from '../../../assets/svg/calendar.svg';
-import fav from '../../../assets/svg/fav.svg';
 import trash from '../../../assets/svg/trash.svg';
 import profile from '../../../assets/svg/profile.svg';
 import logout from '../../../assets/svg/logout.svg';

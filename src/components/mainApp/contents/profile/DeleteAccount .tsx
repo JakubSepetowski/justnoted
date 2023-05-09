@@ -27,11 +27,7 @@ export const DeleteAccount = () => {
 					Delete your account
 				</button>
 			</motion.div>
-			{isModalOpen &&
-				createPortal(
-					<DeleteModal onCloseModal={setModalHandler} />,
-					document.getElementById('modal')!
-				)}
+			<DeleteModal isOpen={isModalOpen} onCloseModal={setModalHandler} />
 		</div>
 	);
 };

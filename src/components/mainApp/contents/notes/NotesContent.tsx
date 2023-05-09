@@ -11,7 +11,7 @@ import { DeleteAllBtn } from './DeleteAllBtn';
 import { popupSlice } from '../../../../store/slices/popupSlice';
 import { H2 } from '../../../common/H2';
 import { AnimatePresence, motion } from 'framer-motion';
-import { fromLeftAnim, fromRigthAnim, opacityAnim } from '../../../../animations/animations';
+import {  fromRigthAnim, opacityAnim } from '../../../../animations/animations';
 
 interface Props {
 	isTrashSite: boolean;

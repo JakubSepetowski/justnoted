@@ -11,13 +11,16 @@ import { popupSlice } from '../../../../store/slices/popupSlice';
 import { RefObject, useRef, useState } from 'react';
 import { colors } from '../../../common/colors';
 import { ColorsBtns } from '../../../common/ColorsBtns';
+import { AnimatePresence, motion } from 'framer-motion';
+import { calendarInputAnim } from '../../../../animations/animations';
 
 interface Props {
 	noteInfo: Note;
-	onCloseEdit: () => void;
+	onCloseEdit: (save: boolean) => void;
+	onChangeColor: (currColor: string) => void;
 }
 
-export const EditNote = ({ noteInfo, onCloseEdit }: Props) => {
+export const EditNote = ({ noteInfo, onCloseEdit, onChangeColor }: Props) => {
 	const dispatch = useDispatch();
 	const [isSending, setIsSending] = useState(false);
 	const formikRef: RefObject<FormikProps<FormikValues>> = useRef<FormikProps<FormikValues>>(null);
@@ -41,7 +44,6 @@ export const EditNote = ({ noteInfo, onCloseEdit }: Props) => {
 			lastFav: noteInfo.fav,
 			lastCalendar: noteInfo.calendar,
 			editatedDate: currentDate,
-			
 		};
 		try {
 			await updateDoc(doc(notesColection, noteInfo.id), updateNote);
@@ -52,7 +54,7 @@ export const EditNote = ({ noteInfo, onCloseEdit }: Props) => {
 					success: true,
 				})
 			);
-			onCloseEdit();
+			onCloseEdit(true);
 		} catch {
 			dispatch(
 				popupSlice.actions.openPopup({
@@ -63,12 +65,15 @@ export const EditNote = ({ noteInfo, onCloseEdit }: Props) => {
 		}
 		setIsSending(false);
 	};
-
+	const closeEditHandler = () => {
+		onCloseEdit(false);
+	};
 	const changeNoteColor = (selectedColor: string) => {
 		console.log(selectedColor);
 		const ref = formikRef.current;
 		if (ref) {
 			ref.setFieldValue('color', selectedColor);
+			onChangeColor(selectedColor);
 		}
 	};
 
@@ -96,13 +101,12 @@ export const EditNote = ({ noteInfo, onCloseEdit }: Props) => {
 					.min(currentDate, 'Past date cannot be selected')
 					.required('Please enter a valid date'),
 			})}
-			onSubmit={(values, { resetForm }) => {
+			onSubmit={(values) => {
 				updateNoteHanlder(values);
-				resetForm();
 			}}>
 			{(formik) => {
 				return (
-					<Form className='w-full h-full flex flex-col justify-between'>
+					<Form className='w-full h-full flex flex-col justify-between '>
 						<div>
 							<div className='flex flex-col'>
 								<label
@@ -158,22 +162,30 @@ export const EditNote = ({ noteInfo, onCloseEdit }: Props) => {
 									{categoryOptions}
 								</Field>
 							</div>
-							{formik.values.calendar && (
-								<div className='flex flex-col mt-2 md:mt-4'>
-									<label
-										className={`font-semibold ${
-											formik.touched.date && formik.errors.date ? 'text-red-500' : ''
-										}`}
-										htmlFor='date'>
-										{formik.touched.date && formik.errors.date ? formik.errors.date : 'Date'}
-									</label>
-									<Field
-										className='bg-bgc mt-1 focus:outline-none p-1 md:p-2  placeholder:text-neutral-500 transition-colors duration-200 focus:bg-blue-100 registerInputs rounded-md '
-										name='date'
-										type='date'
-									/>
-								</div>
-							)}
+							<AnimatePresence initial={false}>
+								{formik.values.calendar && (
+									<motion.div
+										key='calinput'
+										initial='hidden'
+										animate='visible'
+										exit='exit'
+										variants={calendarInputAnim}
+										className='flex flex-col mt-2 md:mt-4'>
+										<label
+											className={`font-semibold ${
+												formik.touched.date && formik.errors.date ? 'text-red-500' : ''
+											}`}
+											htmlFor='date'>
+											{formik.touched.date && formik.errors.date ? formik.errors.date : 'Date'}
+										</label>
+										<Field
+											className='bg-bgc mt-1 focus:outline-none p-1 md:p-2  placeholder:text-neutral-500 transition-colors duration-200 focus:bg-blue-100 registerInputs rounded-md '
+											name='date'
+											type='date'
+										/>
+									</motion.div>
+								)}
+							</AnimatePresence>
 
 							<div className='flex flex-col mt-2 md:mt-4'>
 								<label className='font-semibold ' htmlFor='color'>
@@ -205,7 +217,7 @@ export const EditNote = ({ noteInfo, onCloseEdit }: Props) => {
 								</div>
 							</div>
 						</div>
-						<div className='flex'>
+						<div className='flex mt-6'>
 							{!isSending && (
 								<>
 									<button
@@ -221,7 +233,7 @@ export const EditNote = ({ noteInfo, onCloseEdit }: Props) => {
 
 									<button
 										type='button'
-										onClick={onCloseEdit}
+										onClick={closeEditHandler}
 										className='ml-2 border  w-24 rounded-md p-1  bg-transparent hover:bg-neutral-200 duration-200 transition-colors'>
 										Cancel
 									</button>

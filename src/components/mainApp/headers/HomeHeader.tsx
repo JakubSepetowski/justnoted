@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { LocalStorage } from '../../../types/types';
 import { HeaderWrapper } from '../../common/HeaderWrapper';
 import dayjs from 'dayjs';
-import { fromLeftAnim, opacityAnim, titleAnim } from '../../../animations/animations';
+import { opacityAnim, titleAnim } from '../../../animations/animations';
 
 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 export const HomeHeader = () => {

@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import {  useState } from 'react';
 import { auth } from '../../../../config/firebase';
 import { H2 } from '../../../common/H2';
 import { useFormik } from 'formik';

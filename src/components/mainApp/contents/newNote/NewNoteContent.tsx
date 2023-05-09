@@ -188,34 +188,36 @@ export const NewNoteContent = () => {
 										</motion.div>
 									)}
 								</AnimatePresence>
-								<div className='flex flex-col mt-4'>
-									<label className='font-semibold ' htmlFor='color'>
-										Choose color of note
-										<div className='flex gap-2 mt-1'>
-											{colors.map((color) => (
-												<ColorsBtns
-													key={color}
-													currColor={formik.values.color}
-													color={color}
-													onChange={changeNoteColor}
-												/>
-											))}
-										</div>
-									</label>
-								</div>
-
-								<motion.div variants={fromBottomAnim} className='flex flex-col mt-2 md:mt-4'>
-									<div className='flex  items-center '>
-										<Field name='calendar' className='' type='checkbox' />
-										<label className='ml-2' htmlFor='calendar'>
-											save note to calendar
+								<motion.div variants={fromBottomAnim}>
+									<div className='flex flex-col mt-4'>
+										<label className='font-semibold ' htmlFor='color'>
+											Choose color of note
+											<div className='flex gap-2 mt-1'>
+												{colors.map((color) => (
+													<ColorsBtns
+														key={color}
+														currColor={formik.values.color}
+														color={color}
+														onChange={changeNoteColor}
+													/>
+												))}
+											</div>
 										</label>
 									</div>
-									<div className='flex items-center '>
-										<Field name='fav' type='checkbox' />
-										<label className='ml-2' htmlFor='fav'>
-											mark note as favourite
-										</label>
+
+									<div className='flex flex-col mt-2 md:mt-4'>
+										<div className='flex  items-center '>
+											<Field name='calendar' className='' type='checkbox' />
+											<label className='ml-2' htmlFor='calendar'>
+												save note to calendar
+											</label>
+										</div>
+										<div className='flex items-center '>
+											<Field name='fav' type='checkbox' />
+											<label className='ml-2' htmlFor='fav'>
+												mark note as favourite
+											</label>
+										</div>
 									</div>
 								</motion.div>
 								<motion.div variants={fromBottomAnim} className='mt-4 md:mt-8'>

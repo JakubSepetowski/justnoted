@@ -6,7 +6,7 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store/store';
 import { Spinner } from '../../../common/Spinner';
-import { motion } from 'framer-motion';
+import {  motion } from 'framer-motion';
 import { opacityAnim } from '../../../../animations/animations';
 interface Props {
 	title: string;
@@ -41,6 +41,7 @@ export const Card = ({ title, info, img, desc, name }: Props) => {
 						{desc}
 					</motion.p>
 				)}
+
 				{isFetched && !isEditing && !desc && (
 					<motion.div
 						variants={opacityAnim}
