@@ -69,7 +69,6 @@ export const EditNote = ({ noteInfo, onCloseEdit, onChangeColor }: Props) => {
 		onCloseEdit(false);
 	};
 	const changeNoteColor = (selectedColor: string) => {
-		console.log(selectedColor);
 		const ref = formikRef.current;
 		if (ref) {
 			ref.setFieldValue('color', selectedColor);

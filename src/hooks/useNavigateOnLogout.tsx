@@ -9,7 +9,6 @@ export const useNavigateOnLogout = () => {
 
 	useEffect(() => {
 		if (!isAuth) {
-			console.log('zmiana');
 			navgiate('/');
 		}
 	}, [isAuth]);
