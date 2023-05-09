@@ -1,4 +1,4 @@
-import { Formik, Field, Form } from 'formik';
+import { Formik, Field, Form, FormikProps } from 'formik';
 import * as Yup from 'yup';
 import { FormikValues, Note } from '../../../../types/types';
 import { categories, categoryOptions } from '../../../common/categories';
@@ -8,7 +8,9 @@ import { dataBase, auth } from '../../../../config/firebase';
 import { useDispatch } from 'react-redux';
 import { notesSlice } from '../../../../store/slices/notesSlice';
 import { popupSlice } from '../../../../store/slices/popupSlice';
-import { useState } from 'react';
+import { RefObject, useRef, useState } from 'react';
+import { colors } from '../../../common/colors';
+import { ColorsBtns } from '../../../common/ColorsBtns';
 
 interface Props {
 	noteInfo: Note;
@@ -18,6 +20,7 @@ interface Props {
 export const EditNote = ({ noteInfo, onCloseEdit }: Props) => {
 	const dispatch = useDispatch();
 	const [isSending, setIsSending] = useState(false);
+	const formikRef: RefObject<FormikProps<FormikValues>> = useRef<FormikProps<FormikValues>>(null);
 
 	const updateNoteHanlder = async (val: FormikValues) => {
 		setIsSending(true);
@@ -30,6 +33,7 @@ export const EditNote = ({ noteInfo, onCloseEdit }: Props) => {
 			calendar: val.calendar,
 			date: val.date,
 			fav: val.fav,
+			color: val.color,
 			lastTitle: noteInfo.title,
 			lastNote: noteInfo.note,
 			lastCategory: noteInfo.category,
@@ -37,6 +41,7 @@ export const EditNote = ({ noteInfo, onCloseEdit }: Props) => {
 			lastFav: noteInfo.fav,
 			lastCalendar: noteInfo.calendar,
 			editatedDate: currentDate,
+			
 		};
 		try {
 			await updateDoc(doc(notesColection, noteInfo.id), updateNote);
@@ -59,8 +64,17 @@ export const EditNote = ({ noteInfo, onCloseEdit }: Props) => {
 		setIsSending(false);
 	};
 
+	const changeNoteColor = (selectedColor: string) => {
+		console.log(selectedColor);
+		const ref = formikRef.current;
+		if (ref) {
+			ref.setFieldValue('color', selectedColor);
+		}
+	};
+
 	return (
 		<Formik
+			innerRef={formikRef}
 			initialValues={{
 				title: noteInfo.title,
 				note: noteInfo.note,
@@ -68,6 +82,7 @@ export const EditNote = ({ noteInfo, onCloseEdit }: Props) => {
 				date: noteInfo.date,
 				calendar: noteInfo.calendar,
 				fav: noteInfo.fav,
+				color: noteInfo.color,
 			}}
 			validationSchema={Yup.object({
 				title: Yup.string().required('Title is required').max(20, 'Title is to long').trim(),
@@ -159,6 +174,22 @@ export const EditNote = ({ noteInfo, onCloseEdit }: Props) => {
 									/>
 								</div>
 							)}
+
+							<div className='flex flex-col mt-2 md:mt-4'>
+								<label className='font-semibold ' htmlFor='color'>
+									Choose color of note
+									<div className='flex gap-2 mt-1'>
+										{colors.map((color) => (
+											<ColorsBtns
+												key={color}
+												currColor={formik.values.color}
+												color={color}
+												onChange={changeNoteColor}
+											/>
+										))}
+									</div>
+								</label>
+							</div>
 							<div className='flex flex-col mt-2 md:mt-4'>
 								<div className='flex  items-center '>
 									<Field name='calendar' className='' type='checkbox' />
@@ -183,7 +214,7 @@ export const EditNote = ({ noteInfo, onCloseEdit }: Props) => {
 										className={`w-24 rounded-md p-1  duration-200 transition-colors text-white ${
 											!(formik.dirty && formik.isValid)
 												? 'bg-neutral-500 '
-												: `${noteInfo.color} hover:scale-[1.02] transition-transform `
+												: `${formik.values.color} hover:scale-[1.02] transition-transform `
 										}`}>
 										Save
 									</button>

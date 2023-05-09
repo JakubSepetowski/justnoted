@@ -30,7 +30,7 @@ export const NoteInfoContent = () => {
 					<div
 						className={`  flex flex-col bg-white w-full shadow-lg rounded-lg mt-12 p-4 ${
 							isEditing
-								? 'justify-center  min-h-[30rem] md:min-h-[33rem] lg:min-h-[36rem] '
+								? 'justify-center  min-h-[32rem] md:min-h-[36rem] lg:min-h-[40rem] '
 								: 'justify-between min-h-[22rem] md:min-h-[20rem] lg:min-h-[23rem]'
 						}`}>
 						{!isEditing && <NoteInfo noteInfo={noteInfo} onOpenEdit={openEditHandler} />}

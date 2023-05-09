@@ -5,9 +5,9 @@ import { notesSlice } from '../../../../store/slices/notesSlice';
 import { popupSlice } from '../../../../store/slices/popupSlice';
 interface Props {
 	id: string;
-	color:string
+	color: string;
 }
-export const TrashNoteBtns = ({ id,color }: Props) => {
+export const TrashNoteBtns = ({ id, color }: Props) => {
 	const dispatch = useDispatch();
 	const notesColection = collection(dataBase, `users/${auth.currentUser?.uid}/notes`);
 

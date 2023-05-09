@@ -43,6 +43,7 @@ export const notesSlice = createSlice({
 						title: actions.payload.title,
 						note: actions.payload.note,
 						category: actions.payload.category,
+						color: actions.payload.color,
 						date: actions.payload.date,
 						calendar: actions.payload.calendar,
 						fav: actions.payload.fav,

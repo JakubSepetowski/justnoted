@@ -22,6 +22,7 @@ export interface FormikValues {
 	date: string;
 	calendar: boolean;
 	fav: boolean;
+	color: string;
 }
 export interface getData extends HomeNotes, Note {}
 export interface HomeNotes {
@@ -33,7 +34,6 @@ export interface Note extends FormikValues {
 	createdAt: string;
 	inTrash?: boolean;
 	id: string;
-	color?: string;
 	editatedDate?: null | string;
 	lastTitle?: null | string;
 	lastNote?: null | string;

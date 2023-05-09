@@ -5,6 +5,7 @@ import { notePopupSlice } from '../../../../store/slices/notePopupSlice';
 import { opacityAnim, fromBottomAnim, fromLeftAnim } from '../../../../animations/animations';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { colors } from '../../../common/colors';
 
 export const NotePopup = () => {
 	const dispatch = useDispatch();
@@ -12,7 +13,6 @@ export const NotePopup = () => {
 	const desc = useSelector((state: RootState) => state.notesPopup.desc);
 	const currColor = useSelector((state: RootState) => state.notesPopup.color);
 	const id = useSelector((state: RootState) => state.notesPopup.currOpenNoteId);
-	const colors = ['blue', 'indigo', 'purple', 'green', 'red', 'orange', 'yellow'];
 
 	const closePopupHandler = () => {
 		dispatch(notePopupSlice.actions.closePopup());
