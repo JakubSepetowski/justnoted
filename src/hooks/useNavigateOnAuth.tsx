@@ -9,7 +9,6 @@ export const useNavigateOnAuth = () => {
 
 	useEffect(() => {
 		if (isAuth) {
-			console.log('zmiana');
 			navgiate('/app/home');
 		}
 	}, [isAuth]);

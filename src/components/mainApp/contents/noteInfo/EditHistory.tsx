@@ -15,7 +15,7 @@ export const EditHistory = ({ noteInfo, newColor }: Props) => {
 		<div className=' h-52 md:h-[18rem] lg:min-h-[23rem] bg-transparent w-full mt-12  bg-white shadow-md rounded-md p-4 overflow-y-auto mb-4 lg:mb-0 '>
 			{!noteInfo.editatedDate && (
 				<div className='h-full w-full flex flex-col items-center justify-center'>
-					<p className={`lg:text-lg font-semibold ${noteInfo.color}-text text-center mb-4`}>
+					<p className={`lg:text-lg font-semibold ${currColor}-text text-center mb-4`}>
 						This note hasn't been edited yet.
 					</p>
 					<Player src={noEdit} className='hidden md:block md:w-1/4 lg:w-2/3' loop autoplay />
@@ -78,8 +78,7 @@ export const EditHistory = ({ noteInfo, newColor }: Props) => {
 					)}
 					{noteInfo.lastFav !== noteInfo.fav && noteInfo.fav && (
 						<p className='mt-2 font-semibold'>
-							Favourite:{' '}
-							<span className={`${currColor}-text`}>Note was marked as favourite</span>
+							Favourite: <span className={`${currColor}-text`}>Note was marked as favourite</span>
 						</p>
 					)}
 					{noteInfo.lastFav !== noteInfo.fav && !noteInfo.fav && (
@@ -87,6 +86,14 @@ export const EditHistory = ({ noteInfo, newColor }: Props) => {
 							Favourite:
 							<span className={`${currColor}-text`}> Note was removed from favourties</span>
 						</p>
+					)}
+					{noteInfo.lastColor !== noteInfo.color && (
+						<HistoryItem
+							name='Color of note'
+							color={currColor}
+							oldValue={noteInfo.lastColor!}
+							newValue={noteInfo.color}
+						/>
 					)}
 				</>
 			)}

@@ -13,3 +13,6 @@ export const getMonth = (month = dayjs().month()) => {
 	return daysMatrix;
 };
 
+export const stopPropagationHanlder = (e: React.MouseEvent<HTMLDivElement>) => {
+	e.stopPropagation();
+};

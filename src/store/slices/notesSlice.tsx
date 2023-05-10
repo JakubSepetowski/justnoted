@@ -53,6 +53,7 @@ export const notesSlice = createSlice({
 						lastCalendar: actions.payload.lastCalendar,
 						lastDate: actions.payload.lastDate,
 						lastFav: actions.payload.lastFav,
+						lastColor:actions.payload.lastColor,
 						editatedDate: actions.payload.editatedDate,
 					};
 				} else {

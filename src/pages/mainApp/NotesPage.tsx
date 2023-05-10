@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { PageAnim } from '../../animations/animations';
-import { Container } from '../../components/mainApp/Container';
+import { Container } from '../../components/container/Container';
 import { NotesContent } from '../../components/mainApp/contents/notes/NotesContent';
 import { useCloseNotePopup } from '../../hooks/useCloseNotePopup';
 

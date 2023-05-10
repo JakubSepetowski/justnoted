@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
-import { Container } from '../../components/mainApp/Container';
+import { Container } from '../../components/container/Container';
 import { HomeContent } from '../../components/mainApp/contents/home/HomeContent';
 import { HomeHeader } from '../../components/mainApp/headers/HomeHeader';
 import { useCloseNotePopup } from '../../hooks/useCloseNotePopup';
-import { PageAnim} from '../../animations/animations';
+import { PageAnim } from '../../animations/animations';
 
 export const MainAppPage = () => {
 	useCloseNotePopup();

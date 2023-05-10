@@ -41,6 +41,7 @@ export interface Note extends FormikValues {
 	lastFav?: null | boolean;
 	lastDate?: null | string;
 	lastCalendar?: null | boolean;
+	lastColor?: null | string;
 }
 export interface InitialNoteState {
 	notes: Note[];

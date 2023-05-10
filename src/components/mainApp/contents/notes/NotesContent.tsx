@@ -11,7 +11,8 @@ import { DeleteAllBtn } from './DeleteAllBtn';
 import { popupSlice } from '../../../../store/slices/popupSlice';
 import { H2 } from '../../../common/H2';
 import { AnimatePresence, motion } from 'framer-motion';
-import {  fromRigthAnim, opacityAnim } from '../../../../animations/animations';
+import { fromRigthAnim, opacityAnim } from '../../../../animations/animations';
+import { DeleteAllPopup } from './DeleteAllPopup';
 
 interface Props {
 	isTrashSite: boolean;
@@ -26,6 +27,9 @@ export const NotesContent = ({ isTrashSite }: Props) => {
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const [notesPerPage] = useState(4);
+
+	const [isPopupOpen, setIsPopOpen] = useState(false);
+	const [agreedToRemoveAll, setAgreedToRemoveAll] = useState(false);
 
 	const [searchTerm, setSearchTerm] = useState('');
 	const [selectedNoteCategory, setSelectedNoteCategory] = useState('');
@@ -84,6 +88,17 @@ export const NotesContent = ({ isTrashSite }: Props) => {
 	const filteredNotes = sorting(currentSortingCategory);
 
 	const currentNotes = filteredNotes.slice(indexOfFirstNote, indexOfLastNote);
+
+	const closePopupHandler = () => {
+		setIsPopOpen(false);
+	};
+	const openPopupHandler = () => {
+		setIsPopOpen(true);
+	};
+	const resetAgreeToRemoveHandler = () => {
+		closePopupHandler();
+		setAgreedToRemoveAll(false);
+	};
 
 	const onPaginateHanlder = (pageNumber: number) => {
 		setCurrentPage(pageNumber);
@@ -235,7 +250,7 @@ export const NotesContent = ({ isTrashSite }: Props) => {
 
 	return (
 		<ContentWrapper hasHeader={false}>
-			<div className=' h-full flex flex-col '>
+			<div className=' h-full flex flex-col relative '>
 				<div className='md:h-1/6  pt-8 md:pt-0 md:p-0  w-full flex flex-col md:flex-row items-center md:justify-around '>
 					{isTrashSite && <H2 title='Your Trash' />}
 					{!isTrashSite && <H2 title='Your Notes' />}
@@ -269,7 +284,9 @@ export const NotesContent = ({ isTrashSite }: Props) => {
 							<option value={SortingOptions.health}>Health</option>
 						</select>
 						{!isTrashSite && <DeafultNotesContentBtns length={trashedNotes.length} />}
-						{isTrashSite && <DeleteAllBtn length={trashedNotes.length} />}
+						{isTrashSite && (
+							<DeleteAllBtn length={trashedNotes.length} onPopupOpen={openPopupHandler} />
+						)}
 					</motion.div>
 				</div>
 				<div className='h-4/6 md:h-5/6 w-full flex flex-col justify-between'>
@@ -338,6 +355,11 @@ export const NotesContent = ({ isTrashSite }: Props) => {
 						/>
 					)}
 				</div>
+				<AnimatePresence>
+					{isTrashSite && isPopupOpen && (
+						<DeleteAllPopup onReset={resetAgreeToRemoveHandler} onClosePopup={closePopupHandler} />
+					)}
+				</AnimatePresence>
 			</div>
 		</ContentWrapper>
 	);

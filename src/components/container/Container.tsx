@@ -1,9 +1,9 @@
-import {  useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { PopupInfo } from '../common/PopupInfo';
 import { UserInfo } from '../common/UserInfo';
-import { Nav } from './nav/Nav';
+import { Nav } from '../mainApp/nav/Nav';
 import { RootState } from '../../store/store';
-import { NotePopup } from './contents/calendar/NotePopup';
+import { NotePopup } from '../mainApp/contents/calendar/NotePopup';
 import { AnimatePresence, motion } from 'framer-motion';
 import { opacityContAnim } from '../../animations/animations';
 

@@ -14,6 +14,9 @@ import { authSlice } from '../../../../store/slices/authSlice';
 import { AnimatePresence, motion } from 'framer-motion';
 import { createPortal } from 'react-dom';
 import { fromBottomAnim, opacityAnim } from '../../../../animations/animations';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
+import { stopPropagationHanlder } from '../../../../utils/utils';
 
 interface Props {
 	onCloseModal: () => void;
@@ -73,9 +76,7 @@ export const DeleteModal = ({ isOpen, onCloseModal }: Props) => {
 		return () => clearTimeout(timer);
 	}, [isDeleted]);
 
-	const stopPropagationHanlder = (e: React.MouseEvent<HTMLDivElement>) => {
-		e.stopPropagation();
-	};
+	
 
 	const formik = useFormik({
 		initialValues: {
@@ -120,7 +121,7 @@ export const DeleteModal = ({ isOpen, onCloseModal }: Props) => {
 						className=' bg-bgc w-4/5  md:w-1/3 h-min z-50 rounded-md shadow-md   flex flex-col overflow-hidden relative'>
 						<div className='flex w-full items-center justify-between bg-zinc-900   p-4 '>
 							<h3 className=' md:text-lg'>Are you sure to do this? It cannot be undone</h3>
-							<button onClick={closeModalHandler}>X</button>
+							<button onClick={closeModalHandler}><FontAwesomeIcon icon={faClose}/></button>
 						</div>
 
 						<div className='h-full  bg-zinc-800 overflow-y-auto p-4 noscroll text-sm md:text-base'>

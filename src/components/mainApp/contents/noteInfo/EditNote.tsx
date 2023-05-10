@@ -43,6 +43,7 @@ export const EditNote = ({ noteInfo, onCloseEdit, onChangeColor }: Props) => {
 			lastDate: noteInfo.date,
 			lastFav: noteInfo.fav,
 			lastCalendar: noteInfo.calendar,
+			lastColor: noteInfo.color,
 			editatedDate: currentDate,
 		};
 		try {
@@ -96,9 +97,7 @@ export const EditNote = ({ noteInfo, onCloseEdit, onChangeColor }: Props) => {
 					.oneOf(categories, 'Please select a category from list'),
 				calendar: Yup.boolean(),
 				fav: Yup.boolean(),
-				date: Yup.date()
-					.min(currentDate, 'Past date cannot be selected')
-					.required('Please enter a valid date'),
+				date: Yup.date().required('Please enter a valid date'),
 			})}
 			onSubmit={(values) => {
 				updateNoteHanlder(values);
@@ -109,29 +108,32 @@ export const EditNote = ({ noteInfo, onCloseEdit, onChangeColor }: Props) => {
 						<div>
 							<div className='flex flex-col'>
 								<label
+									htmlFor='title'
 									className={`font-semibold ${
 										formik.touched.title && formik.errors.title ? 'text-red-500' : ''
-									}`}
-									htmlFor='title'>
+									}`}>
 									{formik.touched.title && formik.errors.title ? formik.errors.title : 'Title'}
 								</label>
 								<Field
 									className='bg-bgc mt-1 focus:outline-none p-1 md:p-2  placeholder:text-neutral-500 transition-colors duration-200 focus:bg-blue-100 registerInputs rounded-md '
+									id='title'
 									name='title'
 									type='text'
 								/>
 							</div>
 							<div className='flex flex-col mt-2 md:mt-4'>
 								<label
+									htmlFor='note'
 									className={`font-semibold ${
 										formik.touched.note && formik.errors.note ? 'text-red-500' : ''
-									}`}
-									htmlFor='note'>
+									}`}>
 									{formik.touched.note && formik.errors.note ? formik.errors.note : 'Note'}
 								</label>
 								<Field
 									as='textarea'
-									className='bg-bgc mt-1 min-h-[7rem] max-h-[7rem] focus:outline-none p-1 md:p-2  placeholder:text-neutral-500 transition-colors duration-200 focus:bg-blue-100 registerInputs rounded-md '
+									className='bg-bgc mt-1 min-h-[7rem] max-h-[7rem] focus:outline-none p-1 md:p-2  placeholder:text-neutral-500 transition-colors duration-200 focus:bg-blue-100 registerInputs 
+									rounded-md '
+									id='note'
 									name='note'
 								/>
 								<p
@@ -143,10 +145,10 @@ export const EditNote = ({ noteInfo, onCloseEdit, onChangeColor }: Props) => {
 							</div>
 							<div className='flex flex-col mt-2 md:mt-4'>
 								<label
+									htmlFor='category'
 									className={`font-semibold ${
 										formik.touched.category && formik.errors.category ? 'text-red-500' : ''
-									}`}
-									htmlFor='category'>
+									}`}>
 									{formik.touched.category && formik.errors.category
 										? formik.errors.category
 										: 'Category'}
@@ -154,6 +156,7 @@ export const EditNote = ({ noteInfo, onCloseEdit, onChangeColor }: Props) => {
 								<Field
 									as='select'
 									className='bg-bgc mt-1  focus:outline-none p-1 md:p-2  placeholder:text-neutral-500 transition-colors duration-200 focus:bg-blue-100 registerInputs rounded-md '
+									id='category'
 									name='category'>
 									<option disabled value={'0'}>
 										Select a category
@@ -171,14 +174,15 @@ export const EditNote = ({ noteInfo, onCloseEdit, onChangeColor }: Props) => {
 										variants={calendarInputAnim}
 										className='flex flex-col mt-2 md:mt-4'>
 										<label
+											htmlFor='date'
 											className={`font-semibold ${
 												formik.touched.date && formik.errors.date ? 'text-red-500' : ''
-											}`}
-											htmlFor='date'>
+											}`}>
 											{formik.touched.date && formik.errors.date ? formik.errors.date : 'Date'}
 										</label>
 										<Field
 											className='bg-bgc mt-1 focus:outline-none p-1 md:p-2  placeholder:text-neutral-500 transition-colors duration-200 focus:bg-blue-100 registerInputs rounded-md '
+											id='date'
 											name='date'
 											type='date'
 										/>
@@ -187,7 +191,7 @@ export const EditNote = ({ noteInfo, onCloseEdit, onChangeColor }: Props) => {
 							</AnimatePresence>
 
 							<div className='flex flex-col mt-2 md:mt-4'>
-								<label className='font-semibold ' htmlFor='color'>
+								<label className='font-semibold '>
 									Choose color of note
 									<div className='flex gap-2 mt-1'>
 										{colors.map((color) => (
@@ -203,14 +207,14 @@ export const EditNote = ({ noteInfo, onCloseEdit, onChangeColor }: Props) => {
 							</div>
 							<div className='flex flex-col mt-2 md:mt-4'>
 								<div className='flex  items-center '>
-									<Field name='calendar' className='' type='checkbox' />
-									<label className='ml-2' htmlFor='calendar'>
+									<Field id='calendar' name='calendar' type='checkbox' />
+									<label htmlFor='calendar' className='ml-2'>
 										save note to calendar
 									</label>
 								</div>
 								<div className='flex items-center '>
-									<Field name='fav' type='checkbox' />
-									<label className='ml-2' htmlFor='fav'>
+									<Field id='fav' name='fav' type='checkbox' />
+									<label htmlFor='fav' className='ml-2'>
 										mark note as favourite
 									</label>
 								</div>

@@ -47,6 +47,7 @@ export const NewNoteContent = () => {
 			lastFav: null,
 			lastDate: null,
 			lastCalendar: null,
+			lastColor: null,
 		};
 		try {
 			await setDoc(doc(notesColection, id), newNote);
@@ -94,8 +95,7 @@ export const NewNoteContent = () => {
 				calendar: Yup.boolean(),
 				fav: Yup.boolean(),
 				date: Yup.date()
-					.min(currentDate, 'Past date cannot be selected')
-					.required('Please enter a valid date'),
+				.required('Please enter a valid date'),
 			})}
 			onSubmit={(values, { resetForm }) => {
 				const unique_id = uuid();
@@ -120,6 +120,7 @@ export const NewNoteContent = () => {
 										<Field
 											className='mt-1 autofill:bg-none bg-zinc-200 focus:outline-none p-1 md:p-2 placeholder:text-neutral-500 transition-colors duration-200 focus:bg-zinc-300 registerInputs rounded-md '
 											name='title'
+											id='title'
 											type='text'
 										/>
 									</div>
@@ -133,6 +134,7 @@ export const NewNoteContent = () => {
 										</label>
 										<Field
 											className='mt-1 autofill:bg-none min-h-[2rem] md:min-h-[5rem] max-h-24 md:max-h-32 bg-zinc-200 focus:outline-none p-1 md:p-2  placeholder:text-neutral-500 transition-colors duration-200 focus:bg-zinc-300 registerInputs rounded-md'
+											id='note'
 											name='note'
 											as='textarea'
 										/>
@@ -156,6 +158,7 @@ export const NewNoteContent = () => {
 										<Field
 											as='select'
 											className='mt-1 autofill:bg-none bg-zinc-200  focus:outline-none p-1  md:p-2 placeholder:text-neutral-500 transition-colors duration-200 focus:bg-zinc-300  registerInputs rounded-md'
+											id='category'
 											name='category'>
 											<option disabled value={'0'}>
 												Select a category
@@ -182,6 +185,7 @@ export const NewNoteContent = () => {
 											</label>
 											<Field
 												className='mt-1 autofill:bg-none bg-zinc-200  focus:outline-none p-1 md:p-2  placeholder:text-neutral-500 transition-colors duration-200 focus:bg-zinc-300  registerInputs rounded-md'
+												id='date'
 												name='date'
 												type='date'
 											/>
@@ -190,7 +194,7 @@ export const NewNoteContent = () => {
 								</AnimatePresence>
 								<motion.div variants={fromBottomAnim}>
 									<div className='flex flex-col mt-4'>
-										<label className='font-semibold ' htmlFor='color'>
+										<label className='font-semibold '>
 											Choose color of note
 											<div className='flex gap-2 mt-1'>
 												{colors.map((color) => (
@@ -207,13 +211,13 @@ export const NewNoteContent = () => {
 
 									<div className='flex flex-col mt-2 md:mt-4'>
 										<div className='flex  items-center '>
-											<Field name='calendar' className='' type='checkbox' />
+											<Field id='calendar' name='calendar' className='' type='checkbox' />
 											<label className='ml-2' htmlFor='calendar'>
 												save note to calendar
 											</label>
 										</div>
 										<div className='flex items-center '>
-											<Field name='fav' type='checkbox' />
+											<Field id='fav' name='fav' type='checkbox' />
 											<label className='ml-2' htmlFor='fav'>
 												mark note as favourite
 											</label>

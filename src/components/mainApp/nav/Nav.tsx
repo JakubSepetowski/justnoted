@@ -11,6 +11,7 @@ import cal from '../../../assets/svg/calendar.svg';
 import trash from '../../../assets/svg/trash.svg';
 import profile from '../../../assets/svg/profile.svg';
 import logout from '../../../assets/svg/logout.svg';
+import { popupSlice } from '../../../store/slices/popupSlice';
 
 const navItems = [
 	{
@@ -58,11 +59,15 @@ export const Nav = () => {
 	const logOutHandler = async () => {
 		try {
 			await signOut(auth);
-			alert('Loged out');
 			localStorage.removeItem('user');
 			dispatch(authSlice.actions.setIsNotAuth());
 		} catch (err) {
-			console.log(err);
+			dispatch(
+				popupSlice.actions.openPopup({
+					message: 'Failed to log out, try again',
+					success: false,
+				})
+			);
 		}
 	};
 	return (
