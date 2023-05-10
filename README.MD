@@ -9,12 +9,12 @@ The application also displays a different quote to the user each time he logs in
 The application itself requires creating an account - it uses firebase, so you can log in using google.
 It is also possible to customize your profile - change your username, profile picture and change your password. What's more, you can also delete your accoun if you decide to.
 
-## Live
+## Live :globe_with_meridians:
 
 Create an account and start using justNoted
 https://justnoted.netlify.app
 
-## Features
+## Features :sparkler:
 
 - authorization
 - registration/logging in
@@ -52,5 +52,5 @@ https://justnoted.netlify.app
 - Vite
 
 
-## Screenshots
+## Screenshots :notebook_with_decorative_cover:
 
