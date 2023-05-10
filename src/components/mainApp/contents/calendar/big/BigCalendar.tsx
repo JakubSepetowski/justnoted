@@ -10,7 +10,7 @@ import { RootState } from '../../../../../store/store';
 export const BigCalendar = () => {
 	const [currMonth, setCurrMonth] = useState(getMonth());
 	const [monthIndex, setMonthIndex] = useState(dayjs().month());
-	const notes = useSelector((state: RootState) => state.notes.notes);
+	
 
 	useEffect(() => {
 		setCurrMonth(getMonth(monthIndex));

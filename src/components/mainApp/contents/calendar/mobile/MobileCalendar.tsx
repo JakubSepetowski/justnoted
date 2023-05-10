@@ -17,7 +17,7 @@ export const MobileCalendar = () => {
 	const [year, month, day] = pickedData.split('-');
 	useEffect(() => {
 		setFilteredNotes(filter);
-	}, [pickedData]);
+	}, [pickedData, notes]);
 
 	const changeDateHandler = (e: ChangeEvent<HTMLInputElement>) => {
 		setPikcedData(e.target.value);

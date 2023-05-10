@@ -300,7 +300,8 @@ export const NotesContent = ({ isTrashSite }: Props) => {
 									variants={opacityAnim}
 									initial='hidden'
 									animate='visible'
-									exit='exit'>
+									exit='exit'
+									className='text-center'>
 									Nothing found for your query
 								</motion.p>
 							)}

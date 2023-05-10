@@ -34,7 +34,9 @@ export const CardHeader = ({ title, titleImg, info, onClick }: Props) => {
 				<div
 					className='ml-2 cursor-help'
 					onMouseOver={mouseOverHandler}
-					onMouseOut={mouseOutHandler}>
+					onTouchStart={mouseOverHandler}
+					onMouseOut={mouseOutHandler}
+					onTouchEnd={mouseOutHandler}>
 					<img className='w-8 h-8' src={help} alt='help icon' />
 				</div>
 			</div>

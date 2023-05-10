@@ -25,7 +25,7 @@ export const Empty = ({ isTrash }: Props) => {
 			className='flex flex-col justify-center items-center cursor-pointer'>
 			<Player
 				src={add}
-				className='w-3/4 md:w-full max-w-md lg:max-w-lg pointer-events-none'
+				className='w-1/2 md:w-full max-w-md lg:max-w-lg pointer-events-none'
 				loop
 				autoplay
 			/>

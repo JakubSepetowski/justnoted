@@ -237,7 +237,7 @@ export const EditNote = ({ noteInfo, onCloseEdit, onChangeColor }: Props) => {
 									<button
 										type='button'
 										onClick={closeEditHandler}
-										className='ml-2 border  w-24 rounded-md p-1  bg-transparent hover:bg-neutral-200 duration-200 transition-colors'>
+										className='ml-2 border  w-24 rounded-md p-1  bg-transparent hover:bg-neutral-200 duration-200 transition-colors '>
 										Cancel
 									</button>
 								</>

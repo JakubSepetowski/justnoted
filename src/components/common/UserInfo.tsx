@@ -14,7 +14,7 @@ export const UserInfo = () => {
 			onClick={goToProfilePageHandler}
 			className='absolute top-5 right-5 bg-zinc-900 sm:p-1 text-white rounded-3xl sm:min-w-0  shadow-md flex items-center cursor-pointer'>
 			<img
-				className='w-6 h-6 md:w-7 md:h-7 xl:w-8 xl:h-8 rounded-full'
+				className='w-8 h-8 rounded-full'
 				src={user.photoURL}
 				alt='user profile photo'
 			/>
