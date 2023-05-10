@@ -1,13 +1,13 @@
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { auth, googleProvider } from '../../../config/firebase';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import logo from '../../../assets/imgs/googleLogo.webp';
 import { useNavigateOnAuth } from '../../../hooks/useNavigateOnAuth';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { authSlice } from '../../../store/slices/authSlice';
 import { LoginUserData, LoginErrMsgs } from '../../../types/types';
+import * as Yup from 'yup';
 
 export const LoginForm = () => {
 	useNavigateOnAuth();
