@@ -54,3 +54,19 @@ https://justnoted.netlify.app
 
 ## Screenshots :notebook_with_decorative_cover:
 
+
+![HOME](https://github.com/sepetowski/justnoted/assets/114868887/1afed376-f1b5-45f0-8c3f-b5c8cac98476)
+![login](https://github.com/sepetowski/justnoted/assets/114868887/bc7f5a18-3e0d-4851-a5ec-b1ca52ede249)
+![mainapp](https://github.com/sepetowski/justnoted/assets/114868887/d6414334-9746-461b-b7ae-445dc64e9daa)
+![newNote](https://github.com/sepetowski/justnoted/assets/114868887/b2d9b50b-d3cf-4e41-8e18-8b67ee9cd930)
+![notes](https://github.com/sepetowski/justnoted/assets/114868887/5ab47de0-aa15-4f63-9ccd-10ef2bc481de)
+![call](https://github.com/sepetowski/justnoted/assets/114868887/8de38a5d-e1ab-421d-bc39-0cebfa00e5d7)
+![Edit](https://github.com/sepetowski/justnoted/assets/114868887/bff35824-4ccf-4762-8fc7-ef1592fa880f)
+![trash](https://github.com/sepetowski/justnoted/assets/114868887/136fd02c-e724-4292-ae9f-59a3a12374e4)
+![profile](https://github.com/sepetowski/justnoted/assets/114868887/483d7f72-398b-4ccf-8355-83b63c4acb5a)
+
+
+
+
+
+
