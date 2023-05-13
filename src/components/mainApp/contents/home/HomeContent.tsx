@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store/store';
-import { ContentWrapper } from '../../../common/ContentWrapper';
+import { ContentWrapper } from '../../../ui/ContentWrapper';
 import { Card } from './Card';
 import important from '../../../../assets/svg/important.svg';
 import pinned from '../../../../assets/svg/pinned.svg';
@@ -8,7 +8,7 @@ import { HomeNotesNames } from '../../../../types/types';
 import { motion } from 'framer-motion';
 import { Quote } from './Quote';
 import { Clock } from './Clock';
-import { fromBottomAnim} from '../../../../animations/animations';
+import { fromBottomAnim } from '../../../../animations/animations';
 
 export const HomeContent = () => {
 	const imortantNoteDesc = useSelector((state: RootState) => state.homeNotes.importantNoteDesc);
@@ -17,7 +17,9 @@ export const HomeContent = () => {
 	return (
 		<ContentWrapper hasHeader={true}>
 			<div className='h-full w-full flex flex-col md:justify-center overflow-y-auto noscroll gap-5 '>
-				<motion.div variants={fromBottomAnim} className='w-full flex flex-col md:flex-row gap-5 h-full md:h-[42%]'>
+				<motion.div
+					variants={fromBottomAnim}
+					className='w-full flex flex-col md:flex-row gap-5 h-full md:h-[42%]'>
 					<Quote />
 					<Card
 						name={HomeNotesNames.importantNote}
@@ -27,7 +29,9 @@ export const HomeContent = () => {
 						img={important}
 					/>
 				</motion.div>
-				<motion.div variants={fromBottomAnim}  className='w-full flex flex-col md:flex-row gap-5 h-full md:h-[42%] items-end'>
+				<motion.div
+					variants={fromBottomAnim}
+					className='w-full flex flex-col md:flex-row gap-5 h-full md:h-[42%] items-end'>
 					<Card
 						name={HomeNotesNames.quickNote}
 						desc={quickNoteDesc}

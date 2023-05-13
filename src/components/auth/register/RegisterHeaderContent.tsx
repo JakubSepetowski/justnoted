@@ -12,7 +12,7 @@ export const RegisterHeaderContent = ({ title, desc }: Props) => {
 				JustNoted
 			</Link>
 			<h1 className='text-2xl  md:text-5xl mt-10 md:mt-0'>{title}</h1>
-			<p className='text-neutral-400 mt-1 lg:mt-6 md:text-xl mb-10 md:mb-0'>{desc}</p>
+			<p className='text-neutral-400 mt-1 lg:mt-4 md:text-xl mb-10 md:mb-0'>{desc}</p>
 		</div>
 	);
 };

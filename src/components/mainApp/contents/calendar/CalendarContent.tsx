@@ -1,4 +1,4 @@
-import { ContentWrapper } from '../../../common/ContentWrapper';
+import { ContentWrapper } from '../../../ui/ContentWrapper';
 import { MobileCalendar } from './mobile/MobileCalendar';
 import { BigCalendar } from './big/BigCalendar';
 import { useMediaQuery } from '@react-hook/media-query';

@@ -5,8 +5,8 @@ import add from '../../../../assets/lotties/add.json';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store/store';
-import { Spinner } from '../../../common/Spinner';
-import {  motion } from 'framer-motion';
+import { Spinner } from '../../../ui/Spinner';
+import { motion } from 'framer-motion';
 import { opacityAnim } from '../../../../animations/animations';
 interface Props {
 	title: string;

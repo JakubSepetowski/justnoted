@@ -1,6 +1,6 @@
-import {  useState } from 'react';
+import { useState } from 'react';
 import { auth } from '../../../../config/firebase';
-import { H2 } from '../../../common/H2';
+import { H2 } from '../../../ui/H2';
 import { useFormik } from 'formik';
 import { updateProfile } from 'firebase/auth';
 import { LocalStorage } from '../../../../types/types';
@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { popupSlice } from '../../../../store/slices/popupSlice';
 import { storage } from '../../../../config/firebase';
 import { ref, uploadBytes, list, getDownloadURL } from 'firebase/storage';
-import { Spinner } from '../../../common/Spinner';
+import { Spinner } from '../../../ui/Spinner';
 import camera from '../../../../assets/svg/camera.svg';
 import * as Yup from 'yup';
 import { motion } from 'framer-motion';
@@ -138,7 +138,9 @@ export const MyProfile = () => {
 	return (
 		<div className='mt-16'>
 			<H2 title='My Profile' />
-			<motion.div variants={opacityAnim} className='mt-4 w-full h-auto p-2 md:p-4 border rounded-lg flex flex-col justify-center items-center md:flex-row '>
+			<motion.div
+				variants={opacityAnim}
+				className='mt-4 w-full h-auto p-2 md:p-4 border rounded-lg flex flex-col justify-center items-center md:flex-row '>
 				<div className='relative flex flex-col justify-center items-center'>
 					<img
 						className='w-20 h-20 md:w-24 md:h-24 rounded-full'

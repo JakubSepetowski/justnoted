@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../../store/store';
-import { ContentWrapper } from '../../../common/ContentWrapper';
+import { ContentWrapper } from '../../../ui/ContentWrapper';
 import { NoteCrad } from './NoteCard';
 import { Empty } from './Empty';
 import { useState } from 'react';
@@ -9,7 +9,7 @@ import { Sorting, SortingOptions } from '../../../../types/types';
 import { DeafultNotesContentBtns } from './DeafultNotesContentBtns';
 import { DeleteAllBtn } from './DeleteAllBtn';
 import { popupSlice } from '../../../../store/slices/popupSlice';
-import { H2 } from '../../../common/H2';
+import { H2 } from '../../../ui/H2';
 import { AnimatePresence, motion } from 'framer-motion';
 import { fromRigthAnim, opacityAnim } from '../../../../animations/animations';
 import { DeleteAllPopup } from './DeleteAllPopup';

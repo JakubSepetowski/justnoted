@@ -10,7 +10,7 @@ import { notesSlice } from '../../../../store/slices/notesSlice';
 import { popupSlice } from '../../../../store/slices/popupSlice';
 import { RefObject, useRef, useState } from 'react';
 import { colors } from '../../../common/colors';
-import { ColorsBtns } from '../../../common/ColorsBtns';
+import { ColorsBtns } from '../../../ui/ColorsBtns';
 import { AnimatePresence, motion } from 'framer-motion';
 import { calendarInputAnim } from '../../../../animations/animations';
 

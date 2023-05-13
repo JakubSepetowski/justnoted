@@ -1,4 +1,4 @@
-import { H2 } from '../../../../common/H2';
+import { H2 } from '../../../../ui/H2';
 import arrowLeft from '../../../../../assets/svg/arrowLeft.svg';
 import arrowRight from '../../../../../assets/svg/arrowRight.svg';
 import dayjs from 'dayjs';

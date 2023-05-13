@@ -8,28 +8,13 @@ import logo from '../../../assets/imgs/googleLogo.webp';
 import { useNavigateOnAuth } from '../../../hooks/useNavigateOnAuth';
 import { useState } from 'react';
 import { NewUserData, RegisterErrMsgs } from '../../../types/types';
-import { collection, setDoc, doc } from 'firebase/firestore';
-import { v4 as uuid } from 'uuid';
+import { createCollection } from '../../../utils/utils';
 
 export const RegisterForm = () => {
 	const [errorMg, setErrorMg] = useState('');
 	const [isSending, setIsSending] = useState(false);
 	useNavigateOnAuth();
 	const dispatch = useDispatch();
-
-	const createCollection = async () => {
-		const homeNotesColection = collection(dataBase, `users/${auth.currentUser?.uid}/home`);
-		const id = uuid();
-		try {
-			await setDoc(doc(homeNotesColection, id), {
-				id,
-				importantNoteDesc: '',
-				quicktNoteDesc: '',
-			});
-		} catch (err) {
-			throw new Error();
-		}
-	};
 
 	const singByEmailHandler = async (values: NewUserData) => {
 		try {
@@ -207,7 +192,7 @@ export const RegisterForm = () => {
 				onClick={singByGoogleHandler}
 				className='w-full flex items-center justify-center bg-white shadow-md p-2 mt-4 rounded-md cursor-pointer '>
 				<img className='w-6' alt='Google sign-up' src={logo} />
-				<p className='ml-2'>Singup with Google</p>
+				<p className='ml-2'>Continue with Google</p>
 			</div>
 		</form>
 	);

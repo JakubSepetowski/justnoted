@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { LocalStorage } from '../../../types/types';
-import { HeaderWrapper } from '../../common/HeaderWrapper';
+import { HeaderWrapper } from '../../ui/HeaderWrapper';
 import dayjs from 'dayjs';
 import { opacityAnim, titleAnim } from '../../../animations/animations';
 

@@ -141,10 +141,10 @@ export const App = () => {
 	}
 
 	useEffect(() => {
-		if (isAuth) {
-			getData('notes');
-			getData('home');
-		}
+		if (!isAuth) return;
+		getData('notes');
+
+		getData('home');
 	}, [isAuth]);
 
 	useEffect(() => {

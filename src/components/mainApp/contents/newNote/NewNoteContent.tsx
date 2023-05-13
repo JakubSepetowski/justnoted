@@ -1,5 +1,5 @@
 import { Player } from '@lottiefiles/react-lottie-player';
-import { ContentWrapper } from '../../../common/ContentWrapper';
+import { ContentWrapper } from '../../../ui/ContentWrapper';
 import writing from '../../../../assets/lotties/writing.json';
 import { Field, Formik, Form, FormikProps } from 'formik';
 import { collection, doc, setDoc } from 'firebase/firestore';
@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import { notesSlice } from '../../../../store/slices/notesSlice';
 import { v4 as uuid } from 'uuid';
 import { popupSlice } from '../../../../store/slices/popupSlice';
-import { H2 } from '../../../common/H2';
+import { H2 } from '../../../ui/H2';
 import { categoryOptions, categories } from '../../../common/categories';
 import { currentDate } from '../../../common/date';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -20,7 +20,7 @@ import {
 	fromRigthAnim,
 } from '../../../../animations/animations';
 import { colors } from '../../../common/colors';
-import { ColorsBtns } from '../../../common/ColorsBtns';
+import { ColorsBtns } from '../../../ui/ColorsBtns';
 import { RefObject, useRef } from 'react';
 
 export const NewNoteContent = () => {
@@ -94,8 +94,7 @@ export const NewNoteContent = () => {
 					.oneOf(categories, 'Please select a category from list'),
 				calendar: Yup.boolean(),
 				fav: Yup.boolean(),
-				date: Yup.date()
-				.required('Please enter a valid date'),
+				date: Yup.date().required('Please enter a valid date'),
 			})}
 			onSubmit={(values, { resetForm }) => {
 				const unique_id = uuid();

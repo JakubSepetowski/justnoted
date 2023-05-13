@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
-import { PopupInfo } from '../common/PopupInfo';
-import { UserInfo } from '../common/UserInfo';
+import { PopupInfo } from '../ui/PopupInfo';
+import { UserInfo } from '../ui/UserInfo';
 import { Nav } from '../mainApp/nav/Nav';
 import { RootState } from '../../store/store';
 import { NotePopup } from '../mainApp/contents/calendar/NotePopup';

@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
-import { ContentWrapper } from '../../../common/ContentWrapper';
+import { ContentWrapper } from '../../../ui/ContentWrapper';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store/store';
-import { H2 } from '../../../common/H2';
+import { H2 } from '../../../ui/H2';
 import { NoteInfo } from './NoteInfo';
 import { useState } from 'react';
 import { EditNote } from './EditNote';

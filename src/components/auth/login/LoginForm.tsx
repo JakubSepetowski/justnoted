@@ -1,5 +1,5 @@
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { auth, googleProvider } from '../../../config/firebase';
+import { auth, dataBase, googleProvider } from '../../../config/firebase';
 import { useFormik } from 'formik';
 import logo from '../../../assets/imgs/googleLogo.webp';
 import { useNavigateOnAuth } from '../../../hooks/useNavigateOnAuth';
@@ -8,6 +8,8 @@ import { useDispatch } from 'react-redux';
 import { authSlice } from '../../../store/slices/authSlice';
 import { LoginUserData, LoginErrMsgs } from '../../../types/types';
 import * as Yup from 'yup';
+import { createCollection } from '../../../utils/utils';
+import { collection, getDocs } from 'firebase/firestore';
 
 export const LoginForm = () => {
 	useNavigateOnAuth();
@@ -59,6 +61,17 @@ export const LoginForm = () => {
 						photoURL: res.user.photoURL,
 					})
 				);
+
+				const homeNotesColection = collection(dataBase, `users/${auth.currentUser?.uid}/home`);
+
+				const querySnapshot = await getDocs(homeNotesColection);
+				const data = querySnapshot;
+				const filteredData = data.docs.map((doc) => ({
+					...doc.data(),
+				}));
+
+				if (filteredData.length === 0) createCollection();
+
 				dispatch(authSlice.actions.setIsAuth());
 			}
 		} catch (err) {

@@ -4,7 +4,7 @@ import { currentDate } from '../../../../common/date';
 import { CalendarNote } from '../CalendarNote';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { H2 } from '../../../../common/H2';
+import { H2 } from '../../../../ui/H2';
 import noEdit from '../../../../../assets/lotties/noEdit.json';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { motion } from 'framer-motion';
