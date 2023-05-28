@@ -12,7 +12,7 @@ It is also possible to customize your profile - change your username, profile pi
 ## Live :globe_with_meridians:
 
 Create an account and start using justNoted
-https://justnoted-3c406.web.app/
+https://justnoted-3c406.web.app
 
 ## Features :sparkler:
 
