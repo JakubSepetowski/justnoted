@@ -4,11 +4,11 @@ import { HeaderWrapper } from '../../ui/HeaderWrapper';
 import dayjs from 'dayjs';
 import { opacityAnim, titleAnim } from '../../../animations/animations';
 
-const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const days = ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday',];
 export const HomeHeader = () => {
 	const date = new Date();
 	const dayNumber = date.getDate();
-	const dayName = days[dayjs().day() - 1];
+	const dayName = days[dayjs().day()];
 	const month = date.toLocaleString('en', { month: 'long' });
 	const year = date.getFullYear();
 	const user: LocalStorage = JSON.parse(localStorage.getItem('user')!);
