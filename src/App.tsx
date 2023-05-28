@@ -20,8 +20,12 @@ import { popupSlice } from './store/slices/popupSlice';
 import { ProfilePage } from './pages/mainApp/ProfilePage';
 import { homeNotesSlice } from './store/slices/homeNotesSlice';
 import { CalendarPage } from './pages/mainApp/CalendarPage';
+import { ErrorPage } from './pages/ErrorPage';
 
 const router = createBrowserRouter([
+	{
+		errorElement: <ErrorPage />,
+	},
 	{
 		path: '/',
 		element: <HomePage />,
